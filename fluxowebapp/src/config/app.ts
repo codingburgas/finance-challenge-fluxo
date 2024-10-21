@@ -6,7 +6,7 @@ interface AppConfig {
     },
     author: {
         name: string,
-        url: string
+        // url: string
     },
 }
 
@@ -17,7 +17,7 @@ export const appConfig: AppConfig = {
         url: "https://github.com/codingburgas/finance-challenge-fluxo",
     },
     author: {
-        name: "hayyi",
-        //url: "https://github.com/hayyi2/",
+        name: "pepi",
+        // url: "https://github.com/hayyi2/",
     }
 }

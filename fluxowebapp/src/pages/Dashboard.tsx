@@ -37,16 +37,16 @@ export const Heading = () => {
 
 const Dashboard = () => {
     return (
-        <div className="flex flex-row items-center p-4 mt-24">
+        <div className="flex flex-col md:flex-row items-center p-4 mt-24">
             {/* Heading on the left */}
             <Heading />
 
-            {/* Image on the right */}
-            <div className="ml-10"> 
+            {/* Image on the right for large screens, below text for small screens */}
+            <div className="ml-0 md:ml-10 order-last md:order-none mt-6 md:mt-0"> 
                 <img 
-                    src="https://via.placeholder.com/400"  // Replace this with your actual image URL
+                    src="handsmoney.png"  // Reference the image in the public folder
                     alt="Fluxo Illustration" 
-                    className="w-[400px] h-auto object-cover"
+                    className="w-full md:w-[420px] h-auto object-cover ml-4 md:ml-10 lg:ml-12"
                 />
             </div>
         </div>
