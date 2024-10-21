@@ -33,45 +33,43 @@ export const Heading = () => {
             </h1>
         </div>
     );
-};
+}
 
 const Dashboard = () => {
     return (
         <div className="flex flex-col md:flex-row items-start p-4 mt-8">
-            {/* Left Section with Heading and Circular Images */}
-            <div className="flex flex-col items-start md:w-1/2"> {/* Adjust the width for medium screens */}
+            {/* Heading and Circular Images */}
+            <div className="flex flex-col items-start md:w-1/2 mt-10">
                 <Heading />
-
-                {/* Circle Images Section */}
                 <div className="flex flex-col items-center mt-8">
-                    <div className="w-full h-0.5 bg-gray-100 mb-4"></div> {/* Top Line */}
-                        <div className="flex justify-between w-full max-w-[900px] gap-16"> {/* Added gap for spacing */}
-                            <img 
-                                src="chartpic.png" 
-                                alt="Image 1" 
-                                className="w-[106px] h-[106px] rounded-full object-cover" 
-                            />
-                            <img 
-                                src="clockpic.png" 
-                                alt="Image 2" 
-                                className="w-[106px] h-[106px] rounded-full object-cover"  
-                            />
-                            <img 
-                                src="moneypic.png" 
-                                alt="Image 3" 
-                                className="w-[106px] h-[106px] rounded-full object-cover"
-                            />
-                        </div>
-                    <div className="w-full h-0.5 bg-gray-100 mt-4"></div> {/* Bottom Line */}
+                    <div className="w-full h-0.5 bg-gray-100 mb-4"></div>
+                    <div className="flex justify-between w-full max-w-[900px] gap-16">
+                        <img 
+                            src="chartpic.png" 
+                            alt="Image 1" 
+                            className="w-[106px] h-[106px] rounded-full object-cover" 
+                        />
+                        <img 
+                            src="clockpic.png" 
+                            alt="Image 2" 
+                            className="w-[106px] h-[106px] rounded-full object-cover"  
+                        />
+                        <img 
+                            src="moneypic.png" 
+                            alt="Image 3" 
+                            className="w-[106px] h-[106px] rounded-full object-cover"
+                        />
+                    </div>
+                    <div className="w-full h-0.5 bg-gray-100 mt-4"></div>
                 </div>
             </div>
 
-            {/* Right Section with handsmoney Image */}
-            <div className="ml-0 md:ml-10 mt-6 md:mt-0 order-last md:order-none"> 
+            {/* handsmoney Image */}
+            <div className="md:w-1/2 flex justify-end mt-6 md:mt-0">
                 <img 
                     src="handsmoney.png" 
                     alt="Fluxo Illustration" 
-                    className="w-full md:w-[450px] h-auto object-cover" 
+                    className="w-full md:w-[600px] h-auto object-cover -mt-11" 
                 />
             </div>
         </div>
@@ -79,3 +77,4 @@ const Dashboard = () => {
 }
 
 export default Dashboard;
+
