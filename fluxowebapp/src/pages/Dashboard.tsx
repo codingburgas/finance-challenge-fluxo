@@ -37,16 +37,16 @@ export const Heading = () => {
 
 const Dashboard = () => {
     return (
-        <div className="flex flex-col md:flex-row items-center p-4 mt-24">
-            {/* Heading on the left */}
+        <div className="flex flex-col md:flex-row items-center p-4 mt-8">
+            {}
             <Heading />
 
-            {/* Image on the right for large screens, below text for small screens */}
+            {}
             <div className="ml-0 md:ml-10 order-last md:order-none mt-6 md:mt-0"> 
                 <img 
-                    src="handsmoney.png"  // Reference the image in the public folder
+                    src="handsmoney.png" 
                     alt="Fluxo Illustration" 
-                    className="w-full md:w-[420px] h-auto object-cover ml-4 md:ml-10 lg:ml-12"
+                    className="w-full md:w-[450px] h-auto object-cover ml-10 md:ml-18 lg:ml-28"
                 />
             </div>
         </div>
