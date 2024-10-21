@@ -1,0 +1,5 @@
+module fluxo
+typeinfo appfluxo.qmltypes
+prefer :/qt/qml/fluxo/
+Main 1.0 Main.qml
+
