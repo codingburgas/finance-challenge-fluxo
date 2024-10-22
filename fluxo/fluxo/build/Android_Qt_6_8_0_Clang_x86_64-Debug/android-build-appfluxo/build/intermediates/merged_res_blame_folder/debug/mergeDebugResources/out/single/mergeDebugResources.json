@@ -1,6 +1,0 @@
-[
-    {
-        "merged": "org.qtproject.example.appfluxo-debug-10:/xml_qtprovider_paths.xml.flat",
-        "source": "org.qtproject.example.appfluxo-android-build-appfluxo-11:/xml/qtprovider_paths.xml"
-    }
-]

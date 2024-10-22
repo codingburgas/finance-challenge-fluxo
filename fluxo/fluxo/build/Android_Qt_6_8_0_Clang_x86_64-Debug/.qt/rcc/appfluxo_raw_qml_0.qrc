@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/qt/qml/fluxo/">
-    <file alias="Main.qml">D:/IT/projects/finance-challenge-fluxo/fluxo/fluxo/Main.qml</file>
-  </qresource>
-</RCC>
-
