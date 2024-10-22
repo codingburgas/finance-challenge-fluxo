@@ -1,4 +1,5 @@
-import QtQuick
+import QtQuick 2.7
+import QtQuick.Controls 2.2
 
 Window {
     width: 390
@@ -36,10 +37,24 @@ Window {
         y: 470
         width: 303
         height: 93
-        text: qsTr("Text")
-        font.pixelSize: 12
+        text: "<font color=\"#000000\">Best</font> <font color=\"#689A78\">Financial</p>Management System</font><font color=\"#000000\"></p>for You.</font>"
+        font.pixelSize: 26
         horizontalAlignment: Text.AlignHCenter
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
+    }
+    
+    Text {
+        width: 278
+        height: 61
+        horizontalAlignment: Text.AlignHCenter
+        anchors.horizontalCenterOffset: 0
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: 588
+        
+        font.pixelSize: 16
+        text: "<font color=\"#505050\">Money management has never been</p>easier before, start your journey now</p>and see the difference."
+        
+        
     }
 }
