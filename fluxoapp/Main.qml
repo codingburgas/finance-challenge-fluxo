@@ -10,11 +10,13 @@ Window {
 
     Image {
         id: image
+
         x: 0
-        y: 350
+        y: 200
         width: 334
         height: 334
-        source: "images/money_image.png"
+        source: "resources/money_image.png"
+        anchors.horizontalCenter: white_rectange.horizontalCenter
         z: 3
         rotation: 0
         fillMode: Image.PreserveAspectFit
@@ -30,6 +32,8 @@ Window {
         height: 426
         color: "#F1F1F1"
         radius: 43
+
+
     }
 
     Text {
@@ -43,7 +47,7 @@ Window {
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
     }
-    
+
     Text {
         width: 278
         height: 61
@@ -51,10 +55,40 @@ Window {
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
         y: 588
-        
+
         font.pixelSize: 16
         text: "<font color=\"#505050\">Money management has never been</p>easier before, start your journey now</p>and see the difference."
-        
-        
+
+
+    }
+
+    Rectangle {
+        id: button
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: 723
+        z: 3
+
+        width: 208
+        height: 58
+
+        color: "#3C5846"
+        radius: 13
+
+        Text{
+            text: "Get started"
+            color: "#f1f1f1"
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            font.pointSize: 20
+            font.bold: true
+        }
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked:{
+                parent.color = 'red'
+            }
+        }
+
     }
 }
