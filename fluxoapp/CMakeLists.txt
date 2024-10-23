@@ -20,6 +20,8 @@ qt_add_qml_module(appfluxoapp
         QML_FILES authPage.qml
         SOURCES session.cpp
         SOURCES session.h
+        SOURCES fluxo.h
+        SOURCES fluxo.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

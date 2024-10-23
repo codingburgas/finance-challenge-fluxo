@@ -47,22 +47,17 @@ Window {
 
 
         Rectangle {
+            x: 90
+            y: 726
             width: 200
             height: 50
             color: "#3C5846"
             radius: 10
 
-            Text {
-                text: "Click Me"
-                anchors.centerIn: parent
-                font.pixelSize: 20
-                color: "white"
-            }
-
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    console.log("Button clicked!");
+
                 }
             }
         }

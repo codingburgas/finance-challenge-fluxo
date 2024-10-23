@@ -1,26 +1,34 @@
 #ifndef SESSION_H
 #define SESSION_H
-#endif // SESSION_H
 
-#include <QQmlContext>
-#include <QDebug>
 #include <QObject>
-#include <fstream>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QUrl>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QDebug>
 
-class SessionHandler : public QObject {
-    Q_OBJECT
-public slots:
+namespace Fluxo {
+class App; // Forward declaration of App
+}
 
-    QString getUsername();
+namespace Fluxo{
+    class SessionHandler : public QObject {
+        Q_OBJECT
+    public:
+        QString getUsername();
+        QString getPassword();
+        void setUsername(const QString &val);
+        void setPassword(const QString &val);
+        void writeSession(const QString& username, const QString& password, Fluxo::App* app);
 
-    QString getPassword();
+    private:
+        QString username, password;
 
-    void setUsername(const QString &val);
+        bool isAppInitialized(Fluxo::App* app);
+    };
+} //end of namespace Fluxo
 
-    void setPassword(const QString &val);
-
-    void writeToFile(const QString& val);
-
-private:
-    QString username, password;
-};
+#endif // SESSION_H
