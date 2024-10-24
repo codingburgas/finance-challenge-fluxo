@@ -1,5 +1,5 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.2
+
 
 Window {
     width: 380
@@ -8,62 +8,92 @@ Window {
 
     Rectangle {
         id: getStartedPage
-        anchors.fill: parent
+        anchors.fill: parent // Ensures the Rectangle fills the Window exactly
         color: "#304437"
 
-        TextArea {
-            id: username
-            x: 114
-            y: 548
-            width: 152
-            height: 51
-            text: ""
-            z: 10
-            font.weight: Font.Medium
-            placeholderText: qsTr("Username")
+        Rectangle{
+            id: circle
+            radius: 360
+            width: 670
+            height: 670
+            anchors.horizontalCenter: parent.horizontalCenter
+            y:174
+            gradient: Gradient {
+                    GradientStop {position: 0.0; color: "#689A78"}
+                    GradientStop {position: 0.37; color: "#3C5846"}
+                }
         }
 
-        TextArea {
-            id: password
-            x: 114
-            y: 632
-            width: 152
-            height: 51
-            text: ""
-            z: 10
-            placeholderText: qsTr("Password")
-            font.weight: Font.Medium
+        Image {
+            id: moneyImage
+            x: 10
+            y: 192
+            width: 362
+            height: 362
+            source: "resources/money_image.png"
+            z: 3
+            rotation: 0
+            fillMode: Image.PreserveAspectFit
         }
 
         Rectangle {
             id: whiteRectangle
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.left: parent.left // Anchors to the parent Rectangle
+            anchors.right: parent.right // Ensure no overflow on the right
             y: 425
             height: 426
             color: "#F1F1F1"
             radius: 43
         }
 
+        Text {
+            id: textMain
+            y: 470
+            width: 303
+            height: 93
+            text: "<font color=\"#000000\">Best</font> <font color=\"#689A78\">Financial</p>Management System</font><font color=\"#000000\"></p>for You.</font>"
+            font.pixelSize: 26
+            horizontalAlignment: Text.AlignHCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+
+        Text {
+            id: textAdditional
+            width: 278
+            height: 61
+            horizontalAlignment: Text.AlignHCenter
+            z: 2
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 588
+            font.pixelSize: 16
+            text: "<font color=\"#505050\">Money management has never been</p>easier before, start your journey now</p>and see the difference."
+        }
 
         Rectangle {
-            x: 90
-            y: 726
-            width: 200
-            height: 50
+            id: buttonRectangle
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 723
+            z: 3
+            width: 208
+            height: 58
             color: "#3C5846"
-            radius: 10
+            radius: 13
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-
-                    if (fluxo !== null)
-                        SessionHandler.writeSession(username.text, password.text, fluxo);
-                    else
-                        console.log("App instance is null");
-                }
+            Text {
+                id: buttonText
+                text: "Get started"
+                color: "#f1f1f1"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                font.pointSize: 20
+                font.bold: true
             }
+
+            /*MouseArea {
+                id: buttonMouseArea
+                anchors.fill: parent
+            }*/
         }
     }
 }
+
