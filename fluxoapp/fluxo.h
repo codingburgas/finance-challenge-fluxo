@@ -15,12 +15,19 @@ public:
     App(int argc, char** argv);
     ~App();
 
-    Q_INVOKABLE void initialize();
-    Q_INVOKABLE int run();
+    void initialize();
+
+    Q_REQUIRED_RESULT
+    int run();
+
+    Q_REQUIRED_RESULT
     Q_INVOKABLE QNetworkAccessManager* getNetworkManager();
+
+    Q_REQUIRED_RESULT
     Q_INVOKABLE SessionHandler* getSessionHandler();
 
 private:
+
     QGuiApplication* app;
     QQmlApplicationEngine engine;
     QNetworkAccessManager* manager;
