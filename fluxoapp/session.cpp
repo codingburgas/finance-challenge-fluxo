@@ -1,21 +1,6 @@
 #include "session.h"
 #include "fluxo.h"
-
-QString Fluxo::SessionHandler::getUsername() {
-    return this->username;
-}
-
-QString Fluxo::SessionHandler::getPassword() {
-    return this->password;
-}
-
-void Fluxo::SessionHandler::setUsername(const QString &val) {
-    this->username = val;
-}
-
-void Fluxo::SessionHandler::setPassword(const QString &val) {
-    this->password = val;
-}
+#include <qlogging.h>
 
 // Check if the app is initialized
 bool Fluxo::SessionHandler::isAppInitialized(Fluxo::App* app) {
@@ -50,4 +35,6 @@ void Fluxo::SessionHandler::writeSession(const QString& username, const QString&
     if (!reply) {
         qFatal("Failed to send network request.");
     }
+
+    qInfo() << username << password;
 }

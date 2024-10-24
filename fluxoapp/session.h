@@ -18,11 +18,7 @@ namespace Fluxo{
     class SessionHandler : public QObject {
         Q_OBJECT
     public:
-        QString getUsername();
-        QString getPassword();
-        void setUsername(const QString &val);
-        void setPassword(const QString &val);
-        void writeSession(const QString& username, const QString& password, Fluxo::App* app);
+        Q_INVOKABLE void writeSession(const QString& username, const QString& password, Fluxo::App* app);
 
     private:
         QString username, password;

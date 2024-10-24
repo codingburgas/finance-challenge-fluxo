@@ -4,30 +4,31 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QNetworkAccessManager>
-#include <QDebug>
 #include "session.h"
 
 namespace Fluxo {
 
-class App {
-public:
-    App(int argc, char** argv); // Constructor
-    ~App(); // Destructor
+class App : public QObject {
+    Q_OBJECT
 
-    void initialize();
-    int run();
-    QNetworkAccessManager* getNetworkManager(); // Get the network manager
-    SessionHandler* getSessionHandler(); // Return session handler
+public:
+    App(int argc, char** argv);
+    ~App();
+
+    Q_INVOKABLE void initialize();
+    Q_INVOKABLE int run();
+    Q_INVOKABLE QNetworkAccessManager* getNetworkManager();
+    Q_INVOKABLE SessionHandler* getSessionHandler();
 
 private:
     QGuiApplication* app;
-    QQmlApplicationEngine engine; // QML engine
-    QNetworkAccessManager* manager; // Network manager
-    SessionHandler handler; // Session handler
+    QQmlApplicationEngine engine;
+    QNetworkAccessManager* manager;
+    SessionHandler handler;
 
     bool isInitialized() const;
 };
 
-} //end of namespace Fluxo
+} // namespace Fluxo
 
 #endif // FLUXO_H
