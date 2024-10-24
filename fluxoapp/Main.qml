@@ -58,6 +58,10 @@ Window {
                 anchors.fill: parent
                 onClicked: {
 
+                    if (fluxo !== null)
+                        SessionHandler.writeSession(username.text, password.text, fluxo);
+                    else
+                        console.log("App instance is null");
                 }
             }
         }

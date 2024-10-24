@@ -3,10 +3,9 @@
 
 namespace Fluxo {
 
-// Constructor
 App::App(int argc, char** argv)
     : app(new QGuiApplication(argc, argv)),
-    manager(new QNetworkAccessManager()) {
+      manager(new QNetworkAccessManager()) {
     if (!app) {
         qFatal("Failed to create QGuiApplication.");
     }
@@ -15,13 +14,11 @@ App::App(int argc, char** argv)
     }
 }
 
-// Destructor
 App::~App() {
     delete manager;
     delete app;
 }
 
-// Initialize the application
 void App::initialize() {
     if (!isInitialized()) {
         qFatal("App not initialized properly.");
@@ -32,8 +29,8 @@ void App::initialize() {
                      Qt::QueuedConnection);
 
     engine.rootContext()->setContextProperty("SessionHandler", &handler);
+    engine.rootContext()->setContextProperty("fluxo", this); // Expose the app instance to QML
 
-    // Check if loading the QML module is successful
     try {
         engine.loadFromModule("fluxoapp", "Main");
         if (engine.rootObjects().isEmpty()) {
@@ -44,7 +41,6 @@ void App::initialize() {
     }
 }
 
-// Start the application
 int App::run() {
     if (!isInitialized()) {
         qFatal("App not initialized properly.");
@@ -59,14 +55,12 @@ QNetworkAccessManager* App::getNetworkManager() {
     return manager;
 }
 
-// Check if the app is initialized
 bool App::isInitialized() const {
     return (app != nullptr && manager != nullptr);
 }
 
-// Get the session handler
 SessionHandler* App::getSessionHandler() {
     return &handler;
 }
 
-} //end of namespace Fluxo
+} // namespace Fluxo
