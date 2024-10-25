@@ -2,6 +2,7 @@ import QtQuick 2.7
 
 
 Window {
+    id: window
     width: 380
     height: 844
     visible: true
@@ -26,11 +27,11 @@ Window {
 
         Image {
             id: moneyImage
+            source: "qrc:/resources/money_image.png"
             x: 10
             y: 192
             width: 362
             height: 362
-            source: "resources/money_image.png"
             z: 3
             rotation: 0
             fillMode: Image.PreserveAspectFit
@@ -111,5 +112,6 @@ Window {
                 anchors.fill: parent
             }
         }
+
     }
 }

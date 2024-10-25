@@ -22,7 +22,7 @@ Window{
                 id: logoImage
                 width:113
                 height:33
-                source: "resources/logo.png"
+                source: ":/logo.png"
                 anchors.centerIn: parent
             }
         }

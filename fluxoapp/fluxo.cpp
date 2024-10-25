@@ -35,7 +35,7 @@ void App::initialize() {
     engine.rootContext()->setContextProperty("fluxo", this); // Expose the app instance to QML
 
     try {
-        engine.loadFromModule("fluxoapp", "Main");
+        engine.loadFromModule("fluxoapp", "GetStartedPage");
         if (engine.rootObjects().isEmpty()) {
             qFatal("Failed to load QML module.");
         }
