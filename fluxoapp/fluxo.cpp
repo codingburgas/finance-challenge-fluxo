@@ -12,6 +12,9 @@ App::App(int argc, char** argv)
     if (!manager) {
         qFatal("Failed to create QNetworkAccessManager.");
     }
+    app->setApplicationName("Fluxo");
+    app->setApplicationDisplayName("Fluxo");
+    app->setOrganizationName("Fluxo");
 }
 
 App::~App() {
@@ -29,10 +32,10 @@ void App::initialize() {
                      Qt::QueuedConnection);
 
     engine.rootContext()->setContextProperty("SessionHandler", &handler);
-    engine.rootContext()->setContextProperty("fluxo", this); // Expose the app instance to QML
+    engine.rootContext()->setContextProperty("fluxoapp", this); // Expose the app instance to QML
 
     try {
-        engine.loadFromModule("fluxoapp", "Main");
+        engine.loadFromModule("fluxo", "Main");
         if (engine.rootObjects().isEmpty()) {
             qFatal("Failed to load QML module.");
         }

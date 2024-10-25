@@ -24,6 +24,7 @@ namespace Fluxo{
     private:
         QString username, password;
 
+        Q_REQUIRED_RESULT
         bool isAppInitialized(Fluxo::App* app);
     };
 } //end of namespace Fluxo
