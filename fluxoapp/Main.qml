@@ -52,9 +52,16 @@ Window {
             width: 303
             height: 93
             text: "<font color=\"#000000\">Best</font> <font color=\"#689A78\">Financial</p>Management System</font><font color=\"#000000\"></p>for You.</font>"
-            font.pixelSize: 26
+
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenter: parent.horizontalCenter
+
+            font.family: "Inter"
+            font.styleName: "normal"
+            font.weight: 700
+            font.pixelSize: 26
+
         }
 
         Text {
@@ -65,8 +72,13 @@ Window {
             z: 2
             anchors.horizontalCenter: parent.horizontalCenter
             y: 588
-            font.pixelSize: 16
+
             text: "<font color=\"#505050\">Money management has never been</p>easier before, start your journey now</p>and see the difference."
+
+            font.family: "Inter"
+            font.styleName: "normal"
+            font.weight: 300
+            font.pixelSize: 16
         }
 
         Rectangle {
@@ -87,12 +99,17 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 font.pointSize: 20
                 font.bold: true
+
+                font.family: "Inter"
+                font.styleName: "normal"
+                font.weight: 700
+                font.pixelSize: 20
             }
 
-            /*MouseArea {
+            MouseArea {
                 id: buttonMouseArea
                 anchors.fill: parent
-            }*/
+            }
         }
     }
 }

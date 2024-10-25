@@ -1,6 +1,5 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
-import QtQuick.Controls
 
 Window{
     id: window
@@ -64,13 +63,12 @@ Window{
         }
 
         Rectangle{
-            y: 470
             width: 319
             height: 93
             border.width: 0
             z:2
-            anchors.horizontalCenter: parent.horizontalCenter
-            property double y: (0.42*parent.height)
+            anchors.horizontalCenter: circle.horizontalCenter
+            property double y: 0.42*window.height
 
             Text {
                 id: textMain
@@ -78,10 +76,14 @@ Window{
                 height: 93
                 anchors.centerIn: parent
 
-                text: "<font color=\"#689A78\">Sign in</font> <font color=\"#000000\">to an already<p>existing account or</font><font color=\"#689A78\">Create<p>yours</font> <font color=\"#000000\">today!</font>"
+                text: "<font color=\"#689A78\">Sign in</font> <font color=\"#000000\">to an already</p>existing account or</font> <font color=\"#689A78\">Create<p>yours</font> <font color=\"#000000\">today!</font>"
+                font.family: "Inter"
+                font.styleName: "normal";
+                font.weight: 600;
                 font.pixelSize: 24
+
                 horizontalAlignment: Text.AlignHCenter
-                lineHeight: 29
+                //lineHeight: 29
                 z:3
             }
         }
@@ -96,7 +98,6 @@ Window{
             height: 56
             text: ""
             z: 10
-            font.weight: Font.Medium
             placeholderText: qsTr("Username")
             background: Rectangle{
                 width: 293
@@ -104,6 +105,13 @@ Window{
                 border.width: 1
                 border.color: "#898989"
             }
+
+            font.family: "Inter"
+            font.styleName: "normal"
+            font.weight: 400
+            font.pixelSize: 20
+
+            verticalAlignment: Text.AlignVCenter
         }
 
         TextArea {
@@ -115,13 +123,19 @@ Window{
             text: ""
             z: 10
             placeholderText: qsTr("Password")
-            font.weight: Font.Medium
             background: Rectangle{
                 width: 293
                 radius: 8
                 border.width: 1
                 border.color: "#898989"
             }
+
+            font.family: "Inter"
+            font.styleName: "normal"
+            font.weight: 400
+            font.pixelSize: 20
+
+            verticalAlignment: Text.AlignVCenter
         }
 
 
@@ -138,11 +152,14 @@ Window{
 
             Text {
                 id: buttonText
-                text: "Get started"
+                text: "Register"
                 color: "#f1f1f1"
                 anchors.centerIn: parent
-                font.pointSize: 20
-                font.bold: true
+
+                font.family: "Inter"
+                font.styleName: "normal"
+                font.weight: 700
+                font.pixelSize: 20
             }
 
             MouseArea {

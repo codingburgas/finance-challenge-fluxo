@@ -32,10 +32,10 @@ void App::initialize() {
                      Qt::QueuedConnection);
 
     engine.rootContext()->setContextProperty("SessionHandler", &handler);
-    engine.rootContext()->setContextProperty("fluxoapp", this); // Expose the app instance to QML
+    engine.rootContext()->setContextProperty("fluxo", this); // Expose the app instance to QML
 
     try {
-        engine.loadFromModule("fluxo", "Main");
+        engine.loadFromModule("fluxoapp", "Main");
         if (engine.rootObjects().isEmpty()) {
             qFatal("Failed to load QML module.");
         }
