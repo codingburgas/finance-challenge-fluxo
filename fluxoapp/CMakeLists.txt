@@ -23,6 +23,8 @@ qt_add_qml_module(appfluxoapp
         SOURCES fluxo.h
         SOURCES fluxo.cpp
         RESOURCES resources.qrc
+        QML_FILES withdrawAmount.qml
+        RESOURCES images/money_image.png
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
