@@ -3,18 +3,12 @@
 
 #include <QUrl>
 
-#define URL QUrl
-#define ROOT "https://fluxo-api.me"
-#define DEPOSIT "https://fluxo-api.me/deposit"
-#define WITHDRAW "https://fluxo-api.me/withdraw"
-#define AUTH "https://fluxo-api.me/auth"
-
 namespace Fluxo{
     namespace Url{
-    URL root(ROOT);
-    URL deposit(DEPOSIT);
-    URL withdraw(WITHDRAW);
-    URL auth(AUTH);
+    QUrl root("https://fluxo-api.me");
+    QUrl deposit("https://fluxo-api.me");
+    QUrl withdraw("https://fluxo-api.me");
+    QUrl auth("https://fluxo-api.me");
     }
 }
 
