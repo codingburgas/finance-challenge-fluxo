@@ -1,18 +1,9 @@
 #include <QGuiApplication>
-#include <QQmlApplicationEngine>
+#include "fluxo.h"
 
-int main(int argc, char *argv[])
-{
-    QGuiApplication app(argc, argv);
+int main(int argc, char *argv[]) {
+    Fluxo::App app(argc, argv);
+    app.initialize();
 
-    QQmlApplicationEngine engine;
-    QObject::connect(
-        &engine,
-        &QQmlApplicationEngine::objectCreationFailed,
-        &app,
-        []() { QCoreApplication::exit(-1); },
-        Qt::QueuedConnection);
-    engine.loadFromModule("fluxo", "Main");
-
-    return app.exec();
+    return app.run();
 }

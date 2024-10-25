@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(fluxo VERSION 0.1 LANGUAGES CXX)
+project(fluxoapp VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -8,34 +8,48 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
-qt_add_executable(appfluxo
+qt_add_executable(appfluxoapp
     main.cpp
 )
 
-qt_add_qml_module(appfluxo
-    URI fluxo
+qt_add_qml_module(appfluxoapp
+    URI fluxoapp
     VERSION 1.0
     QML_FILES
-        Main.qml
+    GetStartedPage.qml
+        QML_FILES authPage.qml
+        SOURCES session.cpp
+        SOURCES session.h
+        SOURCES fluxo.h
+        SOURCES fluxo.cpp
+        QML_FILES withdrawAmount.qml
+        #RESOURCES images/money_image.png
+        QML_FILES depositAmount.qml
+        QML_FILES withdrawCategory.qml
+        SOURCES mainOperations.h
+        SOURCES mainOperations.cpp
+        SOURCES urls.h
+        RESOURCES resources.qrc
+        QML_FILES MainPage.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
-set_target_properties(appfluxo PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appfluxo
+set_target_properties(appfluxoapp PROPERTIES
+#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appfluxoapp
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
-target_link_libraries(appfluxo
+target_link_libraries(appfluxoapp
     PRIVATE Qt6::Quick
 )
 
 include(GNUInstallDirs)
-install(TARGETS appfluxo
+install(TARGETS appfluxoapp
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

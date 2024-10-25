@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/logo.png</file>
+        <file>resources/money_image.png</file>
+        <file>resources/transactionsImage.png</file>
+        <file>resources/depositIcon.png</file>
+        <file>resources/sendIcon.png</file>
+        <file>resources/statsIcon.png</file>
+        <file>resources/withdrawIcon.png</file>
+    </qresource>
+</RCC>
