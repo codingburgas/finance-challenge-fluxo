@@ -1,115 +1,151 @@
 import QtQuick 2.7
-
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 
 Window {
-    width: 380
-    height: 844
+    width: 420
+    height: 900
     visible: true
 
     Rectangle {
-        id: getStartedPage
-        anchors.fill: parent // Ensures the Rectangle fills the Window exactly
+        id: background
+        width: 420
+        height: 844
+        visible: true
         color: "#304437"
 
-        Rectangle{
+        Rectangle {
             id: circle
             radius: 360
+            z: 0
+            rotation: 90
+            anchors.horizontalCenterOffset: -263
             width: 670
             height: 670
             anchors.horizontalCenter: parent.horizontalCenter
-            y:174
+            y: -24
             gradient: Gradient {
-                    GradientStop {position: 0.0; color: "#689A78"}
-                    GradientStop {position: 0.37; color: "#3C5846"}
-                }
-        }
-
-        Image {
-            id: moneyImage
-            x: 10
-            y: 192
-            width: 362
-            height: 362
-            source: "resources/money_image.png"
-            z: 3
-            rotation: 0
-            fillMode: Image.PreserveAspectFit
+                GradientStop { position: 0.0; color: "#689A78" }
+                GradientStop { position: 0.37; color: "#3C5846" }
+            }
         }
 
         Rectangle {
-            id: whiteRectangle
-            anchors.left: parent.left // Anchors to the parent Rectangle
-            anchors.right: parent.right // Ensure no overflow on the right
-            y: 425
-            height: 426
-            color: "#F1F1F1"
-            radius: 43
+            id: rectangle
+            x: 30
+            y: 33
+            width: 42
+            height: 42
+            color: "#d4de67"
+            radius: 50
         }
 
         Text {
-            id: textMain
-            y: 470
-            width: 303
-            height: 93
-            text: "<font color=\"#000000\">Best</font> <font color=\"#689A78\">Financial</p>Management System</font><font color=\"#000000\"></p>for You.</font>"
-
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 700
-            font.pixelSize: 26
-
-        }
-
-        Text {
-            id: textAdditional
-            width: 278
-            height: 61
-            horizontalAlignment: Text.AlignHCenter
-            z: 2
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: 588
-
-            text: "<font color=\"#505050\">Money management has never been</p>easier before, start your journey now</p>and see the difference."
-
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 300
+            id: _text
+            x: 91
+            y: 46
+            color: "#ffffff"
+            text: qsTr("Hi There, ")
             font.pixelSize: 16
+            font.weight: Font.Bold
+        }
+
+        Rectangle {
+            id: whiteRectange
+            width: 420
+            height: 633
+            color: "#f1f1f1"
+            radius: 43
+            anchors.top: parent.top
+            anchors.topMargin: 211
+            z: 1
+
+            Text {
+                id: _text1
+                x: 57
+                y: 33
+                text: qsTr("Withdraw")
+                font.pixelSize: 24
+                font.family: "Segoe Ui"
+                font.styleName: "Bold"
+            }
+
+            Text {
+                id: _text2
+                x: 76
+                y: 97
+                width: 269
+                height: 86
+                color: "#898989"
+                text: qsTr("Are you sure you want \nto withdraw? Would you like to note \nwhy you’re withdrawing \nthe money from your account?")
+                font.pixelSize: 18
+                horizontalAlignment: Text.AlignHCenter
+                font.styleName: "Regular"
+            }
+
+            ComboBox {
+                id: categoryComboBox
+                anchors.top: _text2.bottom
+                anchors.topMargin: 74
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 200
+                height: 40
+
+                currentIndex: -1
+                onCurrentIndexChanged: {
+                    if (currentIndex === -1) {
+                        categoryComboBox.text = "";
+                    }
+                }
+
+                model: ["Food", "Education", "Transportation", "Bills", "Shopping", "Friends and Family", "Health"]
+
+                font.pixelSize: 16
+                anchors.horizontalCenterOffset: 1
+                background: Rectangle {
+                    color: "#f0f0f0"
+                    border.color: "#d3d3d3"
+                    radius: 8
+                }
+            }
         }
 
         Rectangle {
             id: buttonRectangle
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: 723
-            z: 3
+            y: 674
             width: 208
             height: 58
-            color: "#3C5846"
+            color: "#3c5846"
             radius: 13
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 112
+            z: 2
+            anchors.horizontalCenterOffset: 0
 
             Text {
                 id: buttonText
-                text: "Get started"
                 color: "#f1f1f1"
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                font.pointSize: 20
+                text: "Withdraw"
+                font.styleName: "Bold"
+                font.pointSize: 19
                 font.bold: true
-
-                font.family: "Inter"
-                font.styleName: "normal"
-                font.weight: 700
-                font.pixelSize: 20
+                anchors.centerIn: parent
             }
+        }
 
-            MouseArea {
-                id: buttonMouseArea
-                anchors.fill: parent
-            }
+        Rectangle {
+            id: navBar
+            y: 772
+            width: 484
+            height: 95
+            color: "#fdfdfd"
+            radius: 43
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: -23
+            z: 2
+            anchors.horizontalCenterOffset: 0
         }
     }
 }
