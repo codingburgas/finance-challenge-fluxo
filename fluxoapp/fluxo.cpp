@@ -32,7 +32,8 @@ void App::initialize() {
                      Qt::QueuedConnection);
 
     engine.rootContext()->setContextProperty("SessionHandler", &handler);
-    engine.rootContext()->setContextProperty("fluxo", this); // Expose the app instance to QML
+    engine.rootContext()->setContextProperty("fluxo", this);
+    engine.rootContext()->setContextProperty("CoreOperations", &core);
 
     try {
         engine.loadFromModule("fluxoapp", "GetStartedPage");
