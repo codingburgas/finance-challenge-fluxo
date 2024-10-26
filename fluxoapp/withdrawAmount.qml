@@ -19,7 +19,6 @@ Window {
         visible: true
         color: "#304437"
 
-
         Image {
             id: transactionsImage
             width: 147
@@ -28,8 +27,6 @@ Window {
             anchors.horizontalCenterOffset: 123
             z: 3
             fillMode: Image.PreserveAspectFit
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
             anchors.topMargin: 99
         }
 
@@ -84,7 +81,7 @@ Window {
                 width: 300
                 height: 50
                 x: 60
-                y: 116
+                y: 88
                 readOnly: true
                 font.pixelSize: 20
                 horizontalAlignment: Text.AlignJustify
@@ -99,72 +96,68 @@ Window {
 
             GridLayout {
                 id: keypadLayout
+                width: 301
+                height: 251
                 columns: 3
-                rowSpacing: 10
+                rowSpacing: 20
                 columnSpacing: 10
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenter: inputField.horizontalCenter
                 anchors.top: inputField.bottom
-                anchors.topMargin: 30
+                anchors.topMargin: 41
 
                 Repeater {
                     model: [
-                        { text: "1" }, { text: "2" }, { text: "3" },
-                        { text: "4" }, { text: "5" }, { text: "6" },
-                        { text: "7" }, { text: "8" }, { text: "9" },
-                        { text: "." }, { text: "0" }, { text: "<", isBackspace: true }
-                    ]
+                                            { text: "    1" }, { text: "    2" }, { text: "    3" },
+                                            { text: "    4" }, { text: "    5" }, { text: "    6" },
+                                            { text: "    7" }, { text: "    8" }, { text: "    9" },
+                                            { text: "    ." }, { text: "    0" }, { text: "    <", isBackspace: true }
+                                        ]
 
-                    delegate: Button {
-                        text: modelData.text
-                        width: 110
-                        height: 54
-                        font.pixelSize: 19
-                        background: Rectangle {
-                            color: "#EEEEEE"
-                            radius: 16
-                            border.color: "#d3d3d3"
-                        }
+                                    delegate: Button {
+                                        text: modelData.text === "." ? modelData.text : modelData.text.trim()
+                                        width: 110
+                                        height: 54
+                                        font.pixelSize: 20
+                                        background: Rectangle {
+                                            color: modelData.color
+                                            width: parent.width + 20
+                                            height: parent.height
+                                            radius: 16
+                                            border.color: "#d3d3d3"
+                                            }
 
-                        onClicked: {
-                            if (modelData.isBackspace) {
-                                if (inputField.text.length > 0) {
-                                    inputField.text = inputField.text.slice(0, -1);
-                                }
-                            } else {
-                                inputField.text += text;
-                            }
-                        }
-                    }
+                                            contentItem: Text {
+                                                text: modelData.text
+                                                anchors.centerIn: parent
+                                                font.pixelSize: 19
+                                                color: "#101828"
+                                                }
+
+                                        onClicked: {
+                                            if (modelData.isBackspace) {
+                                                if (inputField.text.length > 0) {
+                                                    inputField.text = inputField.text.slice(0, -1);
+                                                }
+                                            } else {
+                                                inputField.text += text;
+                                            }
+                                        }
+                                    }
                 }
-            }
 
 
-        }
-
-        Text {
-            id: buttonText1
-            color: "#000000"
-            text: "Deposit"
-            font.styleName: "Semibold"
-            font.pointSize: 26
-            font.bold: true
-            anchors.top: transactionsImage.bottom
-            anchors.topMargin: -60
-            z: 3
-            anchors.horizontalCenterOffset: -116
-            anchors.horizontalCenter: parent.horizontalCenter
         }
 
         Rectangle {
             id: buttonRectangle
-            y: 674
+            y: 64
             width: 208
             height: 58
             color: "#3c5846"
             radius: 13
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 112
+            anchors.bottomMargin: 90
             z: 2
             anchors.horizontalCenterOffset: 0
 
@@ -209,15 +202,17 @@ Window {
             z: 2
             anchors.horizontalCenterOffset: 0
         }
-    }
 
-    Image {
-        id: money_image
-        x: 203
-        y: 72
-        width: 245
-        height: 297
-        source: "resources/money_image.png"
-        fillMode: Image.PreserveAspectFit
+        TextEdit {
+            id: textEdit
+            x: 30
+            y: 21
+            width: 80
+            height: 20
+            text: qsTr("Withdraw")
+            font.pixelSize: 22
+            font.styleName: "SemiBold"
+        }
     }
+}
 }
