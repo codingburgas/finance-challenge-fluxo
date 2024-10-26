@@ -10,6 +10,7 @@ qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appfluxoapp
     main.cpp
+    resources.qrc
 )
 
 qt_add_qml_module(appfluxoapp
@@ -17,25 +18,24 @@ qt_add_qml_module(appfluxoapp
     VERSION 1.0
     QML_FILES
     GetStartedPage.qml
-        QML_FILES authPage.qml
-        SOURCES session.cpp
-        SOURCES session.h
-        SOURCES fluxo.h
-        SOURCES fluxo.cpp
-        QML_FILES withdrawAmount.qml
-        #RESOURCES images/money_image.png
-        QML_FILES depositAmount.qml
-        QML_FILES withdrawCategory.qml
-        RESOURCES resources.qrc
-        QML_FILES mainPage.qml
-        QML_FILES depositCategory.qml
-        SOURCES mainOperations.h
-        SOURCES mainOperations.cpp
-        SOURCES urls.h
-        QML_FILES budgetAmount.qml
-        QML_FILES sendMoney.qml
-        QML_FILES TransactionBlock.qml
-        QML_FILES sendMoney.qml
+    QML_FILES authPage.qml
+    SOURCES session.cpp
+    SOURCES session.h
+    SOURCES fluxo.h
+    SOURCES fluxo.cpp
+    QML_FILES withdrawAmount.qml
+    #RESOURCES images/money_image.png
+    QML_FILES depositAmount.qml
+    QML_FILES withdrawCategory.qml
+    RESOURCES resources.qrc
+    QML_FILES mainPage.qml
+    QML_FILES depositCategory.qml
+    SOURCES mainOperations.h
+    SOURCES mainOperations.cpp
+    SOURCES urls.h
+    QML_FILES budgetAmount.qml
+    QML_FILES sendMoney.qml
+    QML_FILES TransactionBlock.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
