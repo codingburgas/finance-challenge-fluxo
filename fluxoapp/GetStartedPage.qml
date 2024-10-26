@@ -27,7 +27,7 @@ Window {
 
         Image {
             id: moneyImage
-            source: "qrc:/resources/money_image.png"
+            source: ":/resources/money_image.png"
             x: 10
             y: 192
             width: 362
