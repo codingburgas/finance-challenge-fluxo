@@ -145,7 +145,7 @@ Window {
                 }
             }
 
-                            TextEdit {
+                            Text {
                                 id: textEdit
                                 x: 40
                                 y: 21
