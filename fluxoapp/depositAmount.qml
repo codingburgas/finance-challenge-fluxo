@@ -3,9 +3,15 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 Window {
+    id: window
     width: 420
     height: 900
     visible: true
+
+    Loader {
+        id: loader
+        anchors.fill: parent
+    }
 
     Rectangle {
         id: background
@@ -29,20 +35,20 @@ Window {
         }
 
         Rectangle{
-                            id: circle
-                            radius: 360
-                            z: 0
-                            rotation: 90
-                            anchors.horizontalCenterOffset: -263
-                            width: 670
-                            height: 670
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            y:-24
-                            gradient: Gradient {
-                                GradientStop {position: 0.0; color: "#689A78"}
-                                GradientStop {position: 0.37; color: "#3C5846"}
-                            }
-                    }
+            id: circle
+            radius: 360
+            z: 0
+            rotation: 39
+            anchors.horizontalCenterOffset: -188
+            width: 670
+            height: 670
+            anchors.horizontalCenter: parent.horizontalCenter
+            y:87
+            gradient: Gradient {
+                GradientStop {position: 0.0; color: "#689A78"}
+                GradientStop {position: 0.37; color: "#3C5846"}
+            }
+        }
 
             Rectangle {
                 id: rectangle
@@ -162,6 +168,14 @@ Window {
             anchors.bottomMargin: 112
             z: 2
             anchors.horizontalCenterOffset: 0
+
+            MouseArea {
+                   anchors.fill: parent
+                   onClicked: {
+
+                       loader.source = "depositCategory.qml";
+                   }
+               }
 
             Text {
                 id: buttonText

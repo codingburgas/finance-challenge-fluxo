@@ -7,6 +7,11 @@ Window {
     height: 900
     visible: true
 
+    Loader {
+            id: loader
+            anchors.fill: parent
+        }
+
     Rectangle {
         id: background
         width: 420
@@ -139,7 +144,7 @@ Window {
         Text {
             id: buttonText1
             color: "#000000"
-            text: "Withdraw"
+            text: "Deposit"
             font.styleName: "Semibold"
             font.pointSize: 26
             font.bold: true
@@ -172,6 +177,14 @@ Window {
                 font.bold: true
                 anchors.centerIn: parent
             }
+
+            MouseArea {
+                   anchors.fill: parent
+                   onClicked: {
+
+                       loader.source = "withdrawCategory.qml";
+                   }
+               }
 
             NumberAnimation {
                 id: animateFlow
