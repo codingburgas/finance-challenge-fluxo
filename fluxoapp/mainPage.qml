@@ -4,8 +4,8 @@ import QtQuick.Layouts 1.3
 
 Window {
     id: window
-    width: 420
-    height: 900
+    width: 390
+    height: 844
     visible: true
 
     Rectangle {
@@ -103,7 +103,10 @@ Window {
                     border.width: 7
                 }
             }
-
+            MouseArea{
+                id: menuMouseArea
+                anchors.fill: parent
+            }
 
         }
 
@@ -365,6 +368,93 @@ Window {
             }
         }
 
+        Rectangle{
+            id: whiteRectangle
+            width: parent.width
+            height: 446
+            x:0
+            y:388
+            radius: 43
+            color: "#FDFDFD"
+
+
+        }
+        Text{
+            id: recentTransactionsText
+            text: "Recent Transactions"
+            width: 209
+            height: 28
+            x:27
+            y:439
+
+            font.family: "Inter"
+            font.styleName: "normal"
+            font.weight: 600
+            font.pixelSize: 20
+            color: "#000000"
+        }
+
+        Rectangle{
+            id: seeAllButton
+            width: 45
+            height: 13
+            x: 314
+            y: 445
+
+            Text{
+                id: seeAllText
+
+                anchors.fill: parent
+
+                text: "See all"
+                font.family: "Inter"
+                font.styleName: "normal"
+                font.weight: 600
+                font.pixelSize: 14
+                font.underline: true
+            }
+
+            MouseArea{
+                id: seeAllMouseArea
+            }
+        }
+
+        ColumnLayout{
+            id: recentTransactions
+            spacing: 27
+            x: 24
+            y: 497
+            TransactionBlock{
+                property string amount: "-68.90 BGN"
+                property string interactor: "Mariq Koleva"
+                property string source: ":/resources/redArrowDown.png"
+                property string textColor: "red"
+                property string time: "8:20 AM"
+            }
+            TransactionBlock{
+                property string amount: "-68.90 BGN"
+                property string interactor: "Mariq Koleva"
+                property string source: ":/resources/redArrowDown.png"
+                property string textColor: "red"
+                property string time: "8:20 AM"
+            }
+            TransactionBlock{
+                property string amount: "-68.90 BGN"
+                property string interactor: "Mariq Koleva"
+                property string source: ":/resources/redArrowDown.png"
+                property string textColor: "red"
+                property string time: "8:20 AM"
+            }
+            TransactionBlock{
+                property string amount: "-68.90 BGN"
+                property string interactor: "Mariq Koleva"
+                property string source: ":/resources/redArrowDown.png"
+                property string textColor: "red"
+                property string time: "8:20 AM"
+            }
+        }
+
+
 
         Rectangle {
             id: navBar
@@ -379,5 +469,58 @@ Window {
             z: 2
             anchors.horizontalCenterOffset: 0
         }
+
+        Rectangle{
+            id: receiptRect
+            width: 25
+            height: 25
+            x: 53
+            y: 793
+            Image{
+                id: receiptImage
+                anchors.fill: parent
+                source: ":/resources/receiptIcon.png"
+            }
+            MouseArea{
+                id: receiptMouseArea
+                anchors.fill: parent
+            }
+        }
+        Rectangle{
+            id: homeRect
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 793
+
+            width: 25
+            height: 25
+            Image{
+                id: homeImage
+                anchors.fill: parent
+                source: ":/resources/homeIcon.png"
+            }
+            MouseArea{
+                id: homeMouseArea
+                anchors.fill: parent
+            }
+        }
+        Rectangle{
+            id: savingsRect
+            x: 311
+            y: 793
+
+            width: 25
+            height: 25
+            Image{
+                id: savingsIcon
+                anchors.fill: parent
+                source: ":/resources/savingsIcon.png"
+            }
+            MouseArea{
+                id: savingsMouseArea
+                anchors.fill: parent
+            }
+        }
+
+
     }
 }

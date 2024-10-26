@@ -7,5 +7,12 @@
         <file>resources/sendIcon.png</file>
         <file>resources/statsIcon.png</file>
         <file>resources/withdrawIcon.png</file>
+        <file>resources/greenArrowUp.png</file>
+        <file>resources/redArrowDown.png</file>
+        <file>resources/restaurantIcon.png</file>
+        <file>resources/studyIcon.png</file>
+        <file>resources/homeIcon.png</file>
+        <file>resources/receiptIcon.png</file>
+        <file>resources/savingsIcon.png</file>
     </qresource>
 </RCC>
