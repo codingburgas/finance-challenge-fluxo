@@ -185,20 +185,6 @@ Window {
             }
         }
 
-        Rectangle {
-            id: navBar
-            y: 772
-            width: 484
-            height: 95
-            color: "#fdfdfd"
-            radius: 43
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: -23
-            z: 2
-            anchors.horizontalCenterOffset: 0
-        }
-
         Text {
             id: _text1
             x: 123
@@ -207,6 +193,12 @@ Window {
             text: qsTr("Creating a budget")
             font.pointSize: 22
             font.styleName: "SemiBold"
+        }
+        Navbar{
+            id: navbar
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: -23
         }
     }
 

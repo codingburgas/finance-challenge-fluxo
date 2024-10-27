@@ -15,18 +15,19 @@ class App; // Forward declaration of App
 }
 
 namespace Fluxo{
-    class SessionHandler : public QObject {
-        Q_OBJECT
-    public:
+class SessionHandler : public QObject {
+    Q_OBJECT
+public:
 
-        Q_INVOKABLE void writeSession(const QString& username, const QString& password, Fluxo::App* app);
+    Q_INVOKABLE void writeSession(const QString& username, const QString& password, Fluxo::App* app);
+    Q_INVOKABLE bool isLogged();
 
-    private:
-        QString username, password;
+private:
+    QString username, password;
 
-        Q_REQUIRED_RESULT
+    Q_REQUIRED_RESULT
         bool isAppInitialized(Fluxo::App* app);
-    };
+};
 } //end of namespace Fluxo
 
 #endif // SESSION_H

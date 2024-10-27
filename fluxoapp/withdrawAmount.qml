@@ -48,25 +48,12 @@ Window {
                             }
                     }
 
-            Rectangle {
-                id: rectangle
-                x: 30
-                y: 33
-                width: 42
-                height: 42
-                color: "#d4de67"
-                radius: 50
-            }
-
-            Text {
-                id: _text
-                x: 91
-                y: 46
-                color: "#ffffff"
-                text: qsTr("Hi There, ")
-                font.pixelSize: 16
-                font.weight: Font.Bold
-            }
+        Header{
+            id: header
+            x:0
+            y: 55
+            property bool welcomeBackText: false
+        }
 
         Rectangle {
             id: whiteRectange
@@ -192,20 +179,6 @@ Window {
             }
         }
 
-        Rectangle {
-            id: navBar
-            y: 772
-            width: 484
-            height: 95
-            color: "#fdfdfd"
-            radius: 43
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: -23
-            z: 2
-            anchors.horizontalCenterOffset: 0
-        }
-
         Text {
             id: textEdit
             x: 30
@@ -227,5 +200,11 @@ Window {
             source: "qrc:/resources/transactionsImage.png"
             fillMode: Image.PreserveAspectFit
         }
+    Navbar{
+        id: navbar
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -23
+    }
 }
 }

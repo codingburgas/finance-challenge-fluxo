@@ -1,6 +1,6 @@
 #include "session.h"
 #include "fluxo.h"
-#include "urls.h"
+
 #include <qlogging.h>
 #include <QFile>
 #include <QJsonDocument>
@@ -10,6 +10,8 @@
 #include <QNetworkRequest>
 #include <QUrl>
 #include <QDir>
+#include <QStandardPaths>
+
 
 bool Fluxo::SessionHandler::isAppInitialized(Fluxo::App* app) {
     return app != nullptr && app->getNetworkManager() != nullptr;
@@ -17,19 +19,16 @@ bool Fluxo::SessionHandler::isAppInitialized(Fluxo::App* app) {
 
 void Fluxo::SessionHandler::writeSession(const QString& username, const QString& password, Fluxo::App* app) {
 
-    QString dir = "dir/data.json";
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
     QJsonObject data;
     data["email"] = username;
-    data["password"] = password;
-    data["authanticated"] = "true";
+    data["authenticated"] = true;
 
     QJsonDocument jsonDoc(data);
     QByteArray convertedData = jsonDoc.toJson();
 
-    if (!isAppInitialized(app)) {
-        qFatal("Not initialized");
+    if (!isAppInitialized(app))
         return;
-    }
 
     QNetworkAccessManager* manager = app->getNetworkManager();
     if (!manager) {
@@ -54,7 +53,7 @@ void Fluxo::SessionHandler::writeSession(const QString& username, const QString&
     file.write(convertedData);
     file.close();
 
-    QUrl url("http://localhost:3000/auth");
+    QUrl url("https://fluxo-api.me/auth");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -64,4 +63,27 @@ void Fluxo::SessionHandler::writeSession(const QString& username, const QString&
         qFatal("Failed to send network request.");
 
     qDebug() << username << password;
+}
+
+bool Fluxo::SessionHandler::isLogged() {
+
+    QString filePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly))
+        return false;
+
+    QByteArray fileData = file.readAll();
+    file.close();
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(fileData);
+    if (jsonDoc.isNull() || !jsonDoc.isObject())
+        return false;
+
+    QJsonObject jsonObj = jsonDoc.object();
+    if (jsonObj.contains("authenticated") && jsonObj["authenticated"].isBool())
+        return jsonObj["authenticated"].toBool();
+
+    qDebug() << "Field 'authenticated' not found or not a boolean.";
+    return false;
 }

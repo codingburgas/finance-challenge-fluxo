@@ -119,7 +119,7 @@ void Fluxo::MainOperations::cacheAmount(const QString& amount, Fluxo::App* app) 
     if (bytesWritten > 0) {
         qDebug() << "Caching was successful" << amount;
     }
-
+}
 
 float Fluxo::MainOperations::retrieveCache() {
 
