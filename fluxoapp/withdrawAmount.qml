@@ -89,7 +89,7 @@ Window {
                 horizontalAlignment: Text.AlignJustify
                 verticalAlignment: Text.AlignVCenter
                 background: Rectangle {
-                    color: "#f0f0f0"
+                    color: "#ffffff"
                     radius: 8
                     border.color: "#d3d3d3"
                 }
@@ -105,7 +105,8 @@ Window {
                 columnSpacing: 10
                 anchors.horizontalCenter: inputField.horizontalCenter
                 anchors.top: inputField.bottom
-                anchors.topMargin: 41
+                anchors.topMargin: 36
+                anchors.horizontalCenterOffset: 0
 
                 Repeater {
                     model: [
@@ -205,7 +206,7 @@ Window {
             anchors.horizontalCenterOffset: 0
         }
 
-        TextEdit {
+        Text {
             id: textEdit
             x: 30
             y: 21
@@ -216,5 +217,15 @@ Window {
             font.styleName: "SemiBold"
         }
     }
+        Image {
+            id: money_image
+            x: 228
+            y: 62
+            z:3
+            width: 192
+            height: 233
+            source: "qrc:/resources/transactionsImage.png"
+            fillMode: Image.PreserveAspectFit
+        }
 }
 }
