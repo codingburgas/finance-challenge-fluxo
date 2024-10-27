@@ -9,15 +9,9 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <QDebug>
-
 #include <QFile>
-#include <QJsonDocument>
 #include <QJsonObject>
 #include <QDebug>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QDir>
 #include <QStandardPaths>
 
 void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app) {
