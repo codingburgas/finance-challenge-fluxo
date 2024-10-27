@@ -8,12 +8,18 @@ Window {
     height: 844
     visible: true
 
+    Loader{
+                id: loader
+                anchors.fill: parent
+    }
+
     Rectangle {
         id: background
         width: 420
         height: 844
         visible: true
         color: "#304437"
+
 
 
         Rectangle{
@@ -173,6 +179,11 @@ Window {
                         source: ":/resources/withdrawIcon.png"
                         anchors.centerIn: parent
                     }
+
+                    MouseArea {
+                        id: mouseArea
+                        anchors.fill: parent
+                    }
                 }
 
                 Rectangle{
@@ -202,6 +213,9 @@ Window {
                 MouseArea{
                     id: withdrawMouseArea
                     anchors.fill: parent
+                    onClicked:{
+                        loader.source = "withdrawAmount.qml"
+                    }
                 }
 
             }
@@ -256,6 +270,10 @@ Window {
                 MouseArea{
                     id: depositMouseArea
                     anchors.fill: parent
+                    anchors.bottomMargin: 13
+                    onClicked:{
+                        loader.source = "depositAmount.qml"
+                    }
                 }
 
             }
@@ -280,6 +298,11 @@ Window {
                     Image{
                         source: ":/resources/statsIcon.png"
                         anchors.centerIn: parent
+                    }
+
+                    MouseArea {
+                        id: mouseArea1
+                        anchors.fill: parent
                     }
                 }
 
@@ -363,6 +386,7 @@ Window {
                 MouseArea{
                     id: sendMouseArea
                     anchors.fill: parent
+                    anchors.bottomMargin: 13
                 }
 
             }

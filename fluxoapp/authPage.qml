@@ -2,11 +2,18 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2
 
 Window{
-    id: window
+
     width: 390
     height: 844
+    visible: true
+
+    Loader{
+        id: loader
+        anchors.fill: parent
+    }
+
     Rectangle {
-        id: authPage
+        id: background
         anchors.fill: parent
         color: "#304437"
 
@@ -58,7 +65,7 @@ Window{
             height: 3
             border.width: 7
             anchors.horizontalCenter: parent.horizontalCenter
-            property double y: 323.5
+            y: 323.5
 
         }
 
@@ -68,7 +75,7 @@ Window{
             border.width: 0
             z:2
             anchors.horizontalCenter: circle.horizontalCenter
-            property double y: 0.42*window.height
+            y: 0.42*window.height
 
             Text {
                 id: textMain
@@ -166,10 +173,12 @@ Window{
                 anchors.fill: parent
                 onClicked: {
 
-                    if (fluxo !== null)
+                    if (fluxo !== null){
                         SessionHandler.writeSession(username.text, password.text, fluxo);
-                    else
-                        console.log("App instance is null");
+                        if (SessionHandler.isLogged()) {
+                            loader.source = "mainPage.qml";
+                        }
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 #include "session.h"
 #include "fluxo.h"
+#include "urls.h"
 #include <qlogging.h>
 #include <QFile>
 #include <QJsonDocument>

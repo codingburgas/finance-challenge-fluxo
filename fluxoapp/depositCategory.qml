@@ -7,6 +7,11 @@ Window {
     height: 900
     visible: true
 
+    Loader{
+                id: loader
+                anchors.fill: parent
+    }
+
     Rectangle {
         id: background
         width: 420
@@ -138,6 +143,7 @@ Window {
                 anchors.fill: parent
                 onClicked:{
                     CoreOperations.deposit(categoryComboBox.text, fluxo);
+                    loader.source = "mainPage.qml";
                 }
             }
         }
