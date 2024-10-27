@@ -5,6 +5,7 @@ Rectangle{
     /*
     params to be set:
     welcomeBackText: bool - whether show 'Welcome back' text
+    menuButton: bool - whether show menu button
     */
     id: header
     width: 390
@@ -57,6 +58,7 @@ Rectangle{
     }
 
     Rectangle{
+        visible: parent.menuButton
         id: menu
         x: 341
         anchors.verticalCenter: parent.verticalCenter

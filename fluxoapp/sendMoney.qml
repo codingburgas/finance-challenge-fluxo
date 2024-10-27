@@ -102,6 +102,7 @@ Window {
         x:0
         y: 55
         property bool welcomeBackText: false
+        property bool menuButton: true
     }
 
     TextArea {
