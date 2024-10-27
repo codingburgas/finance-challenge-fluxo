@@ -14,5 +14,8 @@
         <file>resources/homeIcon.png</file>
         <file>resources/receiptIcon.png</file>
         <file>resources/savingsIcon.png</file>
+        <file>resources/budgetIcon.png</file>
+        <file>resources/incomeIcon.png</file>
+        <file>resources/spendingsIcon.png</file>
     </qresource>
 </RCC>
