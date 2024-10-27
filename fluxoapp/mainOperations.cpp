@@ -22,10 +22,9 @@ void Fluxo::MainOperations::deposit(const QString& amount, Fluxo::App* app) {
     }
 
     QJsonObject testData;
-    testData["amount"] = amount;
+    testData["amount"] = amount.toFloat();
     testData["category"] = "Food";
     testData["email"] = "kvatev1@gmail.com";
-    testData["target"] = "kvatev";
 
     QJsonDocument testDoc(testData);
     QByteArray testConverted = testDoc.toJson();
@@ -84,7 +83,7 @@ void Fluxo::MainOperations::withdraw(const QString& amount, Fluxo::App* app) {
     }
 
     QJsonObject testData;
-    testData["amount"] = amount;
+    testData["amount"] = amount.toFloat();
     testData["category"] = "Food";
     testData["email"] = "kvatev1@gmail.com";
     testData["target"] = "kvatev";
