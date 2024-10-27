@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.16)
 project(fluxoapp VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
 
@@ -10,18 +12,34 @@ qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appfluxoapp
     main.cpp
+    resources.qrc
 )
+
+
 
 qt_add_qml_module(appfluxoapp
     URI fluxoapp
     VERSION 1.0
     QML_FILES
-        Main.qml
-        QML_FILES authPage.qml
-        SOURCES session.cpp
-        SOURCES session.h
-        SOURCES fluxo.h
-        SOURCES fluxo.cpp
+    GetStartedPage.qml
+    QML_FILES authPage.qml
+    SOURCES session.cpp
+    SOURCES session.h
+    SOURCES fluxo.h
+    SOURCES fluxo.cpp
+    QML_FILES withdrawAmount.qml
+    #RESOURCES images/money_image.png
+    QML_FILES depositAmount.qml
+    QML_FILES withdrawCategory.qml
+    RESOURCES resources.qrc
+    QML_FILES mainPage.qml
+    QML_FILES depositCategory.qml
+    SOURCES mainOperations.h
+    SOURCES mainOperations.cpp
+    SOURCES urls.h
+    QML_FILES budgetAmount.qml
+    QML_FILES sendMoney.qml
+    QML_FILES TransactionBlock.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -40,8 +58,24 @@ target_link_libraries(appfluxoapp
 )
 
 include(GNUInstallDirs)
+include(FetchContent)
 install(TARGETS appfluxoapp
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+if (ANDROID)
+    FetchContent_Declare(
+      android_openssl
+      DOWNLOAD_EXTRACT_TIMESTAMP true
+      URL      https://github.com/KDAB/android_openssl/archive/refs/heads/master.zip
+#      URL_HASH MD5=c97d6ad774fab16be63b0ab40f78d945 #optional
+    )
+    FetchContent_MakeAvailable(android_openssl)
+    include(${android_openssl_SOURCE_DIR}/android_openssl.cmake)
+endif()
+
+if (ANDROID)
+    add_android_openssl_libraries(appfluxoapp)
+endif()

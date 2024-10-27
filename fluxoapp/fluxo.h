@@ -5,6 +5,7 @@
 #include <QQmlApplicationEngine>
 #include <QNetworkAccessManager>
 #include "session.h"
+#include "mainOperations.h"
 
 namespace Fluxo {
 
@@ -32,6 +33,7 @@ private:
     QQmlApplicationEngine engine;
     QNetworkAccessManager* manager;
     SessionHandler handler;
+    MainOperations core;
 
     bool isInitialized() const;
 };
