@@ -132,6 +132,14 @@ Window {
                 font.bold: true
                 anchors.centerIn: parent
             }
+
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                onClicked:{
+                    CoreOperations.deposit(categoryComboBox.text, fluxo);
+                }
+            }
         }
 
         Rectangle {

@@ -186,7 +186,7 @@ Window {
 
                 onClicked: {
                     loader.source = "depositCategory.qml";
-                    CoreOperations.deposit(inputField.text, fluxo);
+                    CoreOperations.cacheAmount(inputField.text);
                 }
             }
         }

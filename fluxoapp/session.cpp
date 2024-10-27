@@ -16,7 +16,7 @@ bool Fluxo::SessionHandler::isAppInitialized(Fluxo::App* app) {
 
 void Fluxo::SessionHandler::writeSession(const QString& username, const QString& password, Fluxo::App* app) {
 
-    QString dir = QDir::currentPath() + "/data.json";
+    QString dir = "dir/data.json";
     QJsonObject data;
     data["email"] = username;
     data["password"] = password;
