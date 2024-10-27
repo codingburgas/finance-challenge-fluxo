@@ -9,15 +9,23 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <QDebug>
+
 #include <QFile>
+#include <QJsonDocument>
 #include <QJsonObject>
 #include <QDebug>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QDir>
 #include <QStandardPaths>
 
 void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app) {
 
     float amount = Fluxo::MainOperations::retrieveCache();
 
+    if (amount <= 0.0f)
+        return;
 
     QJsonObject testData;
     testData["amount"] = amount;
@@ -37,13 +45,14 @@ void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app) {
     QObject::connect(reply, &QNetworkReply::finished, [reply]() {
         if (reply->error() == QNetworkReply::NoError) {
             qDebug() << "Request successful, reply:" << reply->readAll();
-        } else {
+        } 
+        else {
             qDebug() << "Request failed, error:" << reply->errorString();
         }
         reply->deleteLater();
     });
 
-    // Fluxo::MainOperations::deleteCache(true);
+    Fluxo::MainOperations::deleteCache(true);
 }
 
 
@@ -52,10 +61,8 @@ void Fluxo::MainOperations::withdraw(const QString& category, Fluxo::App* app) {
 
     float amount = Fluxo::MainOperations::retrieveCache();
 
-    if (amount <= 0.0f) {
-        qDebug() << "Invalid amount read from cache. Operation aborted.";
+    if (amount <= 0.0f)
         return;
-    }
 
     QJsonObject testData;
     testData["amount"] = amount;
@@ -73,51 +80,46 @@ void Fluxo::MainOperations::withdraw(const QString& category, Fluxo::App* app) {
     QNetworkReply* reply = manager->post(request, testConverted);
 
     QObject::connect(reply, &QNetworkReply::finished, [reply]() {
-        if (reply->error() == QNetworkReply::NoError) {
+
+        if (reply->error() == QNetworkReply::NoError)
             qDebug() << "Request successful, reply:" << reply->readAll();
-        } else {
+
+        else
             qDebug() << "Request failed, error:" << reply->errorString();
-        }
+        
         reply->deleteLater();
     });
 
-    // Fluxo::MainOperations::deleteCache(true);
+    Fluxo::MainOperations::deleteCache(true);
 }
 
 
-void Fluxo::MainOperations::cacheAmount(const QString& amount) {
-
+void Fluxo::MainOperations::cacheAmount(const QString& amount, Fluxo::App* app) {
 
     QString dirPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data";
-    qDebug() << dirPath;
-
 
     QDir dir(dirPath);
-    if (!dir.exists()) {
-        if (!dir.mkpath(dirPath)) {
-            qDebug() << "Failed to create data directory.";
-            return;
-        }
+    if (!dir.exists() && !dir.mkpath(dirPath)) {
+        return;
     }
 
     QJsonObject jsonObject;
     jsonObject["amount"] = amount;
-
     QJsonDocument jsonDoc(jsonObject);
 
     QString filePath = dirPath + "/cache.json";
-
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "Could not open file for writing:" << file.errorString();
         return;
     }
 
-    file.write(jsonDoc.toJson());
+    qint64 bytesWritten = file.write(jsonDoc.toJson());
     file.close();
 
-    qDebug() << "Amount cached successfully:" << amount;
-}
+    if (bytesWritten > 0) {
+        qDebug() << "Caching was successful" << amount;
+    }
+
 
 float Fluxo::MainOperations::retrieveCache() {
 
@@ -134,11 +136,7 @@ float Fluxo::MainOperations::retrieveCache() {
             QJsonObject jsonObject = jsonData.object();
             if (jsonObject.contains("amount") && jsonObject["amount"].isString()) {
                 amount = jsonObject["amount"].toString().toFloat();
-            } else {
-                qDebug() << "No valid amount found in JSON.";
             }
-        } else {
-            qDebug() << "Failed to parse JSON data.";
         }
     } else {
         qDebug() << "Failed to open file:" << file.errorString();
@@ -156,12 +154,10 @@ void Fluxo::MainOperations::deleteCache(bool par) {
         if (file.exists()) {
             if (file.remove()) {
                 qDebug() << "Cache file deleted successfully.";
-            } else {
-                qDebug() << "Failed to delete cache file:" << file.errorString();
             }
-        } else {
-            qDebug() << "Cache file does not exist.";
         }
+         else
+            return;
     }
 }
 
