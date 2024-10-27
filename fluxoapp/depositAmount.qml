@@ -170,12 +170,15 @@ Window {
             }
 
             MouseArea {
-                id: mouseArea
+                id: mouseAreaCache
                 anchors.fill: parent
 
                 onClicked: {
-                    loader.source = "depositCategory.qml";
-                    CoreOperations.cacheAmount(inputField.text);
+                    CoreOperations.cacheAmount(inputField.text, fluxo);
+                    // Qt.callLater(() => {
+                        console.log("Loading depositCategory.qml");
+                        loader.source = "depositCategory.qml";
+                    // });
                 }
             }
         }

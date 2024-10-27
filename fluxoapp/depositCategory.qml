@@ -134,7 +134,7 @@ Window {
             }
 
             MouseArea {
-                id: mouseArea
+                id: mouseAreaCategory
                 anchors.fill: parent
                 onClicked:{
                     CoreOperations.deposit(categoryComboBox.text, fluxo);
