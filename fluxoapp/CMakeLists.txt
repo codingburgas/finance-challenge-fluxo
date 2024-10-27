@@ -15,6 +15,8 @@ qt_add_executable(appfluxoapp
     resources.qrc
 )
 
+
+
 qt_add_qml_module(appfluxoapp
     URI fluxoapp
     VERSION 1.0
@@ -56,8 +58,24 @@ target_link_libraries(appfluxoapp
 )
 
 include(GNUInstallDirs)
+include(FetchContent)
 install(TARGETS appfluxoapp
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+if (ANDROID)
+    FetchContent_Declare(
+      android_openssl
+      DOWNLOAD_EXTRACT_TIMESTAMP true
+      URL      https://github.com/KDAB/android_openssl/archive/refs/heads/master.zip
+#      URL_HASH MD5=c97d6ad774fab16be63b0ab40f78d945 #optional
+    )
+    FetchContent_MakeAvailable(android_openssl)
+    include(${android_openssl_SOURCE_DIR}/android_openssl.cmake)
+endif()
+
+if (ANDROID)
+    add_android_openssl_libraries(appfluxoapp)
+endif()

@@ -5,11 +5,11 @@
 
 namespace Fluxo{
 namespace Url{
-QUrl root("https://fluxo-api.me");
-QUrl deposit("https://fluxo-api.me");
-QUrl withdraw("https://fluxo-api.me");
-QUrl auth("https://fluxo-api.me");
-}
+    QUrl root("https://fluxo-api.me");
+    QUrl deposit("https://fluxo-api.me/deposit");
+    QUrl withdraw("https://fluxo-api.me/withdraw");
+    QUrl auth("https://fluxo-api.me/auth");
+    }
 }
 
 #endif // URLS_H
