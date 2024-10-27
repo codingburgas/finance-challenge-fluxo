@@ -21,9 +21,11 @@ Window {
 
         Image {
             id: transactionsImage
+            x: 245
+            y: 87
             width: 147
             height: 191
-            source: "qrc:/resources/logo.png"
+            source: "qrc:/resources/transactionImage.png"
             anchors.horizontalCenterOffset: 123
             z: 3
             fillMode: Image.PreserveAspectFit

@@ -7,10 +7,10 @@ Window {
     height: 900
     visible: true
 
-    Loader{
-                id: loader
-                anchors.fill: parent
-    }
+    Loader {
+            id: loader
+            anchors.fill: parent
+        }
 
     Rectangle {
         id: background
@@ -21,53 +21,55 @@ Window {
 
         Image {
             id: transactionsImage
+            x: 245
+            y: 87
             width: 147
             height: 191
-            source: "qrc:/resources/logo.png"
+            source: "qrc:/resources/transactionImage.png"
             anchors.horizontalCenterOffset: 123
             z: 3
             fillMode: Image.PreserveAspectFit
             anchors.topMargin: 99
         }
 
-        Rectangle {
-            id: circle
-            radius: 360
-            z: 0
-            rotation: 90
-            anchors.horizontalCenterOffset: -263
-            width: 670
-            height: 670
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: -24
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "#689A78" }
-                GradientStop { position: 0.37; color: "#3C5846" }
+        Rectangle{
+                            id: circle
+                            radius: 360
+                            z: 0
+                            rotation: 90
+                            anchors.horizontalCenterOffset: -263
+                            width: 670
+                            height: 670
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            y:-24
+                            gradient: Gradient {
+                                GradientStop {position: 0.0; color: "#689A78"}
+                                GradientStop {position: 0.37; color: "#3C5846"}
+                            }
+                    }
+
+            Rectangle {
+                id: rectangle
+                x: 30
+                y: 33
+                width: 42
+                height: 42
+                color: "#d4de67"
+                radius: 50
             }
-        }
+
+            Text {
+                id: _text
+                x: 91
+                y: 46
+                color: "#ffffff"
+                text: qsTr("Hi There, ")
+                font.pixelSize: 16
+                font.weight: Font.Bold
+            }
 
         Rectangle {
-            id: rectangle
-            x: 30
-            y: 33
-            width: 42
-            height: 42
-            color: "#d4de67"
-            radius: 50
-        }
-
-        Text {
-            id: _text
-            x: 91
-            y: 46
-            color: "#ffffff"
-            text: qsTr("Hi There, ")
-            font.pixelSize: 16
-            font.weight: Font.Bold
-        }
-
-        Rectangle {
-            id: whiteRectangle
+            id: whiteRectange
             width: 420
             height: 633
             color: "#f1f1f1"
@@ -81,7 +83,7 @@ Window {
                 width: 300
                 height: 50
                 x: 60
-                y: 72
+                y: 88
                 readOnly: true
                 font.pixelSize: 20
                 horizontalAlignment: Text.AlignJustify
@@ -93,6 +95,7 @@ Window {
                 }
             }
 
+
             GridLayout {
                 id: keypadLayout
                 width: 301
@@ -102,7 +105,8 @@ Window {
                 columnSpacing: 10
                 anchors.horizontalCenter: inputField.horizontalCenter
                 anchors.top: inputField.bottom
-                anchors.topMargin: 41
+                anchors.topMargin: 36
+                anchors.horizontalCenterOffset: 0
 
                 Repeater {
                     model: [
@@ -143,18 +147,8 @@ Window {
                                         }
                                     }
                 }
-            }
 
-                            Text {
-                                id: textEdit
-                                x: 40
-                                y: 21
-                                width: 80
-                                height: 20
-                                text: qsTr("Deposit")
-                                font.pixelSize: 23
-                                font.styleName: "SemiBold"
-                            }
+
         }
 
         Rectangle {
@@ -181,13 +175,20 @@ Window {
             }
 
             MouseArea {
-                id: mouseArea
-                anchors.fill: parent
+                   anchors.fill: parent
+                   onClicked: {
 
-                onClicked: {
-                    loader.source = "depositCategory.qml";
-                    CoreOperations.deposit(inputField.text, fluxo);
-                }
+                       loader.source = "withdrawCategory.qml";
+                   }
+               }
+
+            NumberAnimation {
+                id: animateFlow
+                target: background
+                properties: "x"
+                duration: 500
+                to: -390
+                from: 0
             }
         }
 
@@ -204,16 +205,27 @@ Window {
             z: 2
             anchors.horizontalCenterOffset: 0
         }
-    }
 
-    Image {
-        id: money_image
-        x: 203
-        y: 72
-        width: 245
-        height: 297
-        source: "resources/money_image.png"
-        fillMode: Image.PreserveAspectFit
+        Text {
+            id: textEdit
+            x: 30
+            y: 21
+            width: 80
+            height: 20
+            text: qsTr("Withdraw")
+            font.pixelSize: 22
+            font.styleName: "SemiBold"
+        }
     }
+        Image {
+            id: money_image
+            x: 228
+            y: 62
+            z:3
+            width: 192
+            height: 233
+            source: "qrc:/resources/transactionsImage.png"
+            fillMode: Image.PreserveAspectFit
+        }
 }
-
+}

@@ -19,30 +19,19 @@ Window {
         visible: true
         color: "#304437"
 
-        Image {
-            id: transactionsImage
-            width: 147
-            height: 191
-            source: "qrc:/resources/logo.png"
-            anchors.horizontalCenterOffset: 123
-            z: 3
-            fillMode: Image.PreserveAspectFit
-            anchors.topMargin: 99
-        }
-
         Rectangle {
             id: circle
             radius: 360
             z: 0
-            rotation: 90
-            anchors.horizontalCenterOffset: -263
+            rotation: 39
+            anchors.horizontalCenterOffset: -188
             width: 670
             height: 670
             anchors.horizontalCenter: parent.horizontalCenter
-            y: -24
+            y:87
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "#689A78" }
-                GradientStop { position: 0.37; color: "#3C5846" }
+                GradientStop {position: 0.0; color: "#689A78"}
+                GradientStop {position: 0.37; color: "#3C5846"}
             }
         }
 
@@ -81,7 +70,7 @@ Window {
                 width: 300
                 height: 50
                 x: 60
-                y: 72
+                y: 79
                 readOnly: true
                 font.pixelSize: 20
                 horizontalAlignment: Text.AlignJustify
@@ -208,11 +197,11 @@ Window {
 
     Image {
         id: money_image
-        x: 203
-        y: 72
-        width: 245
-        height: 297
-        source: "resources/money_image.png"
+        x: 228
+        y: 62
+        width: 192
+        height: 233
+        source: "qrc:/resources/transactionsImage.png"
         fillMode: Image.PreserveAspectFit
     }
 }

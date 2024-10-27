@@ -155,5 +155,16 @@ Window {
             z: 2
             anchors.horizontalCenterOffset: 0
         }
+
+        Image {
+            id: money_image
+            x: 228
+            y: 62
+            z: 3
+            width: 192
+            height: 233
+            source: "qrc:/resources/transactionsImage.png"
+            fillMode: Image.PreserveAspectFit
+        }
     }
 }
