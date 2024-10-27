@@ -18,10 +18,6 @@ void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app) {
 
     float amount = Fluxo::MainOperations::retrieveCache();
 
-    if (amount <= 0.0f) {
-        qDebug() << "Invalid amount read from cache. Operation aborted.";
-        return;
-    }
 
     QJsonObject testData;
     testData["amount"] = amount;
