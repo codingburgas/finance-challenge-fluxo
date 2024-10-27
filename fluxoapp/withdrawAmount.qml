@@ -178,7 +178,7 @@ Window {
                    anchors.fill: parent
                    onClicked: {
 
-                       loader.source = "withdrawCategory.qml";
+                       loader.source = "WithdrawCategory.qml";
                    }
                }
 

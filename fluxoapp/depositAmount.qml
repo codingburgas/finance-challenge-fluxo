@@ -175,8 +175,8 @@ Window{
                     if (fluxo !== null){
                         SessionHandler.writeSession(username.text, password.text, fluxo);
                         if (SessionHandler.isLogged()) {
-                            console.log("Login successful, navigating to mainPage.qml");
-                            loader.source = "mainPage.qml";
+                            console.log("Login successful, navigating to MainPage.qml");
+                            loader.source = "MainPage.qml";
                         }
                         else {
                             console.log("Login failed, please try again.");

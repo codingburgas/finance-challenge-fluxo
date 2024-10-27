@@ -143,7 +143,7 @@ Window {
                 anchors.fill: parent
                 onClicked:{
                     CoreOperations.deposit(categoryComboBox.text, fluxo);
-                    loader.source = "mainPage.qml";
+                    loader.source = "MainPage.qml";
                 }
             }
         }

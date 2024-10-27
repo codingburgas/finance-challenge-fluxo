@@ -176,7 +176,7 @@ Window{
                     if (fluxo !== null){
                         SessionHandler.writeSession(username.text, password.text, fluxo);
                         if (SessionHandler.isLogged()) {
-                            loader.source = "mainPage.qml";
+                            loader.source = "MainPage.qml";
                         }
                     }
                 }
