@@ -119,7 +119,7 @@ Window {
                     console.log("Loader source is now:", loader.source);
                     // loader.source = "depositAmount.qml"
                     Qt.callLater(() => {
-                        loader.source = "authenticate.qml";
+                        loader.source = "AuthPage.qml";
                     });
                 }
             }

@@ -39,12 +39,12 @@ Window {
         }
 
         Header{
-                    id: header
-                    x:0
-                    y: 55
-                    property bool welcomeBackText: true
-                    property bool menuButton: true
-                }
+            id: header
+            x:0
+            y: 55
+            property bool welcomeBackText: true
+            property bool menuButton: true
+        }
 
 
         Text{
@@ -79,6 +79,7 @@ Window {
             font.pixelSize: 32
             verticalAlignment: Text.AlignBottom
         }
+
 
         Rectangle{
             id:actions
@@ -144,7 +145,7 @@ Window {
                     id: withdrawMouseArea
                     anchors.fill: parent
                     onClicked:{
-                        loader.source = "withdrawAmount.qml"
+                        loader.source = "WithdrawAmount.qml"
                     }
                 }
 
@@ -202,7 +203,7 @@ Window {
                     anchors.fill: parent
                     anchors.bottomMargin: 13
                     onClicked:{
-                        loader.source = "depositAmount.qml"
+                        loader.source = "DepositAmount.qml"
                     }
                 }
 
@@ -420,4 +421,17 @@ Window {
 
 
     }
+
+
+    Connections {
+           target: SessionHandler
+
+           function onBalanceUpdated(newBalance) {
+               yourBalance.text = newBalance;
+           }
+       }
+
+       Component.onCompleted: SessionHandler.fetchBalance(fluxo)
+
+
 }

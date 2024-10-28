@@ -1,9 +1,12 @@
 #include "fluxo.h"
 #include <qqmlcontext.h>
+#include <QQmlApplicationEngine>
+#include <QQmlEngine>
+#include <QCoreApplication>
 
 Fluxo::App::App(int argc, char** argv)
     : app(new QGuiApplication(argc, argv)),
-      manager(new QNetworkAccessManager()) {
+    manager(new QNetworkAccessManager()) {
     if (!app) {
         qFatal("Failed to create QGuiApplication.");
     }
@@ -29,12 +32,15 @@ void Fluxo::App::initialize() {
                      app, []() { QCoreApplication::exit(-1); },
                      Qt::QueuedConnection);
 
+    // Register SessionHandler as a QML type, so it can be instantiated in QML
+    qmlRegisterSingletonInstance<Fluxo::SessionHandler>("Fluxo", 1, 0, "SessionHandler", &handler);
+
     engine.rootContext()->setContextProperty("SessionHandler", &handler);
     engine.rootContext()->setContextProperty("fluxo", this);
     engine.rootContext()->setContextProperty("CoreOperations", &core);
 
     try {
-        //engine.loadFromModule("fluxoapp", "GetStartedPage");
+        // Load the main QML file
         engine.loadFromModule("fluxoapp", "GetStartedPage");
         if (engine.rootObjects().isEmpty()) {
             qFatal("Failed to load QML module.");
@@ -65,3 +71,4 @@ bool Fluxo::App::isInitialized() const {
 Fluxo::SessionHandler* Fluxo::App::getSessionHandler() {
     return &handler;
 }
+
