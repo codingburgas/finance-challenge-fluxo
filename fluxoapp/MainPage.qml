@@ -39,12 +39,12 @@ Window {
         }
 
         Header{
-            id: header
-            x:0
-            y: 55
-            property bool welcomeBackText: true
-            property bool menuButton: true
-        }
+                    id: header
+                    x:0
+                    y: 55
+                    property bool welcomeBackText: true
+                    property bool menuButton: true
+                }
 
 
         Text{
