@@ -41,7 +41,8 @@ void Fluxo::App::initialize() {
 
     try {
         // Load the main QML file
-        engine.loadFromModule("fluxoapp", "GetStartedPage");
+        //engine.loadFromModule("fluxoapp", "GetStartedPage");
+        engine.loadFromModule("fluxoapp", "TransactionsPage");
         if (engine.rootObjects().isEmpty()) {
             qFatal("Failed to load QML module.");
         }
