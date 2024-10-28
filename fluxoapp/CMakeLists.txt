@@ -46,6 +46,7 @@ qt_add_qml_module(appfluxoapp
     QML_FILES BudgetMainMenu.qml
     QML_FILES BudgetData.qml
     QML_FILES PrivacyPolicy.qml
+    QML_FILES BudgetEdit.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
