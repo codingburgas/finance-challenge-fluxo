@@ -130,8 +130,16 @@ Window {
                 id: createMouseArea
                 anchors.fill: parent
                 onClicked: {
-                    loader.source = "MainPage.qml"
-                    newScreenAnimation.start()
+                    lonClicked:{
+                        CoreOperations.withdraw(categoryComboBox.text, fluxo, SessionHandler);
+                        if (SessionHandler.isTransactionDone){
+                            loader.source = "MainPage.qml";
+                            newScreenAnimation.start()
+                        }
+                        else{
+                            console.log("Wait a moment, transaction is still being processed!");
+                        }
+                    }
                 }
             }
         }

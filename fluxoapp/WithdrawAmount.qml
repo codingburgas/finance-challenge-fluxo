@@ -167,6 +167,7 @@ Window {
                    anchors.fill: parent
                    onClicked: {
                        loader.source = "WithdrawCategory.qml";
+                    CoreOperations.cacheAmount(inputField.text, fluxo);
                        newScreenAnimation.start()
                    }
                }
