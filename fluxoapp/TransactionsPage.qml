@@ -158,8 +158,9 @@ Window {
         }
 
         ScrollView{
-            id: transations
+            id: transactions
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ScrollBar.vertical.policy: ScrollBar.AlwaysOff
 
             x:0
             y:317
