@@ -3,15 +3,14 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 Window {
-    id: window
     width: 420
     height: 900
     visible: true
 
     Loader {
-        id: loader
-        anchors.fill: parent
-    }
+            id: loader
+            anchors.fill: parent
+        }
 
     Rectangle {
         id: background
@@ -20,55 +19,42 @@ Window {
         visible: true
         color: "#304437"
 
-
         Image {
             id: transactionsImage
+            x: 245
+            y: 87
             width: 147
             height: 191
-            source: "qrc:/resources/logo.png"
+            source: "qrc:/resources/transactionImage.png"
             anchors.horizontalCenterOffset: 123
             z: 3
             fillMode: Image.PreserveAspectFit
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
             anchors.topMargin: 99
         }
 
         Rectangle{
-            id: circle
-            radius: 360
-            z: 0
-            rotation: -52
-            anchors.horizontalCenterOffset: 219
-            width: 670
-            height: 670
-            anchors.horizontalCenter: parent.horizontalCenter
-            y:81
-            gradient: Gradient {
-                GradientStop {position: 0.0; color: "#689A78"}
-                GradientStop {position: 0.37; color: "#3C5846"}
-            }
+                            id: circle
+                            radius: 360
+                            z: 0
+                            rotation: 90
+                            anchors.horizontalCenterOffset: -263
+                            width: 670
+                            height: 670
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            y:-24
+                            gradient: Gradient {
+                                GradientStop {position: 0.0; color: "#689A78"}
+                                GradientStop {position: 0.37; color: "#3C5846"}
+                            }
+                    }
+
+        Header{
+            id: header
+            x:0
+            y: 55
+            property bool welcomeBackText: false
+            property bool menuButton: true
         }
-
-            Rectangle {
-                id: rectangle
-                x: 30
-                y: 33
-                width: 42
-                height: 42
-                color: "#d4de67"
-                radius: 50
-            }
-
-            Text {
-                id: _text
-                x: 91
-                y: 46
-                color: "#ffffff"
-                text: qsTr("Hi There, ")
-                font.pixelSize: 16
-                font.weight: Font.Bold
-            }
 
         Rectangle {
             id: whiteRectange
@@ -85,13 +71,13 @@ Window {
                 width: 300
                 height: 50
                 x: 60
-                y: 53
+                y: 88
                 readOnly: true
                 font.pixelSize: 20
                 horizontalAlignment: Text.AlignJustify
                 verticalAlignment: Text.AlignVCenter
                 background: Rectangle {
-                    color: "#FFFFFF"
+                    color: "#ffffff"
                     radius: 8
                     border.color: "#d3d3d3"
                 }
@@ -107,7 +93,8 @@ Window {
                 columnSpacing: 10
                 anchors.horizontalCenter: inputField.horizontalCenter
                 anchors.top: inputField.bottom
-                anchors.topMargin: 41
+                anchors.topMargin: 36
+                anchors.horizontalCenterOffset: 0
 
                 Repeater {
                     model: [
@@ -147,33 +134,41 @@ Window {
                                             }
                                         }
                                     }
-                                }
-                            }
-        }
+                }
 
+
+        }
 
         Rectangle {
             id: buttonRectangle
-            y: 674
+            y: 64
             width: 208
             height: 58
             color: "#3c5846"
             radius: 13
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 112
+            anchors.bottomMargin: 90
             z: 2
             anchors.horizontalCenterOffset: 0
 
             Text {
                 id: buttonText
                 color: "#f1f1f1"
-                text: "Create"
-                font.styleName: "SemiBold"
+                text: "Next"
+                font.styleName: "Light"
                 font.pointSize: 19
                 font.bold: true
                 anchors.centerIn: parent
             }
+
+            MouseArea {
+                   anchors.fill: parent
+                   onClicked: {
+
+                       loader.source = "WithdrawCategory.qml";
+                   }
+               }
 
             NumberAnimation {
                 id: animateFlow
@@ -185,38 +180,32 @@ Window {
             }
         }
 
-        Rectangle {
-            id: navBar
-            y: 772
-            width: 484
-            height: 95
-            color: "#fdfdfd"
-            radius: 43
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: -23
-            z: 2
-            anchors.horizontalCenterOffset: 0
-        }
-
         Text {
-            id: _text1
-            x: 123
-            y: 121
-            color: "#ffffff"
-            text: qsTr("Creating a budget")
-            font.pointSize: 22
+            id: textEdit
+            x: 30
+            y: 21
+            width: 80
+            height: 20
+            text: qsTr("Withdraw")
+            font.pixelSize: 22
             font.styleName: "SemiBold"
         }
     }
-
-    Image {
-        id: money_image
-        x: 203
-        y: 72
-        width: 245
-        height: 297
-        source: "resources/money_image.png"
-        fillMode: Image.PreserveAspectFit
+        Image {
+            id: money_image
+            x: 228
+            y: 62
+            z:3
+            width: 192
+            height: 233
+            source: "qrc:/resources/transactionsImage.png"
+            fillMode: Image.PreserveAspectFit
+        }
+    Navbar{
+        id: navbar
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -23
     }
+}
 }

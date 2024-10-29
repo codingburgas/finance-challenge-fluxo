@@ -38,82 +38,12 @@ Window {
             }
         }
 
-        Rectangle {
-            id: profilePic
-            x: 20
-            y: 56
-            width: 42
-            height: 42
-            color: "#d4de67"
-            radius: 50
-        }
-
-        Text {
-            id: greetingText
-            x: 71
-            y: 62
-            width: 193
-            height: 23
-
-            color: "#ffffff"
-            text: qsTr("Hi There, ")
-            font.letterSpacing: 0.02
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 600
-            font.pixelSize: 14
-        }
-
-        Text {
-            id: welcomeBackText
-            x: 71
-            y: 82
-            width: 127
-            height: 13
-
-            color: "#ffffff"
-            text: qsTr("Welcome back to Fluxo")
-            font.letterSpacing: 0.02
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 300
-            font.pixelSize: 11
-        }
-
-        Rectangle{
-            id: menu
-            x: window.width*0.875
-            y: 56
-            width: 30
-            height: 30
-            color: "#00ffffff"
-
-            ColumnLayout{
-                anchors.centerIn: parent
-                Rectangle{
-                    id: line1
-                    Layout.preferredWidth: 22.5
-                    Layout.preferredHeight: 3
-                    border.width: 7
-                }
-                Rectangle{
-                    id: line2
-                    Layout.preferredWidth: 22.5
-                    Layout.preferredHeight: 3
-                    border.width: 7
-                }
-                Rectangle{
-                    id: line3
-                    Layout.preferredWidth: 22.5
-                    Layout.preferredHeight: 3
-                    border.width: 7
-                }
-            }
-            MouseArea{
-                id: menuMouseArea
-                anchors.fill: parent
-            }
-
+        Header{
+            id: header
+            x:0
+            y: 55
+            property bool welcomeBackText: true
+            property bool menuButton: true
         }
 
 
@@ -150,6 +80,7 @@ Window {
             verticalAlignment: Text.AlignBottom
         }
 
+
         Rectangle{
             id:actions
             width: 341
@@ -176,7 +107,7 @@ Window {
                     radius: 6
 
                     Image{
-                        source: ":/resources/withdrawIcon.png"
+                        source: "qrc:/resources/withdrawIcon.png"
                         anchors.centerIn: parent
                     }
 
@@ -214,7 +145,7 @@ Window {
                     id: withdrawMouseArea
                     anchors.fill: parent
                     onClicked:{
-                        loader.source = "withdrawAmount.qml"
+                        loader.source = "WithdrawAmount.qml"
                     }
                 }
 
@@ -238,7 +169,7 @@ Window {
                     radius: 6
 
                     Image{
-                        source: ":/resources/depositIcon.png"
+                        source: "qrc:/resources/depositIcon.png"
                         anchors.centerIn: parent
                     }
                 }
@@ -272,7 +203,7 @@ Window {
                     anchors.fill: parent
                     anchors.bottomMargin: 13
                     onClicked:{
-                        loader.source = "depositAmount.qml"
+                        loader.source = "DepositAmount.qml"
                     }
                 }
 
@@ -296,7 +227,7 @@ Window {
                     radius: 6
 
                     Image{
-                        source: ":/resources/statsIcon.png"
+                        source: "qrc:/resources/statsIcon.png"
                         anchors.centerIn: parent
                     }
 
@@ -354,7 +285,7 @@ Window {
                     radius: 6
 
                     Image{
-                        source: ":/resources/sendIcon.png"
+                        source: "qrc:/resources/sendIcon.png"
                         anchors.centerIn: parent
                     }
                 }
@@ -451,100 +382,56 @@ Window {
             TransactionBlock{
                 property string amount: "-68.90 BGN"
                 property string interactor: "Mariq Koleva"
-                property string source: ":/resources/redArrowDown.png"
+                property string source: "qrc:/resources/redArrowDown.png"
                 property string textColor: "red"
                 property string time: "8:20 AM"
             }
             TransactionBlock{
                 property string amount: "-68.90 BGN"
                 property string interactor: "Mariq Koleva"
-                property string source: ":/resources/redArrowDown.png"
+                property string source: "qrc:/resources/redArrowDown.png"
                 property string textColor: "red"
                 property string time: "8:20 AM"
             }
             TransactionBlock{
                 property string amount: "-68.90 BGN"
                 property string interactor: "Mariq Koleva"
-                property string source: ":/resources/redArrowDown.png"
+                property string source: "qrc:/resources/redArrowDown.png"
                 property string textColor: "red"
                 property string time: "8:20 AM"
             }
             TransactionBlock{
                 property string amount: "-68.90 BGN"
                 property string interactor: "Mariq Koleva"
-                property string source: ":/resources/redArrowDown.png"
+                property string source: "qrc:/resources/redArrowDown.png"
                 property string textColor: "red"
                 property string time: "8:20 AM"
             }
         }
 
 
-
-        Rectangle {
-            id: navBar
-            y: 772
-            width: 484
-            height: 95
-            color: "#fdfdfd"
-            radius: 43
+        Navbar{
+            id: navbar
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
-            z: 2
-            anchors.horizontalCenterOffset: 0
         }
 
-        Rectangle{
-            id: receiptRect
-            width: 25
-            height: 25
-            x: 53
-            y: 793
-            Image{
-                id: receiptImage
-                anchors.fill: parent
-                source: ":/resources/receiptIcon.png"
-            }
-            MouseArea{
-                id: receiptMouseArea
-                anchors.fill: parent
-            }
-        }
-        Rectangle{
-            id: homeRect
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: 793
 
-            width: 25
-            height: 25
-            Image{
-                id: homeImage
-                anchors.fill: parent
-                source: ":/resources/homeIcon.png"
-            }
-            MouseArea{
-                id: homeMouseArea
-                anchors.fill: parent
-            }
-        }
-        Rectangle{
-            id: savingsRect
-            x: 311
-            y: 793
-
-            width: 25
-            height: 25
-            Image{
-                id: savingsIcon
-                anchors.fill: parent
-                source: ":/resources/savingsIcon.png"
-            }
-            MouseArea{
-                id: savingsMouseArea
-                anchors.fill: parent
-            }
-        }
 
 
     }
+
+
+    Connections {
+           target: SessionHandler
+
+           function onBalanceUpdated(newBalance) {
+               yourBalance.text = newBalance;
+           }
+       }
+
+       Component.onCompleted: SessionHandler.fetchBalance(fluxo)
+
+
 }

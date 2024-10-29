@@ -172,16 +172,21 @@ Window{
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-
-                    if (fluxo !== null){
+                    if (fluxo !== null) {
                         SessionHandler.writeSession(username.text, password.text, fluxo);
-                        if (SessionHandler.isLogged()) {
-                            loader.source = "mainPage.qml";
-                        }
                     }
                 }
             }
         }
     }
 
+    Connections {
+        target: SessionHandler
+
+        function onSessionWritingCompletedChanged() {
+            if (SessionHandler.sessionWritingCompleted) {
+                loader.source = "MainPage.qml";
+            }
+        }
+    }
 }

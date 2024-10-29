@@ -22,24 +22,32 @@ qt_add_qml_module(appfluxoapp
     VERSION 1.0
     QML_FILES
     GetStartedPage.qml
-    QML_FILES authPage.qml
+    QML_FILES AuthPage.qml
     SOURCES session.cpp
     SOURCES session.h
     SOURCES fluxo.h
     SOURCES fluxo.cpp
-    QML_FILES withdrawAmount.qml
+    QML_FILES WithdrawAmount.qml
     #RESOURCES images/money_image.png
-    QML_FILES depositAmount.qml
-    QML_FILES withdrawCategory.qml
+    QML_FILES DepositAmount.qml
+    QML_FILES WithdrawCategory.qml
     RESOURCES resources.qrc
-    QML_FILES mainPage.qml
-    QML_FILES depositCategory.qml
+    QML_FILES MainPage.qml
+    QML_FILES DepositCategory.qml
     SOURCES mainOperations.h
     SOURCES mainOperations.cpp
     SOURCES urls.h
-    QML_FILES budgetAmount.qml
-    QML_FILES sendMoney.qml
+    QML_FILES BudgetAmount.qml
+    QML_FILES SendMoney.qml
     QML_FILES TransactionBlock.qml
+    QML_FILES Navbar.qml
+    QML_FILES Header.qml
+    QML_FILES MenuPage.qml
+    QML_FILES BudgetMainMenu.qml
+    QML_FILES BudgetData.qml
+    QML_FILES PrivacyPolicy.qml
+    QML_FILES BudgetEdit.qml
+    QML_FILES TransactionsPage.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

@@ -32,7 +32,7 @@ Window {
 
         Image {
             id: moneyImage
-            source: ":/resources/money_image.png"
+            source: "qrc:/resources/money_image.png"
             x: 10
             y: 192
             width: 362
@@ -119,7 +119,7 @@ Window {
                     console.log("Loader source is now:", loader.source);
                     // loader.source = "depositAmount.qml"
                     Qt.callLater(() => {
-                        loader.source = "authenticate.qml";
+                        loader.source = "AuthPage.qml";
                     });
                 }
             }
