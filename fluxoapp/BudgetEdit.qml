@@ -5,6 +5,7 @@ import QtQuick.Window 2.15
 
 Window {
     id: window
+    x: 390
     width: 420
     height: 900
     visible: true
@@ -76,20 +77,20 @@ Window {
             Text {
                 id: buttonText
                 color: "#f1f1f1"
-                text: "Go back"
+                text: "Save"
                 font.styleName: "SemiBold"
                 font.pointSize: 19
                 font.bold: true
                 anchors.centerIn: parent
             }
 
-            NumberAnimation {
-                id: animateFlow
-                target: background
-                properties: "x"
-                duration: 500
-                to: -390
-                from: 0
+            MouseArea{
+                id: saveMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    loader.source = "BudgetCreateMenuPage"
+                    newScreenAnimation.start()
+                }
             }
         }
 
@@ -237,10 +238,15 @@ Window {
     }
 
     Header{
-                id: header
-                x:0
-                y: 55
-                property bool welcomeBackText: false
-                property bool menuButton: true
-            }
+        id: header
+        x:0
+        y: 55
+        property bool welcomeBackText: false
+        property bool menuButton: true
+    }
+
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
+    }
 }

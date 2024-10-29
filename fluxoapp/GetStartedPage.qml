@@ -8,8 +8,8 @@ Window {
     visible: true
 
     Loader{
-                id: loader
-                anchors.fill: parent
+        id: loader
+        anchors.fill: parent
     }
 
     Rectangle {
@@ -120,10 +120,15 @@ Window {
                     // loader.source = "depositAmount.qml"
                     Qt.callLater(() => {
                         loader.source = "AuthPage.qml";
+                        newScreenAnimation.start()
                     });
                 }
             }
         }
 
+    }
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
     }
 }

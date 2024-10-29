@@ -5,6 +5,7 @@ import QtQuick.Window 2.15
 
 Window {
     id: window
+    x: 390
     width: 420
     height: 900
     visible: true
@@ -98,6 +99,15 @@ Window {
                 duration: 500
                 to: -390
                 from: 0
+            }
+
+            MouseArea{
+                id: nextMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    loader.source = "BudgetAmount.qml"
+                    newScreenAnimation.start()
+                }
             }
         }
 
@@ -254,5 +264,10 @@ Window {
             z: 2
             font.styleName: "Regular"
         }
+    }
+
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
     }
 }

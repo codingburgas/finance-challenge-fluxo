@@ -3,13 +3,14 @@ import QtQuick.Controls 2.2
 //import QtQuick.Layouts 1.3
 
 Window {
+    x: 390
     width: 420
     height: 900
     visible: true
 
     Loader{
-                id: loader
-                anchors.fill: parent
+        id: loader
+        anchors.fill: parent
     }
 
     Rectangle {
@@ -132,6 +133,7 @@ Window {
                 onClicked:{
                     CoreOperations.deposit(categoryComboBox.text, fluxo);
                     loader.source = "MainPage.qml";
+                    newScreenAnimation.start()
                 }
             }
         }
@@ -153,6 +155,11 @@ Window {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
         }
+    }
+
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
     }
 
 }

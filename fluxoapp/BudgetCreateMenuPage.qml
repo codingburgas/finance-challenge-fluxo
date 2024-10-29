@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 
 Window {
     id: window
+    x: 390
     width: 390
     height: 844
     visible: true
@@ -120,6 +121,10 @@ Window {
                     MouseArea{
                         id: createBudgetMouseArea
                         anchors.fill: parent
+                        onClicked: {
+                            loader.source = "BudgetData.qml"
+                            newScreenAnimation.start()
+                        }
                     }
                 }
 
@@ -141,6 +146,11 @@ Window {
             anchors.bottomMargin: -23
         }
 
+    }
+
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
     }
 
 }

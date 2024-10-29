@@ -3,9 +3,15 @@ import QtQuick.Layouts 1.3
 
 Window{
     id: window
+    x: 390
     width: 390
     height: 844
     visible: true
+
+    Loader{
+        id: loader
+        anchors.fill: parent
+    }
 
     Rectangle {
         id: background
@@ -141,6 +147,10 @@ Window{
                 MouseArea{
                     id: homeMouseArea
                     anchors.fill: parent
+                    onClicked: {
+                        loader.source = "MainPage.qml"
+                        newScreenAnimation.start()
+                    }
 
                 }
             }
@@ -189,6 +199,10 @@ Window{
                 MouseArea{
                     id: budgetMouseArea
                     anchors.fill: parent
+                    onClicked: {
+                        loader.source = "BudgetMainMenu.qml"
+                        newScreenAnimation.start()
+                    }
 
                 }
             }
@@ -237,7 +251,10 @@ Window{
                 MouseArea{
                     id: withdrawMouseArea
                     anchors.fill: parent
-
+                    onClicked: {
+                        loader.source = "WithdrawAmount.qml"
+                        newScreenAnimation.start()
+                    }
                 }
             }
 
@@ -285,6 +302,11 @@ Window{
                 MouseArea{
                     id: depositMouseArea
                     anchors.fill: parent
+
+                    onClicked: {
+                        loader.source = "DepositAmount.qml"
+                        newScreenAnimation.start()
+                    }
 
                 }
             }
@@ -334,6 +356,10 @@ Window{
                     id: sendMouseArea
                     anchors.fill: parent
 
+                    onClicked: {
+                        loader.source = "SendMoney.qml"
+                        newScreenAnimation.start()
+                    }
                 }
             }
 
@@ -382,6 +408,10 @@ Window{
                     id: statsMouseArea
                     anchors.fill: parent
 
+                    /*onClicked: {
+                        loader.source = "Page.qml"
+                        newScreenAnimation.start()
+                    }*/
                 }
             }
 
@@ -430,6 +460,10 @@ Window{
                     id: transactionsMouseArea
                     anchors.fill: parent
 
+                    onClicked: {
+                        loader.source = "TransactionsPage.qml"
+                        newScreenAnimation.start()
+                    }
                 }
             }
 
@@ -484,6 +518,10 @@ Window{
                     id: privacyPolicyMouseArea
                     anchors.fill: parent
 
+                    onClicked: {
+                        loader.source = "PrivacyPolicy.qml"
+                        newScreenAnimation.start()
+                    }
                 }
             }
         }
@@ -497,5 +535,9 @@ Window{
         }
     }
 
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
+    }
 
 }

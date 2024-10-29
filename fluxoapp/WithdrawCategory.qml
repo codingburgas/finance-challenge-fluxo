@@ -3,9 +3,15 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 Window {
-    width: 420
-    height: 900
+    x: 390
+    width: 390
+    height: 844
     visible: true
+
+    Loader{
+        id: loader
+        anchors.fill: parent
+    }
 
     Rectangle {
         id: background
@@ -119,6 +125,15 @@ Window {
                 font.bold: true
                 anchors.centerIn: parent
             }
+
+            MouseArea{
+                id: createMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    loader.source = "MainPage.qml"
+                    newScreenAnimation.start()
+                }
+            }
         }
         Navbar{
             id: navbar
@@ -139,4 +154,8 @@ Window {
         fillMode: Image.PreserveAspectFit
     }
 
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
+    }
 }

@@ -4,9 +4,16 @@ import QtQuick.Layouts 1.3
 
 Window {
     id: window
+    x: 390
     width: 390
     height: 844
     visible: true
+
+
+    Loader{
+        id: loader
+        anchors.fill: parent
+    }
 
     Rectangle {
         id: background
@@ -68,46 +75,12 @@ Window {
             z: 3
         }
 
-        Rectangle {
-            id: profilePic
-            x: 20
-            y: 56
-            width: 42
-            height: 42
-            color: "#d4de67"
-            radius: 50
-        }
-
-        Text {
-            id: greetingText
-            x: 71
-            y: 62
-            width: 193
-            height: 23
-
-            color: "#ffffff"
-            text: qsTr("Hi There, ")
-            font.letterSpacing: 0.02
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 600
-            font.pixelSize: 14
-        }
-
-        Text {
-            id: welcomeBackText
-            x: 71
-            y: 82
-            width: 127
-            height: 13
-
-            color: "#ffffff"
-            text: qsTr("Welcome back to Fluxo")
-            font.letterSpacing: 0.02
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 300
-            font.pixelSize: 11
+        Header{
+            id: header
+            x:0
+            y: 55
+            property bool welcomeBackText: true
+            property bool menuButton: true
         }
 
         Rectangle {
@@ -135,44 +108,7 @@ Window {
         }
 
 
-        Rectangle{
-            id: menu
-            x: window.width*0.875
-            y: 56
-            width: 30
-            height: 30
-            color: "#00ffffff"
 
-            ColumnLayout{
-                anchors.centerIn: parent
-                Rectangle{
-                    id: line1
-                    border.color: "#ffffff"
-                    Layout.preferredWidth: 22.5
-                    Layout.preferredHeight: 3
-                    border.width: 7
-                }
-                Rectangle{
-                    id: line2
-                    border.color: "#ffffff"
-                    Layout.preferredWidth: 22.5
-                    Layout.preferredHeight: 3
-                    border.width: 7
-                }
-                Rectangle{
-                    id: line3
-                    border.color: "#ffffff"
-                    Layout.preferredWidth: 22.5
-                    Layout.preferredHeight: 3
-                    border.width: 7
-                }
-            }
-            MouseArea{
-                id: menuMouseArea
-                anchors.fill: parent
-            }
-
-        }
 
 
 
@@ -245,81 +181,6 @@ Window {
             color: "#000000"
         }
 
-        ColumnLayout{
-            id: recentTransactions
-            spacing: 27
-            x: 24
-            y: 497
-        }
-
-
-
-        Rectangle {
-            id: navBar
-            y: 772
-            width: 484
-            height: 95
-            color: "#fdfdfd"
-            radius: 43
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: -23
-            z: 2
-            anchors.horizontalCenterOffset: 0
-        }
-
-        Rectangle{
-            id: receiptRect
-            width: 25
-            height: 25
-            x: 53
-            y: 793
-            Image{
-                id: receiptImage
-                anchors.fill: parent
-                source: ":/resources/receiptIcon.png"
-            }
-            MouseArea{
-                id: receiptMouseArea
-                anchors.fill: parent
-            }
-        }
-        Rectangle{
-            id: homeRect
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: 793
-
-            width: 25
-            height: 25
-            Image{
-                id: homeImage
-                anchors.fill: parent
-                source: ":/resources/homeIcon.png"
-            }
-            MouseArea{
-                id: homeMouseArea
-                anchors.fill: parent
-            }
-        }
-
-        Rectangle{
-            id: savingsRect
-            x: 311
-            y: 793
-
-            width: 25
-            height: 25
-            Image{
-                id: savingsIcon
-                anchors.fill: parent
-                source: ":/resources/savingsIcon.png"
-            }
-            MouseArea{
-                id: savingsMouseArea
-                anchors.fill: parent
-            }
-        }
-
         Rectangle {
             id: spendingButton
             x: 208
@@ -330,6 +191,7 @@ Window {
             color: "#e39c9c"
             radius: 6
             z: 2
+
         }
 
         Rectangle {
@@ -351,6 +213,15 @@ Window {
                 font.pixelSize: 12
                 font.styleName: "Bold"
             }
+
+            MouseArea{
+                id: withdrawMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    loader.source = "WithdrawAmount.qml"
+                    newScreenAnimation.start()
+                }
+            }
         }
 
         Rectangle {
@@ -371,6 +242,15 @@ Window {
                 text: qsTr("Deposit")
                 font.pixelSize: 12
                 font.styleName: "Bold"
+            }
+
+            MouseArea{
+                id: depositMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    loader.source = "DepositAmount.qml"
+                    newScreenAnimation.start()
+                }
             }
         }
 
@@ -635,5 +515,10 @@ Window {
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom: parent.bottom
     anchors.bottomMargin: -23
+    }
+
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
     }
 }
