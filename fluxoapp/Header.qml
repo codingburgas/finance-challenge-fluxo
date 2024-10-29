@@ -2,11 +2,9 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 Rectangle{
-    /*
-    params to be set:
-    welcomeBackText: bool - whether show 'Welcome back' text
-    menuButton: bool - whether show menu button
-    */
+
+    property string userName: SessionHandler.username
+
     id: header
     width: 390
     height: 42
@@ -32,7 +30,7 @@ Rectangle{
         height: 23
 
         color: "#ffffff"
-        text: qsTr("Hi There, ")
+        text: qsTr("Hi There, ") + parent.userName + "."
         font.letterSpacing: 0.02
         font.family: "Inter"
         font.styleName: "normal"

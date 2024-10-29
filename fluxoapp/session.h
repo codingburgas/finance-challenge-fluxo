@@ -21,15 +21,19 @@ namespace Fluxo {
 
         Q_PROPERTY(bool sessionWritingCompleted READ isSessionWritingCompleted WRITE setSessionWritingCompleted NOTIFY sessionWritingCompletedChanged)
         Q_PROPERTY(bool isTransactionDone READ getIsTransactionDone WRITE setIsTransactionDone NOTIFY transactionDone)
+        Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
 
 
     public:
+
+        explicit SessionHandler(QObject *parent = nullptr) : QObject(parent), isTransactionDone(false), sessionWritingCompleted(false) {}
 
         Q_INVOKABLE void writeSession(const QString& username, const QString& password, Fluxo::App* app);
         QString createSessionID(const QString& email, const QString& userId);
         Q_INVOKABLE void fetchBalance(Fluxo::App* app);
 
         bool isTransactionDone = false;
+        QString username;
 
     signals:
 
@@ -37,19 +41,22 @@ namespace Fluxo {
         void sessionWritten();
         void sessionWritingCompletedChanged();
         void transactionDone();
+        void usernameChanged();
 
     private:
-        QString username, password;
-        bool m_sessionWritingCompleted = false;
+
+        QString password;
+        bool sessionWritingCompleted = false;
 
     public:
 
-        bool isSessionWritingCompleted() const { return m_sessionWritingCompleted; }
-        bool getIsTransactionDone() const { return isTransactionDone; }
+        bool isSessionWritingCompleted() const { return this->sessionWritingCompleted; }
+        QString getUsername() const { return this->username; }
+        bool getIsTransactionDone() const { return this->isTransactionDone; }
 
         void setSessionWritingCompleted(bool completed) {
-            if (m_sessionWritingCompleted != completed) {
-                m_sessionWritingCompleted = completed;
+            if (sessionWritingCompleted != completed) {
+                sessionWritingCompleted = completed;
                 emit sessionWritingCompletedChanged();
             }
         }
@@ -61,6 +68,14 @@ namespace Fluxo {
                 emit transactionDone();
             }
         }
+
+        void setUsername(const QString &newUsername) {
+            if (username != newUsername) {
+                username = newUsername;
+                emit usernameChanged();
+            }
+        }
+
 
         Q_REQUIRED_RESULT
             bool isAppInitialized(Fluxo::App* app) const;
