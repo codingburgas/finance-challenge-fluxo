@@ -15,7 +15,8 @@
 
 
 
-void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app) {
+void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app, Fluxo::SessionHandler* handler) {
+
 
     float amount = Fluxo::MainOperations::retrieveCache();
 
@@ -61,7 +62,8 @@ void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app) {
 
     QNetworkReply* getInfoReply = manager->post(getInfoRequest, getInfoData);
 
-    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [getInfoReply, category, amount, manager, app]() {
+    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [getInfoReply, category, amount, manager, app, handler]() {
+
         if (getInfoReply->error() == QNetworkReply::NoError) {
             QByteArray responseData = getInfoReply->readAll();
             QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
@@ -86,9 +88,10 @@ void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app) {
 
                 QNetworkReply* depositReply = manager->post(depositRequest, testConverted);
 
-                QObject::connect(depositReply, &QNetworkReply::finished, [depositReply]() {
+                QObject::connect(depositReply, &QNetworkReply::finished, [depositReply, handler]() {
                     if (depositReply->error() == QNetworkReply::NoError) {
                         qDebug() << "Deposit request successful, reply:" << depositReply->readAll();
+                        handler->setIsTransactionDone(true);
                     }
                     else {
                         qDebug() << "Deposit request failed, error:" << depositReply->errorString();
@@ -122,7 +125,6 @@ void Fluxo::MainOperations::withdraw(const QString& category, Fluxo::App* app) {
     float amount = Fluxo::MainOperations::retrieveCache();
 
     if (amount <= 0.0f) {
-        qDebug() << "Invalid amount read from cache. Operation aborted.";
         return;
     }
 
@@ -131,7 +133,6 @@ void Fluxo::MainOperations::withdraw(const QString& category, Fluxo::App* app) {
 
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Couldn't open file:" << file.fileName();
         return;
     }
 
@@ -145,7 +146,6 @@ void Fluxo::MainOperations::withdraw(const QString& category, Fluxo::App* app) {
 
 
     if (token.isEmpty() || id.isEmpty()) {
-        qWarning() << "Token or ID is missing in data.json.";
         return;
     }
 
@@ -164,12 +164,15 @@ void Fluxo::MainOperations::withdraw(const QString& category, Fluxo::App* app) {
     QNetworkReply* getInfoReply = manager->post(getInfoRequest, getInfoData);
 
     QObject::connect(getInfoReply, &QNetworkReply::finished, this, [getInfoReply, category, amount, manager, app]() {
+
         if (getInfoReply->error() == QNetworkReply::NoError) {
+
             QByteArray responseData = getInfoReply->readAll();
             QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
             QJsonObject responseObj = responseDoc.object();
 
             if (responseObj.contains("email") && responseObj["email"].isString()) {
+
                 QString email = responseObj["email"].toString();
 
                 QJsonObject testData;
@@ -190,22 +193,18 @@ void Fluxo::MainOperations::withdraw(const QString& category, Fluxo::App* app) {
 
                 QObject::connect(withdrawtReply, &QNetworkReply::finished, [withdrawtReply]() {
                     if (withdrawtReply->error() == QNetworkReply::NoError) {
-                        qDebug() << "Deposit request successful, reply:" << withdrawtReply->readAll();
+                        qDebug() << "Deposit successful, reply:" << withdrawtReply->readAll();
                     }
                     else {
-                        qDebug() << "Deposit request failed, error:" << withdrawtReply->errorString();
+                        qDebug() << "Deposit failed, error:" << withdrawtReply->errorString();
                     }
                     withdrawtReply->deleteLater();
                 });
             }
 
             else {
-                qWarning() << "Failed to retrieve email from /getInfo response.";
+                qWarning() << "Failed to retrieve user";
             }
-        }
-
-        else {
-            qWarning() << "Request to /getInfo failed, error:" << getInfoReply->errorString();
         }
 
         getInfoReply->deleteLater();
@@ -218,7 +217,7 @@ void Fluxo::MainOperations::withdraw(const QString& category, Fluxo::App* app) {
 
 
 void Fluxo::MainOperations::cacheAmount(const QString& amount, Fluxo::App* app) {
-    qDebug() << "cacheAmount called with amount:" << amount;
+
 
     QString dirPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data";
     qDebug() << "Attempting to cache in directory:" << dirPath;

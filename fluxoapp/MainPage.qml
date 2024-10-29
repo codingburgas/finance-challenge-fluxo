@@ -68,7 +68,6 @@ Window {
         Text{
             id: yourBalance
 
-            text: "122.23 BGN"
             color:"#EFEFEF"
 
             width: 191
@@ -425,12 +424,7 @@ Window {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
         }
-
-
-
-
     }
-
 
     NewScreenAnimation{
         id: newScreenAnimation
@@ -443,6 +437,13 @@ Window {
 
            function onBalanceUpdated(newBalance) {
                yourBalance.text = newBalance;
+           }
+
+           function onTransactionDone() {
+               if (SessionHandler.isTransactionDone) {
+                   loader.source = "MainPage.qml";
+                   newScreenAnimation.start();
+               }
            }
        }
 

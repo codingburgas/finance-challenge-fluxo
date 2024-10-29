@@ -131,9 +131,14 @@ Window {
                 id: mouseAreaCategory
                 anchors.fill: parent
                 onClicked:{
-                    CoreOperations.deposit(categoryComboBox.text, fluxo);
-                    loader.source = "MainPage.qml";
-                    newScreenAnimation.start()
+                    CoreOperations.deposit(categoryComboBox.text, fluxo, SessionHandler);
+                    if (SessionHandler.isTransactionDone){
+                        loader.source = "MainPage.qml";
+                        newScreenAnimation.start()
+                    }
+                    else{
+                        console.log("Wait a moment, transaction is still being processed!");
+                    }
                 }
             }
         }
