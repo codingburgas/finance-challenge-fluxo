@@ -4,13 +4,15 @@ import QtQuick.Layouts 1.3
 
 Window {
     id: window
+    x: 390
     width: 390
     height: 844
     visible: true
 
     Loader{
-                id: loader
-                anchors.fill: parent
+        id: loader
+        anchors.fill: parent
+        x: 390
     }
 
     Rectangle {
@@ -66,7 +68,6 @@ Window {
         Text{
             id: yourBalance
 
-            text: "122.23 BGN"
             color:"#EFEFEF"
 
             width: 191
@@ -111,10 +112,6 @@ Window {
                         anchors.centerIn: parent
                     }
 
-                    MouseArea {
-                        id: mouseArea
-                        anchors.fill: parent
-                    }
                 }
 
                 Rectangle{
@@ -146,6 +143,7 @@ Window {
                     anchors.fill: parent
                     onClicked:{
                         loader.source = "WithdrawAmount.qml"
+                        newScreenAnimation.start()
                     }
                 }
 
@@ -204,6 +202,7 @@ Window {
                     anchors.bottomMargin: 13
                     onClicked:{
                         loader.source = "DepositAmount.qml"
+                        newScreenAnimation.start()
                     }
                 }
 
@@ -231,10 +230,6 @@ Window {
                         anchors.centerIn: parent
                     }
 
-                    MouseArea {
-                        id: mouseArea1
-                        anchors.fill: parent
-                    }
                 }
 
                 Rectangle{
@@ -264,6 +259,10 @@ Window {
                 MouseArea{
                     id: statsMouseArea
                     anchors.fill: parent
+                    onClicked: {
+                        /*loader.source = ""
+                          newScreenAnimation.start()*/
+                    }
                 }
 
             }
@@ -318,6 +317,10 @@ Window {
                     id: sendMouseArea
                     anchors.fill: parent
                     anchors.bottomMargin: 13
+                    onClicked: {
+                        loader.source = "SendMoney.qml"
+                        newScreenAnimation.start()
+                    }
                 }
 
             }
@@ -371,6 +374,11 @@ Window {
 
             MouseArea{
                 id: seeAllMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    loader.source = "TransactionsPage.qml"
+                    newScreenAnimation.start()
+                }
             }
         }
 
@@ -416,10 +424,11 @@ Window {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
         }
+    }
 
-
-
-
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
     }
 
 
@@ -428,6 +437,13 @@ Window {
 
            function onBalanceUpdated(newBalance) {
                yourBalance.text = newBalance;
+           }
+
+           function onTransactionDone() {
+               if (SessionHandler.isTransactionDone) {
+                   loader.source = "MainPage.qml";
+                   newScreenAnimation.start();
+               }
            }
        }
 

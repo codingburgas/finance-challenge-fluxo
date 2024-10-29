@@ -147,6 +147,9 @@ void Fluxo::SessionHandler::writeSession(const QString& username, const QString&
     data["email"] = username;
     data["password"] = password;
 
+
+    this->username = username;
+
     QJsonDocument jsonDoc(data);
     QByteArray convertedData = jsonDoc.toJson();
 

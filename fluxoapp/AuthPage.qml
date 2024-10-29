@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2
 
 Window{
-
+    x: 390
     width: 390
     height: 844
     visible: true

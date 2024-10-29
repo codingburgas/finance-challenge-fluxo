@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 
 Window {
     id: window
+    x: 390
     width: 420
     height: 900
     visible: true
@@ -175,13 +176,13 @@ Window {
                 anchors.centerIn: parent
             }
 
-            NumberAnimation {
-                id: animateFlow
-                target: background
-                properties: "x"
-                duration: 500
-                to: -390
-                from: 0
+            MouseArea{
+                id: createMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    loader.source = "BudgetMainMenu.qml"
+                    newScreenAnimation.start()
+                }
             }
         }
 
@@ -202,13 +203,9 @@ Window {
         }
     }
 
-    Image {
-        id: money_image
-        x: 203
-        y: 72
-        width: 245
-        height: 297
-        source: "resources/money_image.png"
-        fillMode: Image.PreserveAspectFit
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
     }
+
 }

@@ -3,8 +3,9 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 Window {
-    width: 420
-    height: 900
+    x: 390
+    width: 390
+    height: 844
     visible: true
 
     Loader {
@@ -165,19 +166,11 @@ Window {
             MouseArea {
                    anchors.fill: parent
                    onClicked: {
-
                        loader.source = "WithdrawCategory.qml";
+                    CoreOperations.cacheAmount(inputField.text, fluxo);
+                       newScreenAnimation.start()
                    }
                }
-
-            NumberAnimation {
-                id: animateFlow
-                target: background
-                properties: "x"
-                duration: 500
-                to: -390
-                from: 0
-            }
         }
 
         Text {
@@ -207,5 +200,10 @@ Window {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -23
     }
-}
+    }
+
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
+    }
 }

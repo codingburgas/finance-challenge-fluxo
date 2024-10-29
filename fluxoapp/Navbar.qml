@@ -8,6 +8,12 @@ Rectangle {
     radius: 43
     z: 2
 
+    Loader{
+        id: loader
+        anchors.fill: parent
+        x: 390
+    }
+
     Rectangle{
         id: homeRect
         anchors.horizontalCenter: parent.horizontalCenter
@@ -23,6 +29,10 @@ Rectangle {
         MouseArea{
             id: homeMouseArea
             anchors.fill: parent
+            onClicked: {
+                loader.source = "MainPage.qml"
+                newScreenAnimation.start()
+            }
         }
     }
 
@@ -40,6 +50,10 @@ Rectangle {
         MouseArea{
             id: receiptMouseArea
             anchors.fill: parent
+            onClicked: {
+                loader.source = "TransactionsPage.qml"
+                newScreenAnimation.start()
+            }
         }
     }
 
@@ -58,7 +72,16 @@ Rectangle {
         MouseArea{
             id: savingsMouseArea
             anchors.fill: parent
+            onClicked: {
+                loader.source = "BudgetCreateMenuPage.qml"
+                newScreenAnimation.start()
+            }
         }
+    }
+
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
     }
 }
 

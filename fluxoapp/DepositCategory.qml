@@ -3,13 +3,14 @@ import QtQuick.Controls 2.2
 //import QtQuick.Layouts 1.3
 
 Window {
+    x: 390
     width: 420
     height: 900
     visible: true
 
     Loader{
-                id: loader
-                anchors.fill: parent
+        id: loader
+        anchors.fill: parent
     }
 
     Rectangle {
@@ -130,8 +131,14 @@ Window {
                 id: mouseAreaCategory
                 anchors.fill: parent
                 onClicked:{
-                    CoreOperations.deposit(categoryComboBox.text, fluxo);
-                    loader.source = "MainPage.qml";
+                    CoreOperations.deposit(categoryComboBox.text, fluxo, SessionHandler);
+                    if (SessionHandler.isTransactionDone){
+                        loader.source = "MainPage.qml";
+                        newScreenAnimation.start()
+                    }
+                    else{
+                        console.log("Wait a moment, transaction is still being processed!");
+                    }
                 }
             }
         }
@@ -153,6 +160,11 @@ Window {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
         }
+    }
+
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
     }
 
 }

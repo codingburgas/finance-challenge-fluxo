@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 
 Window {
     id: window
+    x: 390
     width: 390
     height: 844
     visible: true
@@ -158,8 +159,9 @@ Window {
         }
 
         ScrollView{
-            id: transations
+            id: transactions
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ScrollBar.vertical.policy: ScrollBar.AlwaysOff
 
             x:0
             y:317

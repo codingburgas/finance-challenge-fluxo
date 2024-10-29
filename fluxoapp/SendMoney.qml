@@ -3,9 +3,15 @@ import QtQuick.Controls 2.2
 
 Window {
     id: window
-    width: 380
+    x: 390
+    width: 390
     height: 844
     visible: true
+
+    Loader{
+        id: loader
+        anchors.fill: parent
+    }
 
     Rectangle {
         id: getStartedPage
@@ -93,7 +99,21 @@ Window {
                 font.pixelSize: 22
                 font.styleName: "SemiBold"
             }
+
+            MouseArea{
+                id: sendMouseArea
+                anchors.fill: parent
+
+                onClicked: {
+                    loader.source = "MainPage.qml"
+                    newScreenAnimation.start()
+                }
+            }
+
+
         }
+
+
 
     }
 
@@ -154,5 +174,10 @@ Window {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -23
+    }
+
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
     }
 }
