@@ -363,6 +363,7 @@ Window {
 
                         Component.onCompleted: {
                             console.log("Transaction:", amount, interactor, time);
+                            SessionHandler.fetchTransactions(fluxo)
                         }
                     }
                 }
