@@ -20,5 +20,6 @@
         <file>resources/penCircle.png</file>
         <file>resources/handWithCoins.png</file>
         <file>resources/plusBudgetIcon.png</file>
+        <file>resources/statisticsIcon.png</file>
     </qresource>
 </RCC>
