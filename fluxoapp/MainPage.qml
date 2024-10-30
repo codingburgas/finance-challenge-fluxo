@@ -354,13 +354,12 @@ Window {
                     visible: true
 
                     TransactionBlock {
-
-                        property int transactionIndex: index
-                        property string amount: SessionHandler.transactions[SessionHandler.transactions.length - transactionIndex - 1].transactionAmount
-                        property string interactor: SessionHandler.transactions[SessionHandler.transactions.length - transactionIndex - 1].target
-                        property string time: SessionHandler.transactions[SessionHandler.transactions.length - transactionIndex - 1].timeProcessed
-                        property string source: ":/resources/redArrowDown.png"
-                        property string textColor: "red"
+                        required property int index
+                        amount: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].transactionAmount
+                        interactor: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target
+                        time: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].timeProcessed
+                        source: ":/resources/redArrowDown.png"
+                        textColor: "red"
 
                         Component.onCompleted: {
                             console.log("Transaction:", amount, interactor, time);
