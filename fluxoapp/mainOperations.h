@@ -7,11 +7,13 @@
 #include <QNetworkRequest>
 #include <QString>
 #include <QObject>
+#include "transaction.h"
 
 namespace Fluxo{
 
 class App;
 class SessionHandler;
+class Transaction;
 
 class MainOperations : public QObject{
 
@@ -25,5 +27,6 @@ public:
         Q_INVOKABLE float retrieveCache();
 
     };
+
 }
 #endif // MAINOPERATIONS_H

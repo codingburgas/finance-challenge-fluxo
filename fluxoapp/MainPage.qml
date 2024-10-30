@@ -9,97 +9,86 @@ Window {
     height: 844
     visible: true
 
-    Loader{
+    Loader {
         id: loader
         anchors.fill: parent
-        x: 390
     }
 
     Rectangle {
         id: background
         width: 420
         height: 844
-        visible: true
         color: "#304437"
 
-
-
-        Rectangle{
+        Rectangle {
             id: circle
             radius: 360
             z: 0
             rotation: 90
-            anchors.horizontalCenterOffset: 263
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
             width: 670
             height: 670
-            anchors.horizontalCenter: parent.horizontalCenter
-            y:-24
+            y: -24
             gradient: Gradient {
-                GradientStop {position: 0.0; color: "#689A78"}
-                GradientStop {position: 0.37; color: "#3C5846"}
+                GradientStop { position: 0.0; color: "#689A78" }
+                GradientStop { position: 0.37; color: "#3C5846" }
             }
         }
 
-        Header{
+        Header {
             id: header
-            x:0
+            x: 0
             y: 55
             property bool welcomeBackText: true
             property bool menuButton: true
         }
 
-
-        Text{
+        Text {
             id: yourBalanceText
-
             text: "Your balance"
             color: "#BDBDBD"
-
             width: 191
             height: 63
-            x:27
-            y:167
+            x: 27
+            y: 167
             font.family: "Inter"
-            font.styleName: "normal"
             font.weight: 400
             font.pixelSize: 14
             verticalAlignment: Text.AlignTop
         }
-        Text{
+
+        Text {
             id: yourBalance
-
-            color:"#EFEFEF"
-
+            color: "#EFEFEF"
             width: 191
             height: 63
-            x:27
-            y:167
+            x: 27
+            y: 167
             font.family: "Inter"
-            font.styleName: "normal"
             font.weight: 700
             font.pixelSize: 32
             verticalAlignment: Text.AlignBottom
         }
 
-
-        Rectangle{
-            id:actions
+        Rectangle {
+            id: actions
             width: 341
             height: 86
             anchors.horizontalCenter: parent.horizontalCenter
-            y:281
+            y: 281
             radius: 25
             color: "#FDFDFD"
 
-            Rectangle{
-                id:withdraw
+            Rectangle {
+                id: withdraw
                 width: 68
-                height:52
-                x:32
+                height: 52
+                x: 32
                 anchors.verticalCenter: parent.verticalCenter
 
-                Rectangle{
-                    id:withdrawRect
+                Rectangle {
+                    id: withdrawRect
                     width: 44
                     height: 39
                     color: "#6badd8b9"
@@ -107,58 +96,51 @@ Window {
                     anchors.top: parent.top
                     radius: 6
 
-                    Image{
+                    Image {
                         source: "qrc:/resources/withdrawIcon.png"
                         anchors.centerIn: parent
                     }
-
                 }
 
-                Rectangle{
+                Rectangle {
                     id: withdrawTextRect
                     width: 68
                     height: 7
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
-                    Text{
-                        id: withdrawText
 
+                    Text {
+                        id: withdrawText
                         text: "Withdraw"
                         color: "#000000"
-
                         anchors.fill: parent
-
                         font.family: "Inter"
-                        font.styleName: "normal"
                         font.weight: 600
                         font.pixelSize: 12
                         horizontalAlignment: Text.AlignHCenter
                     }
                 }
 
-
-
-                MouseArea{
+                MouseArea {
                     id: withdrawMouseArea
                     anchors.fill: parent
-                    onClicked:{
+                    onClicked: {
                         loader.source = "WithdrawAmount.qml"
                         newScreenAnimation.start()
                     }
                 }
-
             }
-            Rectangle{
-                id:deposit
-                width: 45
-                height:52
 
+            Rectangle {
+                id: deposit
+                width: 45
+                height: 52
                 anchors.left: withdraw.right
                 anchors.leftMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
 
-                Rectangle{
-                    id:depositRect
+                Rectangle {
+                    id: depositRect
                     width: 44
                     height: 39
                     color: "#6badd8b9"
@@ -166,58 +148,51 @@ Window {
                     anchors.top: parent.top
                     radius: 6
 
-                    Image{
+                    Image {
                         source: "qrc:/resources/depositIcon.png"
                         anchors.centerIn: parent
                     }
                 }
 
-                Rectangle{
+                Rectangle {
                     id: depositTextRect
                     width: 45
                     height: 7
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
-                    Text{
-                        id: depositText
 
+                    Text {
+                        id: depositText
                         text: "Deposit"
                         color: "#000000"
-
                         anchors.fill: parent
-
                         font.family: "Inter"
-                        font.styleName: "normal"
                         font.weight: 600
                         font.pixelSize: 12
                         horizontalAlignment: Text.AlignHCenter
                     }
                 }
 
-
-
-                MouseArea{
+                MouseArea {
                     id: depositMouseArea
                     anchors.fill: parent
-                    anchors.bottomMargin: 13
-                    onClicked:{
+                    onClicked: {
                         loader.source = "DepositAmount.qml"
                         newScreenAnimation.start()
                     }
                 }
-
             }
-            Rectangle{
-                id:stats
+
+            Rectangle {
+                id: stats
                 width: 57
-                height:52
+                height: 52
                 anchors.verticalCenter: deposit.verticalCenter
                 anchors.left: deposit.right
                 anchors.leftMargin: 23
 
-
-                Rectangle{
-                    id:statsRect
+                Rectangle {
+                    id: statsRect
                     width: 44
                     height: 39
                     color: "#6badd8b9"
@@ -225,57 +200,50 @@ Window {
                     anchors.top: parent.top
                     radius: 6
 
-                    Image{
+                    Image {
                         source: "qrc:/resources/statsIcon.png"
                         anchors.centerIn: parent
                     }
-
                 }
 
-                Rectangle{
+                Rectangle {
                     id: statsTextRect
                     width: 57
                     height: 7
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
-                    Text{
-                        id: statsText
 
+                    Text {
+                        id: statsText
                         text: "Statistics"
                         color: "#000000"
-
                         anchors.fill: parent
-
                         font.family: "Inter"
-                        font.styleName: "normal"
                         font.weight: 600
                         font.pixelSize: 12
                         horizontalAlignment: Text.AlignHCenter
                     }
                 }
 
-
-
-                MouseArea{
+                MouseArea {
                     id: statsMouseArea
                     anchors.fill: parent
                     onClicked: {
-                        /*loader.source = ""
-                          newScreenAnimation.start()*/
+                        // Actions for statistics click can be defined here.
                     }
                 }
-
             }
-            Rectangle{
-                id:send
+
+            Rectangle {
+                id: send
                 width: 44
-                height:52
+                height: 52
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: stats.right
                 anchors.leftMargin: 23
 
-                Rectangle{
-                    id:sendRect
+                Rectangle {
+                    id: sendRect
                     width: 44
                     height: 39
                     color: "#6badd8b9"
@@ -283,171 +251,144 @@ Window {
                     anchors.top: parent.top
                     radius: 6
 
-                    Image{
+                    Image {
                         source: "qrc:/resources/sendIcon.png"
                         anchors.centerIn: parent
                     }
                 }
 
-                Rectangle{
+                Rectangle {
                     id: sendTextRect
                     width: 30
                     height: 7
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
-                    Text{
-                        id: sendText
 
+                    Text {
+                        id: sendText
                         text: "Send"
                         color: "#000000"
-
                         anchors.fill: parent
-
                         font.family: "Inter"
-                        font.styleName: "normal"
                         font.weight: 600
                         font.pixelSize: 12
                         horizontalAlignment: Text.AlignHCenter
                     }
                 }
 
-
-
-                MouseArea{
+                MouseArea {
                     id: sendMouseArea
                     anchors.fill: parent
-                    anchors.bottomMargin: 13
                     onClicked: {
                         loader.source = "SendMoney.qml"
                         newScreenAnimation.start()
                     }
                 }
-
             }
         }
 
-        Rectangle{
+        Rectangle {
             id: whiteRectangle
             width: parent.width
             height: 446
-            x:0
-            y:388
+            x: 0
+            y: 388
             radius: 43
             color: "#FDFDFD"
 
-
-        }
-        Text{
-            id: recentTransactionsText
-            text: "Recent Transactions"
-            width: 209
-            height: 28
-            x:27
-            y:439
-
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 600
-            font.pixelSize: 20
-            color: "#000000"
-        }
-
-        Rectangle{
-            id: seeAllButton
-            width: 45
-            height: 13
-            x: 314
-            y: 445
-
-            Text{
-                id: seeAllText
-
-                anchors.fill: parent
-
-                text: "See all"
+            Text {
+                id: recentTransactionsText
+                text: "Recent Transactions"
+                width: 209
+                height: 28
+                x: 27
+                y: 439
                 font.family: "Inter"
-                font.styleName: "normal"
                 font.weight: 600
-                font.pixelSize: 14
-                font.underline: true
+                font.pixelSize: 20
+                color: "#000000"
             }
 
-            MouseArea{
-                id: seeAllMouseArea
-                anchors.fill: parent
-                onClicked: {
-                    loader.source = "TransactionsPage.qml"
-                    newScreenAnimation.start()
+            Rectangle {
+                id: seeAllButton
+                width: 45
+                height: 13
+                x: 314
+                y: 445
+
+                Text {
+                    id: seeAllText
+                    anchors.fill: parent
+                    text: "See all"
+                    font.family: "Inter"
+                    font.weight: 600
+                    font.pixelSize: 14
+                    font.underline: true
+                }
+
+                MouseArea {
+                    id: seeAllMouseArea
+                    anchors.fill: parent
+                    onClicked: {
+                        loader.source = "TransactionsPage.qml"
+                        newScreenAnimation.start()
+                    }
+                }
+            }
+
+            ColumnLayout {
+
+                id: recentTransactions
+                spacing: 27
+                anchors.top: recentTransactionsText.bottom
+                anchors.left: parent.left
+                anchors.margins: 24
+
+                Repeater {
+                    id: transactionsRepeater
+                    model: SessionHandler.transactions.length
+
+                    delegate: TransactionBlock {
+                        property string amount: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].transactionAmount
+                        property string interactor: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target
+                        property string source: ":/resources/redArrowDown.png"
+                        property string textColor: "red"
+                        property string time: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].timeProcessed
+                    }
                 }
             }
         }
 
-        ColumnLayout{
-            id: recentTransactions
-            spacing: 27
-            x: 24
-            y: 497
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: "qrc:/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: "qrc:/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: "qrc:/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: "qrc:/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-        }
-
-
-        Navbar{
+        Navbar {
             id: navbar
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: -23
         }
     }
 
-    NewScreenAnimation{
+    NewScreenAnimation {
         id: newScreenAnimation
         target: loader.item
     }
 
-
     Connections {
-           target: SessionHandler
+        target: SessionHandler
 
-           function onBalanceUpdated(newBalance) {
-               yourBalance.text = newBalance;
-           }
+        function onBalanceUpdated(newBalance) {
+            yourBalance.text = newBalance;
+        }
 
-           function onTransactionDone() {
-               if (SessionHandler.isTransactionDone) {
-                   loader.source = "MainPage.qml";
-                   newScreenAnimation.start();
-               }
-           }
-       }
+        function onTransactionDone() {
+            if (SessionHandler.isTransactionDone) {
+                loader.source = "MainPage.qml";
+                newScreenAnimation.start();
+            }
+        }
 
-       Component.onCompleted: SessionHandler.fetchBalance(fluxo)
+        function onTransactionsChanged() {
+            transactionsRepeater.model = SessionHandler.transactions.length;
+        }
+    }
 
-
+    Component.onCompleted: SessionHandler.fetchBalance(fluxo)
 }

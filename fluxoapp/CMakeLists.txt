@@ -51,6 +51,7 @@ qt_add_qml_module(appfluxoapp
     QML_FILES BudgetCreateMenuPage.qml
     QML_FILES BudgetBlock.qml
     QML_FILES NewScreenAnimation.qml
+    SOURCES transaction.h
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

@@ -32,7 +32,6 @@ void Fluxo::App::initialize() {
                      app, []() { QCoreApplication::exit(-1); },
                      Qt::QueuedConnection);
 
-    // Register SessionHandler as a QML type, so it can be instantiated in QML
     qmlRegisterSingletonInstance<Fluxo::SessionHandler>("Fluxo", 1, 0, "SessionHandler", &handler);
 
     engine.rootContext()->setContextProperty("SessionHandler", &handler);
@@ -40,7 +39,6 @@ void Fluxo::App::initialize() {
     engine.rootContext()->setContextProperty("CoreOperations", &core);
 
     try {
-        // Load the main QML file
         engine.loadFromModule("fluxoapp", "GetStartedPage");
         //engine.loadFromModule("fluxoapp", "MainPage");
         if (engine.rootObjects().isEmpty()) {
