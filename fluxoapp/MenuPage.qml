@@ -1,17 +1,13 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
-Window{
+Rectangle {
     id: window
-    x: 390
-    width: 390
+    width: 380
     height: 844
     visible: true
 
-    Loader{
-        id: loader
-        anchors.fill: parent
-    }
+    signal screenChanged(file: string)
 
     Rectangle {
         id: background
@@ -148,8 +144,7 @@ Window{
                     id: homeMouseArea
                     anchors.fill: parent
                     onClicked: {
-                        loader.source = "MainPage.qml"
-                        newScreenAnimation.start()
+                        window.screenChanged("MainPage.qml")
                     }
 
                 }
@@ -200,8 +195,7 @@ Window{
                     id: budgetMouseArea
                     anchors.fill: parent
                     onClicked: {
-                        loader.source = "BudgetMainMenu.qml"
-                        newScreenAnimation.start()
+                        window.screenChanged("BudgetMainMenu.qml")
                     }
 
                 }
@@ -252,8 +246,7 @@ Window{
                     id: withdrawMouseArea
                     anchors.fill: parent
                     onClicked: {
-                        loader.source = "WithdrawAmount.qml"
-                        newScreenAnimation.start()
+                        window.screenChanged("WithdrawAmount.qml")
                     }
                 }
             }
@@ -304,8 +297,7 @@ Window{
                     anchors.fill: parent
 
                     onClicked: {
-                        loader.source = "DepositAmount.qml"
-                        newScreenAnimation.start()
+                        window.screenChanged("DepositAmount.qml")
                     }
 
                 }
@@ -357,8 +349,7 @@ Window{
                     anchors.fill: parent
 
                     onClicked: {
-                        loader.source = "SendMoney.qml"
-                        newScreenAnimation.start()
+                        window.screenChanged("SendMoney.qml")
                     }
                 }
             }
@@ -409,8 +400,7 @@ Window{
                     anchors.fill: parent
 
                     /*onClicked: {
-                        loader.source = "Page.qml"
-                        newScreenAnimation.start()
+                        lwindow.screenChanged(".qml")
                     }*/
                 }
             }
@@ -461,8 +451,7 @@ Window{
                     anchors.fill: parent
 
                     onClicked: {
-                        loader.source = "TransactionsPage.qml"
-                        newScreenAnimation.start()
+                        window.screenChanged("TransactionsPage.qml")
                     }
                 }
             }
@@ -519,8 +508,7 @@ Window{
                     anchors.fill: parent
 
                     onClicked: {
-                        loader.source = "PrivacyPolicy.qml"
-                        newScreenAnimation.start()
+                        window.screenChanged("PrivacyPolicy.qml")
                     }
                 }
             }
@@ -529,15 +517,11 @@ Window{
 
         Navbar{
             id: navbar
+            property QtObject window: window
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
         }
-    }
-
-    NewScreenAnimation{
-        id: newScreenAnimation
-        target: loader.item
     }
 
 }

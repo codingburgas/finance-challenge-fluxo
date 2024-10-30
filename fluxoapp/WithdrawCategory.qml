@@ -2,16 +2,13 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
-Window {
-    x: 390
-    width: 390
+Rectangle {
+    id: window
+    width: 380
     height: 844
     visible: true
 
-    Loader{
-        id: loader
-        anchors.fill: parent
-    }
+    signal screenChanged(file: string)
 
     Rectangle {
         id: background
@@ -130,40 +127,37 @@ Window {
                 id: createMouseArea
                 anchors.fill: parent
                 onClicked: {
-                    lonClicked:{
-                        CoreOperations.withdraw(categoryComboBox.text, fluxo, SessionHandler);
-                        if (SessionHandler.isTransactionDone){
-                            loader.source = "MainPage.qml";
-                            newScreenAnimation.start()
-                        }
-                        else{
-                            console.log("Wait a moment, transaction is still being processed!");
-                        }
+                    CoreOperations.withdraw(categoryComboBox.text, fluxo, SessionHandler);
+                    if (SessionHandler.isTransactionDone){
+                        window.screenChanged("MainPage.qml")
+                    }
+                    else{
+                        console.log("Wait a moment, transaction is still being processed!");
                     }
                 }
             }
+
         }
         Navbar{
             id: navbar
+            property QtObject window: window
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
         }
+
+        Image {
+            id: money_image
+            x: 228
+            y: 62
+            z:3
+            width: 192
+            height: 233
+            source: "qrc:/resources/transactionsImage.png"
+            fillMode: Image.PreserveAspectFit
+        }
     }
 
-    Image {
-        id: money_image
-        x: 228
-        y: 62
-        z:3
-        width: 192
-        height: 233
-        source: "qrc:/resources/transactionsImage.png"
-        fillMode: Image.PreserveAspectFit
-    }
 
-    NewScreenAnimation{
-        id: newScreenAnimation
-        target: loader.item
-    }
+
 }

@@ -3,6 +3,7 @@ import QtQuick 2.7
 Rectangle{
     /*
     params to be set:
+    window: QObject - object of a main rectangle in a file
     name: string - budget name
     category: string - category
     outOf: string - a string, containing progress (100/200 BGN)
@@ -43,6 +44,11 @@ Rectangle{
         }
         MouseArea{
             anchors.fill: parent
+            onClicked: {
+                window.screenChanged("BudgetEdit.qml")
+            }
+
+
         }
     }
 

@@ -1,16 +1,13 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 
-Window{
-    x: 390
-    width: 390
+Rectangle {
+    id: window
+    width: 380
     height: 844
     visible: true
 
-    Loader{
-        id: loader
-        anchors.fill: parent
-    }
+    signal screenChanged(file: string)
 
     Rectangle {
         id: background
@@ -185,7 +182,7 @@ Window{
 
         function onSessionWritingCompletedChanged() {
             if (SessionHandler.sessionWritingCompleted) {
-                loader.source = "MainPage.qml";
+                window.screenChanged("MainPage.qml")
             }
         }
     }

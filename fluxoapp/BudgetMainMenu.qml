@@ -2,18 +2,13 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
-Window {
+Rectangle {
     id: window
-    x: 390
-    width: 390
+    width: 380
     height: 844
     visible: true
 
-
-    Loader{
-        id: loader
-        anchors.fill: parent
-    }
+    signal screenChanged(file: string)
 
     Rectangle {
         id: background
@@ -218,8 +213,7 @@ Window {
                 id: withdrawMouseArea
                 anchors.fill: parent
                 onClicked: {
-                    loader.source = "WithdrawAmount.qml"
-                    newScreenAnimation.start()
+                    window.screenChanged("WithdrawAmount.qml")
                 }
             }
         }
@@ -248,8 +242,7 @@ Window {
                 id: depositMouseArea
                 anchors.fill: parent
                 onClicked: {
-                    loader.source = "DepositAmount.qml"
-                    newScreenAnimation.start()
+                    window.screenChanged("DepositAmount.qml")
                 }
             }
         }
@@ -512,13 +505,10 @@ Window {
     }
     Navbar{
     id: navbar
+    property QtObject window: window
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom: parent.bottom
     anchors.bottomMargin: -23
     }
 
-    NewScreenAnimation{
-        id: newScreenAnimation
-        target: loader.item
-    }
 }

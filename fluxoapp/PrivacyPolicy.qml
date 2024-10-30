@@ -2,12 +2,13 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 
-Window {
+Rectangle {
     id: window
-    x: 390
-    width: 390
+    width: 380
     height: 844
     visible: true
+
+    signal screenChanged(file: string)
 
     Rectangle {
         id: background
@@ -140,6 +141,7 @@ Window {
 
         Navbar {
             id: navbar
+            property QtObject window: window
             x: -32
             y: 772
             anchors.horizontalCenter: parent.horizontalCenter

@@ -2,9 +2,13 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 Rectangle{
-
     property string userName: SessionHandler.username
-
+    /*
+    params to be set:
+    window: QtObject - object of a main rectangle in a file
+    welcomeBackText: bool - whether show 'Welcome back' text
+    menuButton: bool - whether show menu button
+    */
     id: header
     width: 390
     height: 42
@@ -88,6 +92,9 @@ Rectangle{
         MouseArea{
             id: menuMouseArea
             anchors.fill: parent
+            onClicked: {
+                window.screenChanged("MenuPage.qml")
+            }
         }
 
     }

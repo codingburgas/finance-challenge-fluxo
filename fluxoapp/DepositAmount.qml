@@ -2,15 +2,14 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
-Window {
-    width: 420
-    height: 900
+
+Rectangle {
+    id: window
+    width: 380
+    height: 844
     visible: true
 
-    Loader{
-                id: loader
-                anchors.fill: parent
-    }
+    signal screenChanged(file: string)
 
     Rectangle {
         id: background
@@ -174,7 +173,7 @@ Window {
                 anchors.fill: parent
 
                 onClicked: {
-                    loader.source = "DepositCategory.qml";
+                    window.screenChanged("DepositCategory.qml")
                     CoreOperations.cacheAmount(inputField.text, fluxo);
                 }
             }

@@ -1,16 +1,13 @@
 import QtQuick 2.7
 
 
-Window {
+Rectangle {
     id: window
     width: 380
     height: 844
     visible: true
 
-    Loader{
-        id: loader
-        anchors.fill: parent
-    }
+    signal screenChanged(file: string)
 
     Rectangle {
         id: getStartedPage
@@ -116,19 +113,13 @@ Window {
                 id: buttonMouseArea
                 anchors.fill: parent
                 onClicked:{
-                    console.log("Loader source is now:", loader.source);
-                    // loader.source = "depositAmount.qml"
+                    //console.log("Loader source is now:", loader.source);
                     Qt.callLater(() => {
-                        loader.source = "AuthPage.qml";
-                        newScreenAnimation.start()
+                        window.screenChanged("AuthPage.qml")
                     });
                 }
             }
         }
 
-    }
-    NewScreenAnimation{
-        id: newScreenAnimation
-        target: loader.item
     }
 }

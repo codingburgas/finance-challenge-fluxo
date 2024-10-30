@@ -1,18 +1,17 @@
 import QtQuick 2.7
 
 Rectangle {
+
+    /*
+    params to be set:
+    window: QtObject - object of a main rectangle in a file
+    */
     id: navBar
     width: 484
     height: 95
     color: "#fdfdfd"
     radius: 43
     z: 2
-
-    Loader{
-        id: loader
-        anchors.fill: parent
-        x: 390
-    }
 
     Rectangle{
         id: homeRect
@@ -30,8 +29,7 @@ Rectangle {
             id: homeMouseArea
             anchors.fill: parent
             onClicked: {
-                loader.source = "MainPage.qml"
-                newScreenAnimation.start()
+                window.screenChanged("MainPage.qml")
             }
         }
     }
@@ -51,8 +49,7 @@ Rectangle {
             id: receiptMouseArea
             anchors.fill: parent
             onClicked: {
-                loader.source = "TransactionsPage.qml"
-                newScreenAnimation.start()
+                window.screenChanged("TransactionsPage.qml")
             }
         }
     }
@@ -73,15 +70,10 @@ Rectangle {
             id: savingsMouseArea
             anchors.fill: parent
             onClicked: {
-                loader.source = "BudgetCreateMenuPage.qml"
-                newScreenAnimation.start()
+                window.screenChanged("BudgetCreateMenuPage.qml")
             }
         }
     }
 
-    NewScreenAnimation{
-        id: newScreenAnimation
-        target: loader.item
-    }
 }
 
