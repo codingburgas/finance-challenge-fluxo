@@ -11,7 +11,7 @@
 #include <QUrl>
 #include <QDir>
 #include <QStandardPaths>
-
+#include <QJsonArray>
 
 bool Fluxo::SessionHandler::isAppInitialized(Fluxo::App* app) const {
     return app != nullptr && app->getNetworkManager() != nullptr;
@@ -322,6 +322,59 @@ void Fluxo::SessionHandler::fetchBalance(Fluxo::App* app) {
             qWarning() << "Network error:" << reply->errorString();
         }
         reply->deleteLater();
+    });
+}
+
+
+
+void Fluxo::SessionHandler::fetchTransactions(Fluxo::App* app) {
+    // Get token and id from data.json
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
+    QFile file(dir);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't open file:" << file.fileName();
+        return;
+    }
+
+    QByteArray fileData = file.readAll();
+    file.close();
+    QJsonDocument doc = QJsonDocument::fromJson(fileData);
+    QJsonObject jsonObj = doc.object();
+
+    QString token = jsonObj["token"].toString();
+    QString id = jsonObj["id"].toString();
+
+    QNetworkAccessManager* manager = app->getNetworkManager();
+    QNetworkRequest getInfoRequest(QUrl("https://fluxo-api.me/getInfo"));
+    getInfoRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QJsonObject getInfoRequestBody{{"token", token}, {"id", id}};
+    QNetworkReply* getInfoReply = manager->post(getInfoRequest, QJsonDocument(getInfoRequestBody).toJson());
+
+    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [=]() mutable {
+        if (getInfoReply->error() == QNetworkReply::NoError) {
+            QByteArray responseData = getInfoReply->readAll();
+            QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
+            QJsonObject responseObj = responseDoc.object();
+
+            // Get transactions array
+            if (responseObj.contains("transactions") && responseObj["transactions"].isArray()) {
+                transactions.clear(); // Clear existing transactions
+                QJsonArray transactionsArray = responseObj["transactions"].toArray();
+
+                int count = 0;
+                for (auto it = transactionsArray.begin(); it != transactionsArray.end() && count < 4; ++it, ++count) {
+                    QJsonObject transactionObject = it->toObject();
+                    auto* transaction = new Fluxo::Transaction();
+                    transaction->setTransactionAmount(QString::number(transactionObject["amount"].toDouble()));
+                    transaction->setTarget(transactionObject["target"].toString());
+                    transaction->setTimeProcessed(transactionObject["timeProcessed"].toString());
+                    addTransaction(transaction);
+                }
+                emit transactionsChanged();
+            }
+        }
+        getInfoReply->deleteLater();
     });
 }
 

@@ -4,8 +4,16 @@ Rectangle{
     id: transactionBlock
     width: 356
     height: 41
+    visible: true
+
+    property string amount
+    property string interactor
+    property string time
+    property string source
+    property string textColor
 
     Rectangle{
+        visible: true
         id: transactionImageRect
         width: 41
         height: 41
@@ -20,6 +28,7 @@ Rectangle{
     }
 
     Rectangle{
+        visible: true
         id: transactionTextRect
         width: 100
         height: 29
@@ -28,6 +37,7 @@ Rectangle{
         anchors.leftMargin: 9
 
         Text{
+            visible: true
             id: transactionInteractorText
             text: transactionBlock.interactor
 
@@ -42,10 +52,12 @@ Rectangle{
             font.weight: 600
             font.pixelSize: 14
             color: "#000000"
-            elide: Text.ElideRight // adds 3 dots at the end, if text goes out of Text block
+            elide: Text.ElideRight
         }
 
         Text{
+
+            visible: true
             id: transactionTimeText
             text: transactionBlock.time
 
@@ -63,6 +75,7 @@ Rectangle{
     }
 
     Text{
+        visible: true
         id: transactionAmount
         text: transactionBlock.amount
 

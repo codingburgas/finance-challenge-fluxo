@@ -301,8 +301,8 @@ Window {
                 text: "Recent Transactions"
                 width: 209
                 height: 28
-                x: 27
-                y: 439
+                x: 15
+                y: 21
                 font.family: "Inter"
                 font.weight: 600
                 font.pixelSize: 20
@@ -337,23 +337,34 @@ Window {
             }
 
             ColumnLayout {
-
                 id: recentTransactions
                 spacing: 27
-                anchors.top: recentTransactionsText.bottom
-                anchors.left: parent.left
-                anchors.margins: 24
+                x: 0
+                y: 55
+                width: 420
+                height: 308
+                visible: true
+                z: 10
+
+
 
                 Repeater {
                     id: transactionsRepeater
-                    model: SessionHandler.transactions.length
+                    model: Math.min(SessionHandler.transactions.length, 4)
+                    visible: true
 
-                    delegate: TransactionBlock {
-                        property string amount: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].transactionAmount
-                        property string interactor: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target
+                    TransactionBlock {
+
+                        property int transactionIndex: index
+                        property string amount: SessionHandler.transactions[SessionHandler.transactions.length - transactionIndex - 1].transactionAmount
+                        property string interactor: SessionHandler.transactions[SessionHandler.transactions.length - transactionIndex - 1].target
+                        property string time: SessionHandler.transactions[SessionHandler.transactions.length - transactionIndex - 1].timeProcessed
                         property string source: ":/resources/redArrowDown.png"
                         property string textColor: "red"
-                        property string time: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].timeProcessed
+
+                        Component.onCompleted: {
+                            console.log("Transaction:", amount, interactor, time);
+                        }
                     }
                 }
             }
@@ -372,23 +383,30 @@ Window {
     }
 
     Connections {
-        target: SessionHandler
+            target: SessionHandler
 
-        function onBalanceUpdated(newBalance) {
-            yourBalance.text = newBalance;
-        }
-
-        function onTransactionDone() {
-            if (SessionHandler.isTransactionDone) {
-                loader.source = "MainPage.qml";
-                newScreenAnimation.start();
+            function onBalanceUpdated(newBalance) {
+                yourBalance.text = newBalance;
             }
+
+            function onTransactionDone() {
+                if (SessionHandler.isTransactionDone) {
+                    loader.source = "MainPage.qml";
+                    newScreenAnimation.start();
+                }
+            }
+
+            function onTransactionsChanged() {
+                transactionsRepeater.model = null;
+                transactionsRepeater.model = Math.min(SessionHandler.transactions.length, 4);
+            }
+
+
+
         }
 
-        function onTransactionsChanged() {
-            transactionsRepeater.model = SessionHandler.transactions.length;
+        Component.onCompleted: {
+            SessionHandler.fetchBalance(fluxo)
+            SessionHandler.fetchTransactions(fluxo)
         }
     }
-
-    Component.onCompleted: SessionHandler.fetchBalance(fluxo)
-}

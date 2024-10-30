@@ -32,6 +32,7 @@ class SessionHandler : public QObject {
         Q_INVOKABLE void writeSession(const QString& username, const QString& password, Fluxo::App* app);
         QString createSessionID(const QString& email, const QString& userId);
         Q_INVOKABLE void fetchBalance(Fluxo::App* app);
+        Q_INVOKABLE void fetchTransactions(Fluxo::App* app);
 
     signals:
 
