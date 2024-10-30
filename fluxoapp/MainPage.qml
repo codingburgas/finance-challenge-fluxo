@@ -355,11 +355,11 @@ Window {
 
                     TransactionBlock {
                         required property int index
-                        amount: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].transactionAmount
-                        interactor: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target
-                        time: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].timeProcessed
-                        source: ":/resources/redArrowDown.png"
-                        textColor: "red"
+                        property string amount: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].transactionAmount
+                        property string interactor: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target
+                        property string time: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].timeProcessed
+                        property string source: ":/resources/redArrowDown.png"
+                        property string textColor: "red"
 
                         Component.onCompleted: {
                             console.log("Transaction:", amount, interactor, time);
@@ -396,7 +396,6 @@ Window {
             }
 
             function onTransactionsChanged() {
-                transactionsRepeater.model = null;
                 transactionsRepeater.model = Math.min(SessionHandler.transactions.length, 4);
             }
 

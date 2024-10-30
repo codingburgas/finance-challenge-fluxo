@@ -6,11 +6,6 @@ Rectangle{
     height: 41
     visible: true
 
-    required property string amount
-    required property string interactor
-    required property string time
-    required property string source
-    required property string textColor
 
     Rectangle{
         visible: true
