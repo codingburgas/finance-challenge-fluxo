@@ -3,17 +3,12 @@ import QtQuick.Controls 2.2
 //import QtQuick.Layouts 1.3
 import QtQuick.Window 2.15
 
-Window {
+Rectangle {
     id: window
     x: 390
     width: 390
     height: 844
     visible: true
-
-    Loader{
-        id: loader
-        anchors.fill: parent
-    }
 
     Rectangle {
         id: getStartedPage
@@ -73,11 +68,6 @@ Window {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -23
-    }
-
-    NewScreenAnimation{
-        id: newScreenAnimation
-        target: loader.item
     }
 
     Text {
