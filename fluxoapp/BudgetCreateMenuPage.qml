@@ -124,9 +124,11 @@ Rectangle {
                 }
 
                 Repeater{
+                    id: repeater
                     model: 10
+                    property QtObject window: window
                     BudgetBlock{
-                        property QtObject window: window
+                        property QtObject window: repeater.window
                         property string name: "Dream Laptop"
                         property string category: "Education"
                         property string outOf: "200/2000 BGN"

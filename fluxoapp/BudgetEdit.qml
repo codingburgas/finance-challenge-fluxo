@@ -5,15 +5,15 @@ import QtQuick.Window 2.15
 
 Rectangle {
     id: window
-    width: 380
-    height: 844
+    /*width: 390
+    height: 844*/
     visible: true
 
     signal screenChanged(file: string)
 
     Rectangle {
         id: background
-        width: 420
+        width: 390
         height: 844
         visible: true
         color: "#304437"
@@ -21,7 +21,7 @@ Rectangle {
         Rectangle {
             id: whiteRectange
             x: 1
-            width: 420
+            width: 390
             height: 667
             color: "#f1f1f1"
             radius: 43
@@ -40,7 +40,7 @@ Rectangle {
 
             Rectangle {
                 id: rectangle1
-                x: 64
+                anchors.horizontalCenter: parent.horizontalCenter
                 y: 93
                 width: 292
                 height: 1
@@ -49,7 +49,7 @@ Rectangle {
 
             Text {
                 id: _text4
-                x: 160
+                anchors.horizontalCenter: parent.horizontalCenter
                 y: 194
                 text: qsTr("Budget Details")
                 font.pixelSize: 16
@@ -100,7 +100,7 @@ Rectangle {
             font.styleName: "Bold"
         }
 
-        TextArea {
+        TextField {
             id: title
             anchors.horizontalCenter: parent.horizontalCenter
             y: 275
@@ -123,6 +123,8 @@ Rectangle {
 
             verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenterOffset: -11
+
+            cursorDelegate: CursorRectangle{property QtObject textField: title}
         }
 
         Text {
@@ -192,6 +194,8 @@ Rectangle {
 
             verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenterOffset: -11
+
+            cursorDelegate: CursorRectangle{property QtObject textField: dateInput}
         }
 
         Text {

@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 //import QtQuick.Layouts 1.3
@@ -130,7 +132,7 @@ Rectangle {
             font.styleName: "Regular"
         }
 
-        TextArea {
+        TextField {
             id: title
             anchors.horizontalCenter: parent.horizontalCenter
             y: 388
@@ -153,6 +155,8 @@ Rectangle {
 
             verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenterOffset: 1
+
+            cursorDelegate: CursorRectangle{property QtObject textField: title}
         }
 
         Text {

@@ -1,9 +1,11 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 
 Rectangle {
     id: window
-    width: 380
+    width: 390
     height: 844
     visible: true
 
@@ -49,7 +51,7 @@ Rectangle {
                 font.styleName: "SemiBold"
             }
 
-            TextEdit {
+            Text {
                 id: amountText
                 x: 47
                 y: 192
@@ -61,7 +63,7 @@ Rectangle {
                 rotation: 0
             }
 
-            TextEdit {
+            Text {
                 id: usernameText
                 x: 47
                 y: 83
@@ -120,7 +122,7 @@ Rectangle {
         property bool menuButton: true
     }
 
-    TextArea {
+    TextField {
         id: amount
         x: 44
         y: 547
@@ -140,9 +142,11 @@ Rectangle {
             border.color: "#898989"
             border.width: 1
         }
+
+        cursorDelegate: CursorRectangle{property QtObject textField: amount}
     }
 
-    TextArea {
+    TextField {
         id: username
         x: 44
         y: 438
@@ -162,6 +166,7 @@ Rectangle {
             border.color: "#898989"
             border.width: 1
         }
+        cursorDelegate: CursorRectangle{property QtObject textField: username}
     }
 
     Navbar{

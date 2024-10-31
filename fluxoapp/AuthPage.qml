@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 
@@ -120,41 +122,7 @@ Rectangle {
 
             verticalAlignment: Text.AlignVCenter
 
-            cursorDelegate: Rectangle {
-                id: cursorUsername
-                visible: false
-                color: "#000000"
-                width: username.cursorRectangle.width
-
-                SequentialAnimation {
-                    loops: Animation.Infinite
-                    running: username.cursorVisible
-
-                    PropertyAction {
-                        target: cursorUsername
-                        property: 'visible'
-                        value: true
-                    }
-
-                    PauseAnimation {
-                        duration: 600
-                    }
-
-                    PropertyAction {
-                        target: cursorUsername
-                        property: 'visible'
-                        value: false
-                    }
-
-                    PauseAnimation {
-                        duration: 600
-                    }
-
-                    onStopped: {
-                        cursorUsername.visible = false
-                    }
-                }
-            }
+            cursorDelegate: CursorRectangle{property QtObject textField: username}
 
         }
 
@@ -184,41 +152,7 @@ Rectangle {
 
             verticalAlignment: Text.AlignVCenter
 
-            cursorDelegate: Rectangle {
-                id: cursorPassword
-                visible: false
-                color: "#000000"
-                width: password.cursorRectangle.width
-
-                SequentialAnimation {
-                    loops: Animation.Infinite
-                    running: password.cursorVisible
-
-                    PropertyAction {
-                        target: cursorPassword
-                        property: 'visible'
-                        value: true
-                    }
-
-                    PauseAnimation {
-                        duration: 600
-                    }
-
-                    PropertyAction {
-                        target: cursorPassword
-                        property: 'visible'
-                        value: false
-                    }
-
-                    PauseAnimation {
-                        duration: 600
-                    }
-
-                    onStopped: {
-                        cursorPassword.visible = false
-                    }
-                }
-            }
+            cursorDelegate: CursorRectangle{property QtObject textField: password}
         }
 
 

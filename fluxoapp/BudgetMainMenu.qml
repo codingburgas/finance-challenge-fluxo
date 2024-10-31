@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 Rectangle {
     id: window
-    /*width: 380
+    /*width: 390
     height: 844*/
     visible: true
 
@@ -12,7 +12,7 @@ Rectangle {
 
     Rectangle {
         id: background
-        width: 420
+        width: 390
         height: 844
         visible: true
         color: "#304437"
