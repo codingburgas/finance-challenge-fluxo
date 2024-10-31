@@ -72,18 +72,24 @@ Rectangle{
             anchors.centerIn: parent
             Rectangle{
                 id: line1
+                color: "#ffffff"
+                border.color: "#ffffff"
                 Layout.preferredWidth: 22.5
                 Layout.preferredHeight: 3
                 border.width: 7
             }
             Rectangle{
                 id: line2
+                color: "#ffffff"
+                border.color: "#ffffff"
                 Layout.preferredWidth: 22.5
                 Layout.preferredHeight: 3
                 border.width: 7
             }
             Rectangle{
                 id: line3
+                color: "#ffffff"
+                border.color: "#ffffff"
                 Layout.preferredWidth: 22.5
                 Layout.preferredHeight: 3
                 border.width: 7
