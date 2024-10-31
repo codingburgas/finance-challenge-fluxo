@@ -94,42 +94,60 @@ Rectangle {
 
                 Repeater {
                     model: [
-                                            { text: "    1" }, { text: "    2" }, { text: "    3" },
-                                            { text: "    4" }, { text: "    5" }, { text: "    6" },
-                                            { text: "    7" }, { text: "    8" }, { text: "    9" },
-                                            { text: "    ." }, { text: "    0" }, { text: "    <", isBackspace: true }
-                                        ]
+                            { text: "    1" }, { text: "    2" }, { text: "    3" },
+                            { text: "    4" }, { text: "    5" }, { text: "    6" },
+                            { text: "    7" }, { text: "    8" }, { text: "    9" },
+                            { text: "    ." }, { text: "    0" }, { text: "    <", isBackspace: true }
+                        ]
 
-                                    delegate: Button {
-                                        text: modelData.text === "." ? modelData.text : modelData.text.trim()
-                                        width: 110
-                                        height: 54
-                                        font.pixelSize: 20
-                                        background: Rectangle {
-                                            color: "#ffffff"
-                                            width: parent.width + 20
-                                            height: parent.height
-                                            radius: 16
-                                            border.color: "#d3d3d3"
-                                            }
+                    delegate: Button {
+                        text: modelData.text === "." ? modelData.text : modelData.text.trim()
+                        width: 110
+                        height: 54
+                        font.pixelSize: 20
+                        background: Rectangle {
+                            color: "#ffffff"
+                            width: parent.width + 20
+                            height: parent.height
+                            radius: 16
+                            border.color: "#d3d3d3"
 
-                                            contentItem: Text {
-                                                text: modelData.text
-                                                anchors.centerIn: parent
-                                                font.pixelSize: 19
-                                                color: "#101828"
-                                                }
+                            Behavior on color {
+                                ColorAnimation { duration: 150 }
+                            }
+                            }
 
-                                        onClicked: {
-                                            if (modelData.isBackspace) {
-                                                if (inputField.text.length > 0) {
-                                                    inputField.text = inputField.text.slice(0, -1);
-                                                }
-                                            } else {
-                                                inputField.text += text;
-                                            }
-                                        }
-                                    }
+                            contentItem: Text {
+                                text: modelData.text
+                                anchors.centerIn: parent
+                                font.pixelSize: 19
+                                color: "#101828"
+                                }
+
+                        onClicked: {
+                            if (modelData.isBackspace) {
+                                if (inputField.text.length > 0) {
+                                    inputField.text = inputField.text.slice(0, -1);
+                                }
+                            } else {
+                                inputField.text += text;
+                            }
+                        }
+
+                        onPressed: {
+                            background.color = "#e0e0e0"
+                            scale = 0.95
+                        }
+
+                        onReleased: {
+                            background.color = "#ffffff"
+                            scale = 1.0
+                        }
+
+                        Behavior on scale {
+                            NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
+                        }
+                    }
                 }
             }
 
