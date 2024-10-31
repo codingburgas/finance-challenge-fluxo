@@ -3,8 +3,6 @@ import QtQuick.Controls 2.2
 
 Rectangle {
     id: window
-    width: 380
-    height: 844
     visible: true
 
     signal screenChanged(file: string)
@@ -26,7 +24,7 @@ Rectangle {
                 id: logoImage
                 width:113
                 height:33
-                source: ":/logo.png"
+                source: "qrc:/resources/logo.png"
                 anchors.centerIn: parent
             }
         }

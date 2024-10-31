@@ -4,8 +4,6 @@ import QtQuick.Layouts 1.3
 
 Rectangle {
     id: window
-    width: 380
-    height: 844
     visible: true
 
     signal screenChanged(file: string)

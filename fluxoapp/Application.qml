@@ -11,16 +11,19 @@ Window {
 
     StackView{
         id: stackView
-        width: 390
-        height: 844
         anchors.fill: parent
-        pushEnter: Transition {
-            NewScreenAnimation{
 
-            }
+        replaceEnter: Transition {
+            NumberAnimation { property: "x"; from: stackView.width; to: 0; duration: 300; easing.type: Easing.InOutQuad }
+            NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 300 }
         }
 
-        initialItem: "GetStartedPage.qml"
+        replaceExit: Transition {
+            NumberAnimation { property: "x"; from: 0; to: -stackView.width; duration: 300; easing.type: Easing.InOutQuad }
+            NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 300 }
+        }
+
+        initialItem: GetStartedPage{/*anchors.fill: parent*/}
 
 
     }
@@ -28,7 +31,8 @@ Window {
     Connections{
         target: stackView.currentItem
         function onScreenChanged(path){
-            stackView.replace(Qt.resolvedUrl(path), StackView.ReplaceTransition)
+            stackView.replace(Qt.resolvedUrl(path), StackView.PushTransition)
+            //stackView.currentItem.anchors.fill = stackView
         }
     }
 }

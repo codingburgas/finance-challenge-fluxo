@@ -3,8 +3,8 @@ import QtQuick 2.7
 
 Rectangle {
     id: window
-    width: 380
-    height: 844
+    /*width: 380
+    height: 844*/
     visible: true
 
     signal screenChanged(file: string)
@@ -116,6 +116,7 @@ Rectangle {
                     //console.log("Loader source is now:", loader.source);
                     Qt.callLater(() => {
                         window.screenChanged("AuthPage.qml")
+                        //window.screenChanged(AuthPage())
                     });
                 }
             }

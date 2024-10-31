@@ -8,6 +8,7 @@ Rectangle{
     category: string - category
     outOf: string - a string, containing progress (100/200 BGN)
     */
+    id: budgetBlock
     width: 294
     height: 92
     radius: 20
@@ -45,7 +46,7 @@ Rectangle{
         MouseArea{
             anchors.fill: parent
             onClicked: {
-                window.screenChanged("BudgetEdit.qml")
+                budgetBlock.window.screenChanged("BudgetEdit.qml")
             }
 
 

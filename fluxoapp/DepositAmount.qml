@@ -106,7 +106,7 @@ Rectangle {
                                         height: 54
                                         font.pixelSize: 20
                                         background: Rectangle {
-                                            color: modelData.color
+                                            color: "#ffffff"
                                             width: parent.width + 20
                                             height: parent.height
                                             radius: 16
