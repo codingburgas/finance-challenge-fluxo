@@ -181,10 +181,8 @@ Rectangle {
             MouseArea {
                    anchors.fill: parent
                    onClicked: {
-                       window.screenChanged("WithdrawCategory.qml")
-                    CoreOperations.cacheAmount(inputField.text, fluxo);
-                       newScreenAnimation.start()
-
+                        CoreOperations.cacheAmount(inputField.text, fluxo);
+                        window.screenChanged("WithdrawCategory.qml")
                    }
                }
         }

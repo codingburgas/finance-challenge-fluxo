@@ -129,12 +129,6 @@ Rectangle {
                 anchors.fill: parent
                 onClicked:{
                     CoreOperations.deposit(categoryComboBox.text, fluxo, SessionHandler);
-                    if (SessionHandler.isTransactionDone){
-                        window.screenChanged("MainPage.qml")
-                    }
-                    else{
-                        console.log("Wait a moment, transaction is still being processed!");
-                    }
                 }
             }
         }
@@ -156,6 +150,14 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
+        }
+    }
+
+    Connections{
+        target: SessionHandler
+
+        function onTransactionDone(){
+            window.screenChanged("MainPage.qml")
         }
     }
 

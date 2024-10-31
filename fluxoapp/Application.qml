@@ -23,7 +23,7 @@ Window {
             NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 300 }
         }
 
-        initialItem: GetStartedPage{/*anchors.fill: parent*/}
+        initialItem: GetStartedPage{}
 
 
     }
@@ -32,7 +32,6 @@ Window {
         target: stackView.currentItem
         function onScreenChanged(path){
             stackView.replace(Qt.resolvedUrl(path), StackView.PushTransition)
-            //stackView.currentItem.anchors.fill = stackView
         }
     }
 }

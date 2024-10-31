@@ -424,8 +424,7 @@ Rectangle {
 
            function onTransactionDone() {
                if (SessionHandler.isTransactionDone) {
-                   loader.source = "MainPage.qml";
-                   newScreenAnimation.start();
+                   window.screenChanged("MainPage.qml")
                }
            }
        }
