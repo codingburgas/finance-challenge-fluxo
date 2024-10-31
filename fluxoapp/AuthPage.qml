@@ -4,6 +4,8 @@ import QtQuick.Controls 2.2
 Rectangle {
     id: window
     visible: true
+    /*width: 390
+    height: 844*/
 
     signal screenChanged(file: string)
 
@@ -90,19 +92,22 @@ Rectangle {
             }
         }
 
-
-
-        TextArea {
+        TextField {
             id: username
             anchors.horizontalCenter: parent.horizontalCenter
             y: 498
             width: 293
             height: 56
+
             text: ""
             z: 10
             placeholderText: qsTr("Username")
+
+            placeholderTextColor: "#898989"
+
             background: Rectangle{
                 width: 293
+                height: 56
                 radius: 8
                 border.width: 1
                 border.color: "#898989"
@@ -114,9 +119,46 @@ Rectangle {
             font.pixelSize: 20
 
             verticalAlignment: Text.AlignVCenter
+
+            cursorDelegate: Rectangle {
+                id: cursorUsername
+                visible: false
+                color: "#000000"
+                width: username.cursorRectangle.width
+
+                SequentialAnimation {
+                    loops: Animation.Infinite
+                    running: username.cursorVisible
+
+                    PropertyAction {
+                        target: cursorUsername
+                        property: 'visible'
+                        value: true
+                    }
+
+                    PauseAnimation {
+                        duration: 600
+                    }
+
+                    PropertyAction {
+                        target: cursorUsername
+                        property: 'visible'
+                        value: false
+                    }
+
+                    PauseAnimation {
+                        duration: 600
+                    }
+
+                    onStopped: {
+                        cursorUsername.visible = false
+                    }
+                }
+            }
+
         }
 
-        TextArea {
+        TextField {
             id: password
             anchors.horizontalCenter: parent.horizontalCenter
             y: 571
@@ -125,6 +167,9 @@ Rectangle {
             text: ""
             z: 10
             placeholderText: qsTr("Password")
+            placeholderTextColor: "#898989"
+            echoMode: TextInput.Password
+
             background: Rectangle{
                 width: 293
                 radius: 8
@@ -138,8 +183,43 @@ Rectangle {
             font.pixelSize: 20
 
             verticalAlignment: Text.AlignVCenter
-        }
 
+            cursorDelegate: Rectangle {
+                id: cursorPassword
+                visible: false
+                color: "#000000"
+                width: password.cursorRectangle.width
+
+                SequentialAnimation {
+                    loops: Animation.Infinite
+                    running: password.cursorVisible
+
+                    PropertyAction {
+                        target: cursorPassword
+                        property: 'visible'
+                        value: true
+                    }
+
+                    PauseAnimation {
+                        duration: 600
+                    }
+
+                    PropertyAction {
+                        target: cursorPassword
+                        property: 'visible'
+                        value: false
+                    }
+
+                    PauseAnimation {
+                        duration: 600
+                    }
+
+                    onStopped: {
+                        cursorPassword.visible = false
+                    }
+                }
+            }
+        }
 
 
 
