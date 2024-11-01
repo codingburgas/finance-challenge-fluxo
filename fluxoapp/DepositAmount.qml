@@ -63,7 +63,7 @@ Rectangle {
             anchors.topMargin: 211
             z: 1
 
-            TextArea {
+            TextField {
                 id: inputField
                 width: 300
                 height: 50
@@ -71,8 +71,10 @@ Rectangle {
                 y: 79
                 readOnly: true
                 font.pixelSize: 20
-                horizontalAlignment: Text.AlignJustify
+                horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
+                placeholderText: "Amount"
+                placeholderTextColor: "#898989"
                 background: Rectangle {
                     color: "#ffffff"
                     radius: 8

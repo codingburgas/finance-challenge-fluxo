@@ -42,36 +42,13 @@ Rectangle {
 
             Text {
                 id: textEdit
-                x: 47
+                x: username.x
                 y: 25
                 width: 139
                 height: 31
                 text: qsTr("Send Money")
                 font.pixelSize: 22
                 font.styleName: "SemiBold"
-            }
-
-            Text {
-                id: amountText
-                x: 47
-                y: 192
-                width: 80
-                height: 20
-                color: "#515151"
-                text: qsTr("Amount")
-                font.pixelSize: 12
-                rotation: 0
-            }
-
-            Text {
-                id: usernameText
-                x: 47
-                y: 83
-                width: 80
-                height: 20
-                color: "#515151"
-                text: qsTr("Username")
-                font.pixelSize: 12
             }
         }
 
@@ -124,14 +101,15 @@ Rectangle {
 
     TextField {
         id: amount
-        x: 44
+        anchors.horizontalCenter: window.horizontalCenter
         y: 547
         width: 293
         height: 56
         text: ""
         font.pixelSize: 16
         verticalAlignment: Text.AlignVCenter
-        placeholderText: ""
+        placeholderText: "Amount"
+        placeholderTextColor: "#898989"
         z: 10
         font.weight: 400
         font.styleName: "normal"
@@ -148,13 +126,14 @@ Rectangle {
 
     TextField {
         id: username
-        x: 44
+        anchors.horizontalCenter: window.horizontalCenter
         y: 438
         width: 293
         height: 56
         font.pixelSize: 16
         verticalAlignment: Text.AlignVCenter
-        placeholderText: ""
+        placeholderText: "Username"
+        placeholderTextColor: "#898989"
         hoverEnabled: true
         z: 10
         font.weight: 400

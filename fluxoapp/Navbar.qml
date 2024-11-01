@@ -11,7 +11,10 @@ Rectangle {
     height: 95
     color: "#fdfdfd"
     radius: 43
+    border.color: "#40000000"
+    border.width: 1
     z: 2
+
 
     Rectangle{
         id: homeRect

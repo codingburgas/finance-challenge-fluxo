@@ -78,15 +78,20 @@ Rectangle {
                 anchors.top: _text2.bottom
                 anchors.topMargin: 74
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 200
-                height: 40
+                width: 293
+                height: 50
+
 
                 currentIndex: -1
-                onCurrentIndexChanged: {
-                    if (currentIndex === -1) {
-                        categoryComboBox.text = "";
+                    displayText: (currentIndex === -1) ? "<font color=\"#898989\">Choose a category" : currentText
+                    contentItem: Text{
+                        text: categoryComboBox.displayText
+                        verticalAlignment: Text.AlignVCenter
+                        leftPadding: 11
+                        elide: Text.ElideRight
+                        textFormat: Text.RichText
+
                     }
-                }
 
                 model: ["Food", "Education", "Transportation", "Bills", "Shopping", "Friends and Family", "Health"]
 
@@ -94,7 +99,7 @@ Rectangle {
                 anchors.horizontalCenterOffset: 1
                 background: Rectangle {
                     color: "#f0f0f0"
-                    border.color: "#d3d3d3"
+                    border.color: "#898989"
                     radius: 8
                 }
             }
