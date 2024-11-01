@@ -5,8 +5,7 @@ import QtQuick.Window 2.15
 
 Rectangle {
     id: window
-    x: 390
-    width: 390
+    width: 420
     height: 844
     visible: true
 

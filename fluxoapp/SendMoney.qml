@@ -5,7 +5,7 @@ import QtQuick.Controls 2.2
 
 Rectangle {
     id: window
-    width: 390
+    width: 420
     height: 844
     visible: true
 

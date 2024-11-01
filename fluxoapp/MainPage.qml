@@ -4,14 +4,15 @@ import QtQuick.Layouts 1.3
 
 Rectangle {
     id: window
+    width: 420
+    height: 844
     visible: true
 
     signal screenChanged(file: string)
 
     Rectangle {
         id: background
-        width: 420
-        height: 844
+        anchors.fill: parent
         visible: true
         color: "#304437"
 

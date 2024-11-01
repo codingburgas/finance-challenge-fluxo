@@ -3,8 +3,8 @@ import QtQuick 2.7
 
 Rectangle {
     id: window
-    /*width: 380
-    height: 844*/
+    width: 420
+    height: 844
     visible: true
 
     signal screenChanged(file: string)
@@ -13,6 +13,23 @@ Rectangle {
         id: getStartedPage
         anchors.fill: parent // Ensures the Rectangle fills the Window exactly
         color: "#304437"
+
+        Rectangle{
+            width:113
+            height:33
+            color: "#00ffffff"
+            border.width: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 5
+
+            Image{
+                id: logoImage
+                width:113
+                height:33
+                source: "qrc:/resources/logo.png"
+                anchors.centerIn: parent
+            }
+        }
 
         Rectangle{
             id: circle
@@ -44,7 +61,7 @@ Rectangle {
             anchors.left: parent.left // Anchors to the parent Rectangle
             anchors.right: parent.right // Ensure no overflow on the right
             y: 425
-            height: 426
+            height: 426+20 //+20 in order to hide background under element
             color: "#F1F1F1"
             radius: 43
         }

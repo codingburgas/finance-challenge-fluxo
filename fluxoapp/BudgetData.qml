@@ -7,7 +7,7 @@ import QtQuick.Window 2.15
 
 Rectangle {
     id: window
-    width: 380
+    width: 420
     height: 844
     visible: true
 
@@ -15,8 +15,7 @@ Rectangle {
 
     Rectangle {
         id: background
-        width: 420
-        height: 844
+        anchors.fill: parent
         visible: true
         color: "#304437"
 

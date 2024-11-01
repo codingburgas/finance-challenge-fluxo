@@ -4,7 +4,7 @@ import QtQuick.Controls 2.2
 
 Rectangle {
     id: window
-    width: 380
+    width: 420
     height: 844
     visible: true
 
@@ -12,8 +12,7 @@ Rectangle {
 
     Rectangle {
         id: background
-        width: 420
-        height: 844
+        anchors.fill: parent
         visible: true
         color: "#304437"
 
@@ -44,7 +43,7 @@ Rectangle {
         Rectangle {
             id: whiteRectange
             width: 420
-            height: 633
+            height: 633+20
             color: "#f1f1f1"
             radius: 43
             anchors.top: parent.top

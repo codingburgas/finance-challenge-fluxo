@@ -6,8 +6,8 @@ import QtQuick.Controls 2.2
 Rectangle {
     id: window
     visible: true
-    /*width: 390
-    height: 844*/
+    width: 420
+    height: 844
 
     signal screenChanged(file: string)
 
@@ -53,7 +53,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             y: 308
-            height: 543
+            height: 543+20 //+20 in order to hide background under element
             color: "#FDFDFD"
             radius: 43
         }
@@ -159,7 +159,7 @@ Rectangle {
 
         Rectangle {
             id: buttonRectangle
-            x: 90
+            anchors.horizontalCenter: parent.horizontalCenter
             y: 726
             width: 200
             height: 50

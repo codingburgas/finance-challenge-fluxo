@@ -5,16 +5,15 @@ import QtQuick.Window 2.15
 
 Rectangle {
     id: window
-    /*width: 390
-    height: 844*/
+    width: 420
+    height: 844
     visible: true
 
     signal screenChanged(file: string)
 
     Rectangle {
         id: background
-        width: 390
-        height: 844
+        anchors.fill: parent
         visible: true
         color: "#304437"
 

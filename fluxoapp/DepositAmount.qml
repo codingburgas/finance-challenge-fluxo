@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 
 Rectangle {
     id: window
-    width: 380
+    width: 420
     height: 844
     visible: true
 
@@ -13,8 +13,7 @@ Rectangle {
 
     Rectangle {
         id: background
-        width: 420
-        height: 844
+        anchors.fill: parent
         visible: true
         color: "#304437"
 
@@ -197,18 +196,12 @@ Rectangle {
             }
         }
 
-        Rectangle {
-            id: navBar
-            y: 772
-            width: 484
-            height: 95
-            color: "#fdfdfd"
-            radius: 43
+        Navbar{
+            id: navbar
+            property QtObject window: window
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
-            z: 2
-            anchors.horizontalCenterOffset: 0
         }
     }
 
