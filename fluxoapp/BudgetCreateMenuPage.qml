@@ -2,17 +2,22 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 
-Rectangle {
+Window {
     id: window
-    width: 420
+    x: 390
+    width: 390
     height: 844
     visible: true
 
-    signal screenChanged(file: string)
+    Loader{
+        id: loader
+        anchors.fill: parent
+    }
 
     Rectangle {
         id: background
-        anchors.fill: parent
+        width: 420
+        height: 844
         visible: true
         color: "#304437"
 
@@ -117,17 +122,17 @@ Rectangle {
                         id: createBudgetMouseArea
                         anchors.fill: parent
                         onClicked: {
-                            window.screenChanged("BudgetData.qml")
+                            loader.source = "BudgetData.qml"
+                            newScreenAnimation.start()
                         }
                     }
                 }
 
                 Repeater{
-                    id: repeater
-                    model: 10
-                    property QtObject window: window
+                    id: budgetsRepeater
+                    model: SessionHandler.budgets.length
+
                     BudgetBlock{
-                        property QtObject window: repeater.window
                         property string name: "Dream Laptop"
                         property string category: "Education"
                         property string outOf: "200/2000 BGN"
@@ -138,12 +143,28 @@ Rectangle {
 
         Navbar{
             id: navbar
-            property QtObject window: window
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
         }
 
+    }
+
+    NewScreenAnimation{
+        id: newScreenAnimation
+        target: loader.item
+    }
+
+    Connections {
+        target: SessionHandler
+
+        function onBudgetsChanged(){
+            budgetsRepeater.model = SessionHandler.budgets.length
+        }
+    }
+
+    Component.onCompleted: {
+        SessionHandler.fetchBudgets(fluxo)
     }
 
 }

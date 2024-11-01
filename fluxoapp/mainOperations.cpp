@@ -11,24 +11,24 @@
 #include <QDebug>
 #include <QJsonObject>
 #include <QStandardPaths>
+#include <QDateTime>
+#include <QJsonArray>
+#include <memory>
 
 
 
 
 void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app, Fluxo::SessionHandler* handler) {
 
-
     float amount = Fluxo::MainOperations::retrieveCache();
-
     if (amount <= 0.0f) {
         qDebug() << "Invalid amount read from cache. Operation aborted.";
         return;
     }
+    qDebug() << "Amount to deposit:" << amount;
 
     QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
     QFile file(dir);
-
-
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Couldn't open file:" << file.fileName();
         return;
@@ -36,87 +36,108 @@ void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app, Fl
 
     QByteArray fileData = file.readAll();
     file.close();
-
     QJsonDocument doc = QJsonDocument::fromJson(fileData);
     QJsonObject jsonObj = doc.object();
+
     QString token = jsonObj["token"].toString();
     QString id = jsonObj["id"].toString();
-
-
     if (token.isEmpty() || id.isEmpty()) {
         qWarning() << "Token or ID is missing in data.json.";
         return;
     }
 
-    QJsonObject getInfoRequestBody;
-    getInfoRequestBody["token"] = token;
-    getInfoRequestBody["id"] = id;
+    qDebug() << "Token and ID retrieved successfully:" << token << id;
 
-    QJsonDocument getInfoDoc(getInfoRequestBody);
-    QByteArray getInfoData = getInfoDoc.toJson();
 
     QNetworkAccessManager* manager = app->getNetworkManager();
-    QUrl getInfoUrl("https://fluxo-api.me/getInfo");
-    QNetworkRequest getInfoRequest(getInfoUrl);
+    QNetworkRequest getInfoRequest(QUrl("https://fluxo-api.me/getInfo"));
     getInfoRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    QNetworkReply* getInfoReply = manager->post(getInfoRequest, getInfoData);
+    QJsonObject getInfoRequestBody{{"token", token}, {"id", id}};
+    qDebug() << "Sending request to /getInfo with body:" << QJsonDocument(getInfoRequestBody).toJson();
+    QNetworkReply* getInfoReply = manager->post(getInfoRequest, QJsonDocument(getInfoRequestBody).toJson());
 
-    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [getInfoReply, category, amount, manager, app, handler]() {
 
-        if (getInfoReply->error() == QNetworkReply::NoError) {
-            QByteArray responseData = getInfoReply->readAll();
-            QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
-            QJsonObject responseObj = responseDoc.object();
-
-            if (responseObj.contains("email") && responseObj["email"].isString()) {
-                QString email = responseObj["email"].toString();
-
-                QJsonObject testData;
-                testData["amount"] = amount;
-                testData["category"] = category;
-                testData["email"] = email;
-                testData["token"] = responseObj["token"].toString();
-                testData["id"] = responseObj["id"].toString();
-                testData["target"] = "test";
-
-                QJsonDocument testDoc(testData);
-                QByteArray testConverted = testDoc.toJson();
-
-                QNetworkRequest depositRequest(Fluxo::Url::deposit);
-                depositRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-                QNetworkReply* depositReply = manager->post(depositRequest, testConverted);
-
-                QObject::connect(depositReply, &QNetworkReply::finished, [depositReply, handler]() {
-                    if (depositReply->error() == QNetworkReply::NoError) {
-                        qDebug() << "Deposit request successful, reply:" << depositReply->readAll();
-                        handler->setIsTransactionDone(true);
-                    }
-                    else {
-                        qDebug() << "Deposit request failed, error:" << depositReply->errorString();
-                    }
-                    depositReply->deleteLater();
-                });
-            }
-
-            else {
-                qWarning() << "Failed to retrieve email from /getInfo response.";
-            }
-        }
-
-        else {
+    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [=]() mutable {
+        if (getInfoReply->error() != QNetworkReply::NoError) {
             qWarning() << "Request to /getInfo failed, error:" << getInfoReply->errorString();
+            getInfoReply->deleteLater();
+            return;
         }
 
+        QByteArray responseData = getInfoReply->readAll();
         getInfoReply->deleteLater();
+        QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
+        QJsonObject responseObj = responseDoc.object();
 
+        QString email = responseObj["email"].toString();
+        if (email.isEmpty()) {
+            qWarning() << "Failed to retrieve email from /getInfo response.";
+            return;
+        }
+
+        qDebug() << "Email retrieved from /getInfo response:" << email;
+
+
+        if (responseObj.contains("transactions") && responseObj["transactions"].isArray()) {
+            QJsonArray transactionsArray = responseObj["transactions"].toArray();
+
+            for (const QJsonValue& transactionValue : transactionsArray) {
+                QJsonObject transactionObject = transactionValue.toObject();
+
+
+                auto* transaction = new Fluxo::Transaction();
+                transaction->setTransactionAmount(QString::number(transactionObject["amount"].toDouble()));
+                transaction->setTarget(transactionObject["target"].toString());
+                transaction->setTimeProcessed(transactionObject["timeProcessed"].toString());
+
+                handler->addTransaction(transaction);
+            }
+            qDebug() << "Processed" << transactionsArray.size() << "transactions.";
+        }
+        else {
+            qWarning() << "No transactions found in response.";
+        }
+
+        QJsonObject testData{
+            {"amount", amount},
+            {"category", category},
+            {"email", email},
+            {"type", "DEPOSIT"},
+            {"token", responseObj["token"].toString()},
+            {"id", responseObj["id"].toString()},
+            {"target", "test"}
+        };
+
+        qDebug() << "Preparing deposit request with data:" << QJsonDocument(testData).toJson();
+
+        QNetworkRequest depositRequest(QUrl("https://fluxo-api.me/deposit"));
+        depositRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+        QNetworkReply* depositReply = manager->post(depositRequest, QJsonDocument(testData).toJson());
+
+        QObject::connect(depositReply, &QNetworkReply::finished, this, [=]() mutable {
+            if (depositReply->error() == QNetworkReply::NoError) {
+                qDebug() << "Deposit request successful, reply:" << depositReply->readAll();
+                handler->setIsTransactionDone(true);
+                emit handler->transactionsChanged();
+            } else {
+                qWarning() << "Deposit request failed, error:" << depositReply->errorString();
+            }
+            depositReply->deleteLater();
+        });
     });
-
 
     Fluxo::MainOperations::deleteCache(true);
     handler->setIsTransactionDone(false);
+
 }
+
+
+
+
+
+
 
 
 
@@ -124,15 +145,14 @@ void Fluxo::MainOperations::deposit(const QString& category, Fluxo::App* app, Fl
 void Fluxo::MainOperations::withdraw(const QString& category, Fluxo::App* app, Fluxo::SessionHandler* handler) {
 
     float amount = Fluxo::MainOperations::retrieveCache();
-
     if (amount <= 0.0f) {
         qDebug() << "Invalid amount read from cache. Operation aborted.";
         return;
     }
+    qDebug() << "Amount to deposit:" << amount;
 
     QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
     QFile file(dir);
-
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Couldn't open file:" << file.fileName();
         return;
@@ -140,74 +160,96 @@ void Fluxo::MainOperations::withdraw(const QString& category, Fluxo::App* app, F
 
     QByteArray fileData = file.readAll();
     file.close();
-
     QJsonDocument doc = QJsonDocument::fromJson(fileData);
     QJsonObject jsonObj = doc.object();
+
     QString token = jsonObj["token"].toString();
     QString id = jsonObj["id"].toString();
-
     if (token.isEmpty() || id.isEmpty()) {
         qWarning() << "Token or ID is missing in data.json.";
         return;
     }
 
-    QJsonObject getInfoRequestBody;
-    getInfoRequestBody["token"] = token;
-    getInfoRequestBody["id"] = id;
+    qDebug() << "Token and ID retrieved successfully:" << token << id;
 
-    QJsonDocument getInfoDoc(getInfoRequestBody);
-    QByteArray getInfoData = getInfoDoc.toJson();
 
     QNetworkAccessManager* manager = app->getNetworkManager();
-    QUrl getInfoUrl("https://fluxo-api.me/getInfo");
-    QNetworkRequest getInfoRequest(getInfoUrl);
+    QNetworkRequest getInfoRequest(QUrl("https://fluxo-api.me/getInfo"));
     getInfoRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    QNetworkReply* getInfoReply = manager->post(getInfoRequest, getInfoData);
+    QJsonObject getInfoRequestBody{{"token", token}, {"id", id}};
+    qDebug() << "Sending request to /getInfo with body:" << QJsonDocument(getInfoRequestBody).toJson();
+    QNetworkReply* getInfoReply = manager->post(getInfoRequest, QJsonDocument(getInfoRequestBody).toJson());
 
-    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [getInfoReply, category, amount, manager, app, handler]() {
 
-        if (getInfoReply->error() == QNetworkReply::NoError) {
-            QByteArray responseData = getInfoReply->readAll();
-            QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
-            QJsonObject responseObj = responseDoc.object();
-
-            if (responseObj.contains("email") && responseObj["email"].isString()) {
-                QString email = responseObj["email"].toString();
-
-                QJsonObject testData;
-                testData["amount"] = amount;
-                testData["category"] = category;
-                testData["email"] = email;
-                testData["token"] = responseObj["token"].toString();
-                testData["id"] = responseObj["id"].toString();
-                testData["target"] = "test";
-
-                QJsonDocument testDoc(testData);
-                QByteArray testConverted = testDoc.toJson();
-
-                QNetworkRequest withdrawRequest(Fluxo::Url::withdraw);  // URL for withdrawal
-                withdrawRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-                QNetworkReply* withdrawReply = manager->post(withdrawRequest, testConverted);
-
-                QObject::connect(withdrawReply, &QNetworkReply::finished, [withdrawReply, handler]() {
-                    if (withdrawReply->error() == QNetworkReply::NoError) {
-                        qDebug() << "Withdrawal request successful, reply:" << withdrawReply->readAll();
-                        handler->setIsTransactionDone(true);
-                    } else {
-                        qDebug() << "Withdrawal request failed, error:" << withdrawReply->errorString();
-                    }
-                    withdrawReply->deleteLater();
-                });
-            } else {
-                qWarning() << "Failed to retrieve email from /getInfo response.";
-            }
-        } else {
+    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [=]() mutable {
+        if (getInfoReply->error() != QNetworkReply::NoError) {
             qWarning() << "Request to /getInfo failed, error:" << getInfoReply->errorString();
+            getInfoReply->deleteLater();
+            return;
         }
 
+        QByteArray responseData = getInfoReply->readAll();
         getInfoReply->deleteLater();
+        QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
+        QJsonObject responseObj = responseDoc.object();
+
+        QString email = responseObj["email"].toString();
+        if (email.isEmpty()) {
+            qWarning() << "Failed to retrieve email from /getInfo response.";
+            return;
+        }
+
+        qDebug() << "Email retrieved from /getInfo response:" << email;
+
+
+        if (responseObj.contains("transactions") && responseObj["transactions"].isArray()) {
+            QJsonArray transactionsArray = responseObj["transactions"].toArray();
+
+            for (const QJsonValue& transactionValue : transactionsArray) {
+                QJsonObject transactionObject = transactionValue.toObject();
+
+
+                auto* transaction = new Fluxo::Transaction();
+                transaction->setTransactionAmount(QString::number(transactionObject["amount"].toDouble()));
+                transaction->setTarget(transactionObject["target"].toString());
+                transaction->setTimeProcessed(transactionObject["timeProcessed"].toString());
+
+                handler->addTransaction(transaction);
+            }
+            qDebug() << "Processed" << transactionsArray.size() << "transactions.";
+        }
+        else {
+            qWarning() << "No transactions found in response.";
+        }
+
+        QJsonObject testData{
+            {"amount", amount},
+            {"category", category},
+            {"email", email},
+            {"type", "WITHDRAW"},
+            {"token", responseObj["token"].toString()},
+            {"id", responseObj["id"].toString()},
+            {"target", "test"}
+        };
+
+        qDebug() << "Preparing deposit request with data:" << QJsonDocument(testData).toJson();
+
+        QNetworkRequest depositRequest(QUrl("https://fluxo-api.me/withdraw"));
+        depositRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+        QNetworkReply* depositReply = manager->post(depositRequest, QJsonDocument(testData).toJson());
+
+        QObject::connect(depositReply, &QNetworkReply::finished, this, [=]() mutable {
+            if (depositReply->error() == QNetworkReply::NoError) {
+                qDebug() << "Deposit request successful, reply:" << depositReply->readAll();
+                handler->setIsTransactionDone(true);
+                emit handler->transactionsChanged();
+            } else {
+                qWarning() << "Deposit request failed, error:" << depositReply->errorString();
+            }
+            depositReply->deleteLater();
+        });
     });
 
     Fluxo::MainOperations::deleteCache(true);
