@@ -129,11 +129,14 @@ Window {
                 }
 
                 Repeater{
-                    model: 10
+                    id: budgetsRepeater
+                    model: SessionHandler.budgets.length
+                    //property int length:
                     BudgetBlock{
-                        property string name: "Dream Laptop"
-                        property string category: "Education"
-                        property string outOf: "200/2000 BGN"
+                        required property int index
+                        property string name: SessionHandler.budgets[budgetsRepeater-index-1].budgetTitle
+                        property string category: SessionHandler.budgets[budgetsRepeater-index-1].budgetCategory
+                        property string outOf: SessionHandler.budgets[budgetsRepeater-index-1].budgetAmountInserted + "/" + SessionHandler.budgets[budgetsRepeater-index-1].budgetGGoal
                     }
                 }
             }
@@ -151,6 +154,17 @@ Window {
     NewScreenAnimation{
         id: newScreenAnimation
         target: loader.item
+    }
+
+    Connections{
+        target: SessionHandler
+        function onBudgetsChanged() {
+            budgetsRepeater.model = SessionHandler.budgets.length
+        }
+    }
+
+    Component.onCompleted: {
+        SessionHandler.fetchBudgets(fluxo)
     }
 
 }
