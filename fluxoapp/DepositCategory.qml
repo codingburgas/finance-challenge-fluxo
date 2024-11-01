@@ -128,7 +128,14 @@ Rectangle {
                 id: mouseAreaCategory
                 anchors.fill: parent
                 onClicked:{
-                    CoreOperations.deposit(categoryComboBox.text, fluxo, SessionHandler);
+                    CoreOperations.deposit(categoryComboBox.currentText, fluxo, SessionHandler);
+                    if (SessionHandler.isTransactionDone){
+                        loader.source = "MainPage.qml";
+                        newScreenAnimation.start()
+                    }
+                    else{
+                        console.log("Wait a moment, transaction is still being processed!");
+                    }
                 }
             }
         }

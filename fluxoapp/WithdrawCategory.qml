@@ -127,7 +127,15 @@ Rectangle {
                 id: createMouseArea
                 anchors.fill: parent
                 onClicked: {
-                    CoreOperations.withdraw(categoryComboBox.text, fluxo, SessionHandler);
+                    lonClicked:{
+                        CoreOperations.withdraw(categoryComboBox.text, fluxo, SessionHandler);
+                        if (SessionHandler.isTransactionDone){
+                            window.screenChanged("MainPage.qml")
+                        }
+                        else{
+                            console.log("Wait a moment, transaction is still being processed!");
+                        }
+                    }
                 }
             }
 

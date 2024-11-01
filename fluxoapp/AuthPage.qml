@@ -179,13 +179,13 @@ Rectangle {
             }
 
             MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (fluxo !== null) {
-                        SessionHandler.writeSession(username.text, password.text, fluxo);
-                    }
-                }
-            }
+                            anchors.fill: parent
+                            onClicked: {
+                                if (fluxo !== null) {
+                                    SessionHandler.writeSession(username.text, password.text, fluxo);
+                                }
+                            }
+                        }
         }
     }
 

@@ -72,4 +72,3 @@ bool Fluxo::App::isInitialized() const {
 Fluxo::SessionHandler* Fluxo::App::getSessionHandler() {
     return &handler;
 }
-

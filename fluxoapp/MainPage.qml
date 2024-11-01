@@ -315,93 +315,88 @@ Rectangle {
             }
         }
 
-        Rectangle{
+        Rectangle {
             id: whiteRectangle
             width: parent.width
             height: 446
-            x:0
-            y:388
+            x: 0
+            y: 388
             radius: 43
             color: "#FDFDFD"
 
-
-        }
-        Text{
-            id: recentTransactionsText
-            text: "Recent Transactions"
-            width: 209
-            height: 28
-            x:27
-            y:439
-
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 600
-            font.pixelSize: 20
-            color: "#000000"
-        }
-
-        Rectangle{
-            id: seeAllButton
-            width: 45
-            height: 13
-            x: 314
-            y: 445
-
             Text{
-                id: seeAllText
+                        id: recentTransactionsText
+                        text: "Recent Transactions"
+                        width: 209
+                        height: 28
+                        x:27
+                        y:17
 
-                anchors.fill: parent
+                        font.family: "Inter"
+                        font.styleName: "normal"
+                        font.weight: 600
+                        font.pixelSize: 20
+                        color: "#000000"
+                    }
 
-                text: "See all"
-                font.family: "Inter"
-                font.styleName: "normal"
-                font.weight: 600
-                font.pixelSize: 14
-                font.underline: true
-            }
+                    Rectangle{
+                        id: seeAllButton
+                        width: 45
+                        height: 13
+                        x: 314
+                        y: 17
 
-            MouseArea{
-                id: seeAllMouseArea
-                anchors.fill: parent
-                onClicked: {
-                    window.screenChanged("TransactionsPage.qml")
+                        Text{
+                            id: seeAllText
+
+                            anchors.fill: parent
+
+                            text: "See all"
+                            font.family: "Inter"
+                            font.styleName: "normal"
+                            font.weight: 600
+                            font.pixelSize: 14
+                            font.underline: true
+                        }
+
+                        MouseArea{
+                            id: seeAllMouseArea
+                            anchors.fill: parent
+                            onClicked: {
+                                window.screenChanged("TransactionsPage.qml")
+                            }
+                        }
+                    }
+
+            ColumnLayout {
+                id: recentTransactions
+                spacing: 27
+                x: 0
+                y: 55
+                width: 420
+                height: 308
+                visible: true
+                z: 10
+
+                Repeater {
+                    id: transactionsRepeater
+                    model: Math.min(SessionHandler.transactions.length, 4)
+                    visible: true
+
+                    TransactionBlock {
+                        required property int index
+                        property string amount: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].transactionAmount
+                        property string interactor: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target
+                        property string time: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].timeProcessed
+                        property string source: ":/resources/redArrowDown.png"
+                        property string textColor: "red"
+
+                        Component.onCompleted: {
+                            console.log("Transaction:", amount, interactor, time);
+                            SessionHandler.fetchTransactions(fluxo)
+                        }
+                    }
                 }
-            }
-        }
-
-        ColumnLayout{
-            id: recentTransactions
-            spacing: 27
-            x: 24
-            y: 497
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: "qrc:/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: "qrc:/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: "qrc:/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: "qrc:/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
             }
         }
 
@@ -416,20 +411,29 @@ Rectangle {
     }
 
     Connections {
-           target: SessionHandler
+            target: SessionHandler
 
-           function onBalanceUpdated(newBalance) {
-               yourBalance.text = newBalance;
-           }
+            function onBalanceUpdated(newBalance) {
+                yourBalance.text = newBalance;
+            }
 
-           function onTransactionDone() {
-               if (SessionHandler.isTransactionDone) {
-                   window.screenChanged("MainPage.qml")
-               }
-           }
-       }
+            function onTransactionDone() {
+                if (SessionHandler.isTransactionDone) {
+                    loader.source = "MainPage.qml";
+                    newScreenAnimation.start();
+                }
+            }
 
-       Component.onCompleted: SessionHandler.fetchBalance(fluxo)
+            function onTransactionsChanged() {
+                transactionsRepeater.model = Math.min(SessionHandler.transactions.length, 4);
+            }
 
 
+
+        }
+
+        Component.onCompleted: {
+            SessionHandler.fetchBalance(fluxo)
+            SessionHandler.fetchTransactions(fluxo)
+        }
 }
