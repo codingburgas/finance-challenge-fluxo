@@ -76,7 +76,7 @@ Rectangle {
             anchors.topMargin: 211
             z: 1
 
-            TextArea {
+            TextField {
                 id: inputField
                 width: 300
                 height: 50
@@ -84,8 +84,10 @@ Rectangle {
                 y: 53
                 readOnly: true
                 font.pixelSize: 20
-                horizontalAlignment: Text.AlignJustify
+                horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
+                placeholderText: qsTr("Amount")
+                placeholderTextColor: "#898989"
                 background: Rectangle {
                     color: "#FFFFFF"
                     radius: 8
@@ -182,7 +184,7 @@ Rectangle {
 
         Text {
             id: _text1
-            x: 123
+            anchors.horizontalCenter: parent.horizontalCenter
             y: 121
             color: "#ffffff"
             text: qsTr("Creating a budget")

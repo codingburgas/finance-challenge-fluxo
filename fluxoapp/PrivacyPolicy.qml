@@ -54,11 +54,14 @@ Rectangle {
 
             Text {
                 id: _text
-                x: 128
+                anchors.horizontalCenter: parent.horizontalCenter
                 y: 19
                 text: qsTr("Privacy Policy")
+
+                font.family: "Inter"
+                font.styleName: "normal"
+                font.weight: 600
                 font.pixelSize: 22
-                font.styleName: "Semibold"
             }
         }
 
@@ -131,10 +134,15 @@ Rectangle {
                     + "    as data analysis, identifying usage trends, determining the effectiveness\n"
                     + "    of our promotional campaigns and to evaluate and improve our Service,\n"
                     + "    products, services, marketing and your experience."
-                font.pointSize: 14
+
+                font.family: "Inter"
+                font.styleName: "normal"
+                font.weight: 400
+                font.pixelSize: 15
                 wrapMode: Text.WordWrap
                 z: 3
                 horizontalAlignment: Text.AlignHCenter
+                color: "#898989"
             }
         }
 

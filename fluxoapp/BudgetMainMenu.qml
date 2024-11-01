@@ -170,8 +170,8 @@ Rectangle {
 
             font.family: "Inter"
             font.styleName: "Bold"
-            font.weight: 600
-            font.pixelSize: 20
+            font.weight: 700
+            font.pixelSize: 18
             color: "#000000"
         }
 

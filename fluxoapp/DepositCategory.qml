@@ -83,14 +83,17 @@ Rectangle {
 
 
                 currentIndex: -1
-                    displayText: (currentIndex === -1) ? "<font color=\"#898989\">Choose a category" : currentText
+                    displayText: (currentIndex === -1) ? "<font color=\"#898989\">Choose a category</font>" : currentText
                     contentItem: Text{
                         text: categoryComboBox.displayText
                         verticalAlignment: Text.AlignVCenter
                         leftPadding: 11
                         elide: Text.ElideRight
                         textFormat: Text.RichText
-
+                        font.family: "Inter"
+                        font.styleName: "normal"
+                        font.weight: 400
+                        font.pixelSize: 20
                     }
 
                 model: ["Food", "Education", "Transportation", "Bills", "Shopping", "Friends and Family", "Health"]

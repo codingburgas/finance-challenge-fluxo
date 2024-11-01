@@ -2,8 +2,6 @@ pragma ComponentBehavior: Bound
 
 import QtQuick 2.7
 import QtQuick.Controls 2.2
-//import QtQuick.Layouts 1.3
-import QtQuick.Window 2.15
 
 Rectangle {
     id: window
@@ -109,7 +107,7 @@ Rectangle {
 
         Text {
             id: _text1
-            x: 123
+            anchors.horizontalCenter: parent.horizontalCenter
             y: 121
             color: "#ffffff"
             text: qsTr("Creating a budget")
@@ -139,6 +137,8 @@ Rectangle {
             height: 56
             text: ""
             z: 10
+            placeholderText: qsTr("Password")
+            placeholderTextColor: "#898989"
             background: Rectangle{
                 width: 293
                 radius: 8
@@ -158,35 +158,30 @@ Rectangle {
             cursorDelegate: CursorRectangle{property QtObject textField: title}
         }
 
-        Text {
-            id: _text3
-            x: 64
-            y: 365
-            width: 42
-            height: 23
-            visible: true
-            color: "#898989"
-            text: qsTr("Title")
-            font.pixelSize: 15
-            horizontalAlignment: Text.AlignLeft
-            z: 2
-            font.styleName: "Regular"
-        }
 
         ComboBox {
             id: categoryComboBox
-            anchors.top: _text2.bottom
-            anchors.topMargin: 152
+            anchors.top: title.bottom
+            anchors.topMargin: 28
             anchors.horizontalCenter: parent.horizontalCenter
             width: 294
             height: 56
 
             currentIndex: -1
-            onCurrentIndexChanged: {
-                if (currentIndex === -1) {
-                    categoryComboBox.text = "";
-                }
+            displayText: (currentIndex === -1) ? "<font color=\"#898989\">Choose a category</font>" : currentText
+            contentItem: Text{
+                text: categoryComboBox.displayText
+                verticalAlignment: Text.AlignVCenter
+                leftPadding: 11
+                elide: Text.ElideRight
+                textFormat: Text.RichText
+                font.family: "Inter"
+                font.styleName: "normal"
+                font.weight: 400
+                font.pixelSize: 20
+
             }
+
 
             model: ["Food", "Education", "Transportation", "Bills", "Shopping", "Friends and Family", "Health"]
 
@@ -203,7 +198,8 @@ Rectangle {
         TextField {
             id: dateInput
             anchors.horizontalCenter: parent.horizontalCenter
-            y: 573
+            y: 568
+
             width: 293
             height: 56
             inputMask: "99/99/9999"
@@ -226,20 +222,6 @@ Rectangle {
             anchors.horizontalCenterOffset: 1
         }
 
-        Text {
-            id: _textDateLabel
-            x: 64
-            y: 553
-            width: 122
-            height: 23
-            visible: true
-            color: "#898989"
-            text: qsTr("Budget Deadline")
-            font.pixelSize: 15
-            horizontalAlignment: Text.AlignLeft
-            z: 2
-            font.styleName: "Regular"
-        }
 
         Navbar {
             id: navbar
@@ -249,19 +231,5 @@ Rectangle {
             anchors.bottomMargin: -23
         }
 
-        Text {
-            id: categoryChoose
-            x: 64
-            y: 462
-            width: 140
-            height: 23
-            visible: true
-            color: "#898989"
-            text: qsTr("Choose a category")
-            font.pixelSize: 15
-            horizontalAlignment: Text.AlignLeft
-            z: 2
-            font.styleName: "Regular"
-        }
     }
 }

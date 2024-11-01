@@ -33,8 +33,11 @@ Rectangle {
                 x: 47
                 y: 49
                 text: qsTr("My Dream Laptop")
+
+                font.family: "Inter"
+                font.styleName: "normal"
+                font.weight: 700
                 font.pixelSize: 20
-                font.styleName: "Bold"
             }
 
             Rectangle {
@@ -93,10 +96,13 @@ Rectangle {
             x: 149
             y: 154
             color: "#000000"
-            text: qsTr("Edit a <font color=\"#689A78\">budget</font>")
+            text: qsTr("Edit A <font color=\"#689A78\">Budget</font>")
             z: 1
-            font.pointSize: 16
-            font.styleName: "Bold"
+
+            font.family: "Inter"
+            font.styleName: "normal"
+            font.weight: 700
+            font.pixelSize: 16
         }
 
         TextField {
@@ -105,7 +111,6 @@ Rectangle {
             y: 275
             width: 293
             height: 38
-            text: ""
             z: 10
             background: Rectangle{
                 width: 293
@@ -115,6 +120,8 @@ Rectangle {
                 color: "#ffffff"
             }
 
+            placeholderText: qsTr("Amount")
+            placeholderTextColor: "#898989"
             font.family: "Inter"
             font.styleName: "normal"
             font.weight: 400
@@ -150,16 +157,22 @@ Rectangle {
             height: 38
 
             currentIndex: -1
-            onCurrentIndexChanged: {
-                if (currentIndex === -1) {
-                    categoryComboBox.text = "";
+                displayText: (currentIndex === -1) ? "<font color=\"#898989\">Choose a category</font>" : currentText
+                contentItem: Text{
+                    text: categoryComboBox.displayText
+                    verticalAlignment: Text.AlignVCenter
+                    leftPadding: 11
+                    elide: Text.ElideRight
+                    textFormat: Text.RichText
+                    font.family: "Inter"
+                    font.styleName: "normal"
+                    font.weight: 400
+                    font.pixelSize: 20
                 }
-            }
 
             model: ["Food", "Education", "Transportation", "Bills", "Shopping", "Friends and Family", "Health"]
 
             font.pixelSize: 16
-            displayText: ""
             z: 5
             anchors.horizontalCenterOffset: -11
             background: Rectangle {
