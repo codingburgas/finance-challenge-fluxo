@@ -9,6 +9,8 @@ Rectangle {
     height: 844
     visible: true
 
+    signal screenChanged(file: string)
+
     Rectangle {
         id: getStartedPage
         anchors.fill: parent

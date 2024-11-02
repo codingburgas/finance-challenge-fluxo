@@ -252,7 +252,7 @@ Rectangle {
                     id: statsMouseArea
                     anchors.fill: parent
                     onClicked: {
-                        /*window.screenChanged(".qml")*/
+                        window.screenChanged("Statistics.qml")
                     }
                 }
 
