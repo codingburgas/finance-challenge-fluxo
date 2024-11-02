@@ -384,7 +384,7 @@ void Fluxo::SessionHandler::fetchTransactions(Fluxo::App* app) {
 
 
 void Fluxo::SessionHandler::fetchBudgets(Fluxo::App* app) {
-    // Get token and id from data.json
+
     QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
     QFile file(dir);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {

@@ -483,7 +483,7 @@ void Fluxo::MainOperations::createBudget(const QString& goal, Fluxo::App* app, F
 
                 auto* budget = new Fluxo::Budget();
                 budget->setBudgetTitle(budgetObject["title"].toString());
-                budget->setBudgetAmountInserted(QString::number(budgetObject["amountINserted"].toDouble()));
+                budget->setBudgetAmountInserted(QString::number(budgetObject["amountInserted"].toDouble()));
                 budget->setBudgetGoal(QString::number(budgetObject["goal"].toDouble()));
                 budget->setBudgetCategory(budgetObject["category"].toString());
                 budget->setBudgetDeadline(budgetObject["deadline"].toString());
@@ -501,7 +501,7 @@ void Fluxo::MainOperations::createBudget(const QString& goal, Fluxo::App* app, F
                              {"token", responseObj["token"].toString()},
                              {"id", responseObj["id"].toString()},
                              {"amountInserted", 0.0f},
-                             {"goal", goal},
+                             {"goal", goal.toDouble()},
                              {"deadline", budgetInfo["deadline"]},
                              {"category", budgetInfo["category"]},
                              {"title", budgetInfo["title"]},
