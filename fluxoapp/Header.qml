@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
-Rectangle{
+Rectangle {
     property string userName: SessionHandler.username
     /*
     params to be set:
@@ -15,7 +15,6 @@ Rectangle{
     color: "#00000000"
     border.color: "#00000000"
 
-
     Rectangle {
         id: profilePic
         x: 19
@@ -24,15 +23,27 @@ Rectangle{
         height: 42
         color: "#d4de67"
         radius: 50
+
+        Text {
+            id: pfp
+            x: 0
+            y: 0
+            width: 40
+            height: 42
+            text: userName.length > 0 ? userName.charAt(0).toUpperCase() : ""
+            font.pixelSize: 16
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.styleName: "Black"
+        }
     }
 
     Text {
         id: greetingText
         x: 71
-        y: (parent.welcomeBackText) ? 0:9
+        y: (parent.welcomeBackText) ? 0 : 9
         width: 193
         height: 23
-
         color: "#ffffff"
         text: qsTr("Hi There, ") + parent.userName + "."
         font.letterSpacing: 0.02
@@ -49,7 +60,6 @@ Rectangle{
         y: 29
         width: 127
         height: 13
-
         color: "#ffffff"
         text: qsTr("Welcome back to Fluxo")
         font.letterSpacing: 0.02
@@ -59,7 +69,7 @@ Rectangle{
         font.pixelSize: 11
     }
 
-    Rectangle{
+    Rectangle {
         visible: parent.menuButton
         id: menu
         x: 341
@@ -68,9 +78,9 @@ Rectangle{
         height: 30
         color: "#00ffffff"
 
-        ColumnLayout{
+        ColumnLayout {
             anchors.centerIn: parent
-            Rectangle{
+            Rectangle {
                 id: line1
                 color: "#ffffff"
                 border.color: "#ffffff"
@@ -78,7 +88,7 @@ Rectangle{
                 Layout.preferredHeight: 3
                 border.width: 7
             }
-            Rectangle{
+            Rectangle {
                 id: line2
                 color: "#ffffff"
                 border.color: "#ffffff"
@@ -86,7 +96,7 @@ Rectangle{
                 Layout.preferredHeight: 3
                 border.width: 7
             }
-            Rectangle{
+            Rectangle {
                 id: line3
                 color: "#ffffff"
                 border.color: "#ffffff"
@@ -95,14 +105,12 @@ Rectangle{
                 border.width: 7
             }
         }
-        MouseArea{
+        MouseArea {
             id: menuMouseArea
             anchors.fill: parent
             onClicked: {
                 window.screenChanged("MenuPage.qml")
             }
         }
-
     }
 }
-
