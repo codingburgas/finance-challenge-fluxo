@@ -180,6 +180,7 @@ Window {
                 id: createMouseArea
                 anchors.fill: parent
                 onClicked: {
+                    CoreOperations.createBudget(inputField.text, fluxo, SessionHandler)
                     loader.source = "BudgetMainMenu.qml"
                     newScreenAnimation.start()
                 }

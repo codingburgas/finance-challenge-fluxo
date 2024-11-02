@@ -105,6 +105,7 @@ Window {
                 id: nextMouseArea
                 anchors.fill: parent
                 onClicked: {
+                    CoreOperations.cacheBudgetInfo(title.text, categoryComboBox.currentText, dateInput.text, fluxo)
                     loader.source = "BudgetAmount.qml"
                     newScreenAnimation.start()
                 }

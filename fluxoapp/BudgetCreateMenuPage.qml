@@ -131,12 +131,12 @@ Window {
                 Repeater{
                     id: budgetsRepeater
                     model: SessionHandler.budgets.length
-                    //property int length:
+
                     BudgetBlock{
                         required property int index
-                        property string name: SessionHandler.budgets[budgetsRepeater-index-1].budgetTitle
-                        property string category: SessionHandler.budgets[budgetsRepeater-index-1].budgetCategory
-                        property string outOf: SessionHandler.budgets[budgetsRepeater-index-1].budgetAmountInserted + "/" + SessionHandler.budgets[budgetsRepeater-index-1].budgetGGoal
+                        property string name: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetTitle
+                        property string category: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetCategory
+                        property string outOf: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetAmountInserted + "/" + SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetGGoal
                     }
                 }
             }
@@ -158,12 +158,21 @@ Window {
 
     Connections{
         target: SessionHandler
+
+        function onBudgetDone(){
+            if (SessionHandler.isBudgetDone){
+                loader.source = "BudgetCreateMenuPage.qml"
+                newScreenAnimation.start()
+            }
+        }
+
         function onBudgetsChanged() {
             budgetsRepeater.model = SessionHandler.budgets.length
         }
     }
 
     Component.onCompleted: {
+        console.log("Fetching budgets")
         SessionHandler.fetchBudgets(fluxo)
     }
 
