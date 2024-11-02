@@ -8,30 +8,84 @@ Window {
     height: 844
     visible: true
 
+    property string currentFile: "GetStartedPage.qml"
+    property string nextFile: ""
+    property Rectangle currentPage: GetStartedPage{}
+    property Rectangle nextPage
 
-    StackView{
-        id: stackView
-        anchors.fill: parent
 
-        replaceEnter: Transition {
-            NumberAnimation { property: "x"; from: stackView.width; to: 0; duration: 300; easing.type: Easing.Linear }
-            NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 300 }
+    property NewPageShowAnimation showAnimation: NewPageShowAnimation{
+        property QtObject stackView: window
+    }
+
+    property NewPageHideAnimation hideAnimation: NewPageHideAnimation{
+        property QtObject stackView: window
+    }
+
+    /*function putOnIndex(item, index){
+        if (index < stackView.count-1){
+            stackView.addItem(item)
+        } else{
+            stackView.insertItem(index, item)
         }
+    }*/
 
-        replaceExit: Transition {
-            NumberAnimation { property: "x"; from: 0; to: -stackView.width; duration: 300; easing.type: Easing.Linear }
-            NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 300 }
+    Component.onCompleted: {
+        currentPage = Qt.createComponent( Qt.resolvedUrl(currentFile) ).createObject(window, {x:0, y:0})
+    }
+
+
+    Connections{
+        target: window.currentPage
+        //checks if user clicked sth, which is supposed to enter new page
+        function onScreenChanged(path){
+
+            if (window.currentFile != path){
+                window.nextFile = path
+                //create new component from path given and convert it into object
+                let newComponent = Qt.createComponent( Qt.resolvedUrl(path) )
+
+                if (window.currentFile == "MainPage.qml"){
+                    window.nextPage = newComponent.createObject(window, {x:window.width/2, z:2})
+                    window.showAnimation.restart()
+                } else{
+                    if (window.nextFile == "MainPage.qml"){
+                        window.nextPage = newComponent.createObject(window, {z:0})
+                        window.hideAnimation.restart()
+                    } else {
+                        window.nextPage = newComponent.createObject(window, {x:window.width/2, z:2})
+                        window.showAnimation.restart()
+                    }
+                }
+
+            }
+
         }
-
-        initialItem: GetStartedPage{}
-
-
     }
 
     Connections{
-        target: stackView.currentItem
-        function onScreenChanged(path){
-            stackView.replace(Qt.resolvedUrl(path), StackView.ReplaceTransition)
+        target: window.showAnimation
+
+        function onFinished(){
+            window.currentPage.destroy()
+            window.currentPage = window.nextPage
+            window.currentPage.z = 1
+
+            window.currentFile = window.nextFile
+            window.nextFile=""
+        }
+    }
+
+    Connections{
+        target: window.hideAnimation
+
+        function onFinished(){
+            window.currentPage.destroy()
+            window.currentPage = window.nextPage
+            window.currentPage.z = 1
+
+            window.currentFile = window.nextFile
+            window.nextFile=""
         }
     }
 }
