@@ -21,16 +21,7 @@ export const mainMenu: NavItemWithChildren[] = [
     },
     {
         title: "What's new",
-        items: [
-            {
-                title: 'Sample',
-                to: '/sample',
-            },
-            {
-                title: 'Sample Dua',
-                to: '/#',
-            },
-        ]
+        to: '/',
     },
     {
         title: 'About',
