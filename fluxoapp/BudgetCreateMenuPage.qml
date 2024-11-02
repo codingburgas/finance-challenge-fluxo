@@ -2,17 +2,13 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 
-Window {
+Rectangle {
     id: window
-    x: 390
-    width: 390
+    width: 420
     height: 844
     visible: true
 
-    Loader{
-        id: loader
-        anchors.fill: parent
-    }
+    signal screenChanged(file: string)
 
     Rectangle {
         id: background
@@ -122,8 +118,7 @@ Window {
                         id: createBudgetMouseArea
                         anchors.fill: parent
                         onClicked: {
-                            loader.source = "BudgetData.qml"
-                            newScreenAnimation.start()
+                            window.screenChanged("BudgetData.qml")
                         }
                     }
                 }
@@ -133,9 +128,10 @@ Window {
                     model: SessionHandler.budgets.length
 
                     BudgetBlock{
-                        property string name: "Dream Laptop"
-                        property string category: "Education"
-                        property string outOf: "200/2000 BGN"
+                        required property int index
+                        property string name: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetTitle
+                        property string category: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetCategory
+                        property string outOf: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetAmountInserted + "/" + SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetGGoal
                     }
                 }
             }
@@ -148,11 +144,6 @@ Window {
             anchors.bottomMargin: -23
         }
 
-    }
-
-    NewScreenAnimation{
-        id: newScreenAnimation
-        target: loader.item
     }
 
     Connections {

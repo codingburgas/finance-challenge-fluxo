@@ -371,7 +371,69 @@ void Fluxo::SessionHandler::fetchTransactions(Fluxo::App* app) {
                     transaction->setTimeProcessed(transactionObject["timeProcessed"].toString());
                     addTransaction(transaction);
                 }
+                qDebug() << "Transactions changed: " << transactions;
                 emit transactionsChanged();
+            }
+        }
+        getInfoReply->deleteLater();
+    });
+}
+
+
+
+
+
+void Fluxo::SessionHandler::fetchBudgets(Fluxo::App* app) {
+    // Get token and id from data.json
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
+    QFile file(dir);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't open file:" << file.fileName();
+        return;
+    }
+
+    QByteArray fileData = file.readAll();
+    file.close();
+    QJsonDocument doc = QJsonDocument::fromJson(fileData);
+    QJsonObject jsonObj = doc.object();
+
+    QString token = jsonObj["token"].toString();
+    QString id = jsonObj["id"].toString();
+
+    QNetworkAccessManager* manager = app->getNetworkManager();
+    QNetworkRequest getInfoRequest(QUrl("https://fluxo-api.me/getInfo"));
+    getInfoRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QJsonObject getInfoRequestBody{{"token", token}, {"id", id}};
+    QNetworkReply* getInfoReply = manager->post(getInfoRequest, QJsonDocument(getInfoRequestBody).toJson());
+
+    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [=]() mutable {
+        if (getInfoReply->error() == QNetworkReply::NoError) {
+            QByteArray responseData = getInfoReply->readAll();
+            QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
+            QJsonObject responseObj = responseDoc.object();
+            qDebug() << "Data fetched from db: " << responseObj;
+
+            // Get budgets array
+            if (responseObj.contains("budgets") && responseObj["budgets"].isArray()) {
+                budgets.clear(); // Clear existing budgets
+                QJsonArray budgetsArray = responseObj["budgets"].toArray();
+
+
+                for (auto it = budgetsArray.begin(); it != budgetsArray.end(); ++it) {
+                    QJsonObject budgetObject = it->toObject();
+                    auto* budget = new Fluxo::Budget();
+                    budget->setBudgetTitle(budgetObject["title"].toString());
+                    budget->setBudgetAmountInserted(QString::number(budgetObject["amountINserted"].toDouble()));
+                    budget->setBudgetGoal(QString::number(budgetObject["goal"].toDouble()));
+                    budget->setBudgetCategory(budgetObject["category"].toString());
+                    budget->setBudgetDeadline(budgetObject["deadline"].toString());
+
+                    addBudget(budget);
+                }
+                emit budgetsChanged();
+            } else {
+                qDebug() << "budgets key is not found in fetched data";
             }
         }
         getInfoReply->deleteLater();

@@ -372,10 +372,10 @@ Rectangle {
             ColumnLayout {
                 id: recentTransactions
                 spacing: 27
-                x: 0
-                y: 55
-                width: 420
-                height: 308
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 110
+                width: 366
+                height: Math.min(SessionHandler.transactions.length, 4)*41 + (Math.min(SessionHandler.transactions.length, 4)-1)*27
                 visible: true
                 z: 10
 
@@ -389,12 +389,12 @@ Rectangle {
                         property string amount: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].transactionAmount
                         property string interactor: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target
                         property string time: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].timeProcessed
-                        property string source: ":/resources/redArrowDown.png"
-                        property string textColor: "red"
+                        property string source: (SessionHandler.transactions[SessionHandler.transactions.length - index - 1].type == "WITHDRAW")? "qrc:/resources/redArrowDown.png" : "qrc:/resources/greenArrowUp.png"
+                        property string textColor: (SessionHandler.transactions[SessionHandler.transactions.length - index - 1].type == "WITHDRAW")? "red" : "notRed"
 
                         Component.onCompleted: {
                             console.log("Transaction:", amount, interactor, time);
-                            SessionHandler.fetchTransactions(fluxo)
+                            //SessionHandler.fetchTransactions(fluxo)
                         }
                     }
                 }
@@ -420,8 +420,7 @@ Rectangle {
 
             function onTransactionDone() {
                 if (SessionHandler.isTransactionDone) {
-                    loader.source = "MainPage.qml";
-                    newScreenAnimation.start();
+                    window.screenChanged("MainPage.qml");
                 }
             }
 

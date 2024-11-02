@@ -100,6 +100,7 @@ Rectangle {
                 id: nextMouseArea
                 anchors.fill: parent
                 onClicked: {
+                    CoreOperations.cacheBudgetInfo(title.text, categoryComboBox.currentText, dateInput.text, fluxo)
                     window.screenChanged("BudgetAmount.qml")
                 }
             }
@@ -137,7 +138,7 @@ Rectangle {
             height: 56
             text: ""
             z: 10
-            placeholderText: qsTr("Password")
+            placeholderText: qsTr("Title")
             placeholderTextColor: "#898989"
             background: Rectangle{
                 width: 293
@@ -220,6 +221,7 @@ Rectangle {
 
             verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenterOffset: 1
+            cursorDelegate: CursorRectangle{property QtObject textField: username}
         }
 
 
