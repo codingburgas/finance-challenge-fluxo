@@ -389,13 +389,8 @@ Rectangle {
                         property string amount: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].transactionAmount
                         property string interactor: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target
                         property string time: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].timeProcessed
-                        property string source: (SessionHandler.transactions[SessionHandler.transactions.length - index - 1].type == "WITHDRAW")? "qrc:/resources/redArrowDown.png" : "qrc:/resources/greenArrowUp.png"
-                        property string textColor: (SessionHandler.transactions[SessionHandler.transactions.length - index - 1].type == "WITHDRAW")? "red" : "notRed"
-
-                        Component.onCompleted: {
-                            console.log("Transaction:", amount, interactor, time);
-                            //SessionHandler.fetchTransactions(fluxo)
-                        }
+                        property string source: (SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target == "WITHDRAW")? "qrc:/resources/redArrowDown.png" : "qrc:/resources/greenArrowUp.png"
+                        property string textColor: (SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target == "WITHDRAW")? "red" : "notRed"
                     }
                 }
             }
@@ -426,14 +421,16 @@ Rectangle {
 
             function onTransactionsChanged() {
                 transactionsRepeater.model = Math.min(SessionHandler.transactions.length, 4);
+                for (let transaction of SessionHandler.transactions){
+                    console.log("Transaction: ", transaction.transactionAmount, transaction.target)
+                }
             }
-
 
 
         }
 
         Component.onCompleted: {
             SessionHandler.fetchBalance(fluxo)
-            SessionHandler.fetchTransactions(fluxo)
+            SessionHandler.fetchRecentTransactions(fluxo)
         }
 }

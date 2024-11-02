@@ -167,85 +167,23 @@ Rectangle {
                 x: 24
 
                 spacing: 22
-                TransactionBlock{
-                    property string amount: "-68.90 BGN"
-                    property string interactor: "Mariq Koleva"
-                    property string source: "qrc:/resources/redArrowDown.png"
-                    property string textColor: "red"
-                    property string time: "8:20 AM"
+
+                Repeater{
+                    id: transactionsRepeater
+                    model: SessionHandler.transactions.length
+
+                    TransactionBlock{
+                        required property int index
+                        property string amount: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].transactionAmount
+                        property string interactor: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target
+                        property string time: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].timeProcessed
+                        property string source: (SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target == "WITHDRAW")? "qrc:/resources/redArrowDown.png" : "qrc:/resources/greenArrowUp.png"
+                        property string textColor: (SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target == "WITHDRAW")? "red" : "notRed"
+                    }
                 }
 
-                TransactionBlock{
-                    property string amount: "-68.90 BGN"
-                    property string interactor: "Mariq Koleva"
-                    property string source: "qrc:/resources/redArrowDown.png"
-                    property string textColor: "red"
-                    property string time: "8:20 AM"
-                }
 
-                TransactionBlock{
-                    property string amount: "-68.90 BGN"
-                    property string interactor: "Mariq Koleva"
-                    property string source: "qrc:/resources/redArrowDown.png"
-                    property string textColor: "red"
-                    property string time: "8:20 AM"
-                }
 
-                TransactionBlock{
-                    property string amount: "-68.90 BGN"
-                    property string interactor: "Mariq Koleva"
-                    property string source: "qrc:/resources/redArrowDown.png"
-                    property string textColor: "red"
-                    property string time: "8:20 AM"
-                }
-
-                TransactionBlock{
-                    property string amount: "-68.90 BGN"
-                    property string interactor: "Mariq Koleva"
-                    property string source: "qrc:/resources/redArrowDown.png"
-                    property string textColor: "red"
-                    property string time: "8:20 AM"
-                }
-
-                TransactionBlock{
-                    property string amount: "-68.90 BGN"
-                    property string interactor: "Mariq Koleva"
-                    property string source: "qrc:/resources/redArrowDown.png"
-                    property string textColor: "red"
-                    property string time: "8:20 AM"
-                }
-
-                TransactionBlock{
-                    property string amount: "-68.90 BGN"
-                    property string interactor: "Mariq Koleva"
-                    property string source: "qrc:/resources/redArrowDown.png"
-                    property string textColor: "red"
-                    property string time: "8:20 AM"
-                }
-
-                TransactionBlock{
-                    property string amount: "-68.90 BGN"
-                    property string interactor: "Mariq Koleva"
-                    property string source: "qrc:/resources/redArrowDown.png"
-                    property string textColor: "red"
-                    property string time: "8:20 AM"
-                }
-
-                TransactionBlock{
-                    property string amount: "-68.90 BGN"
-                    property string interactor: "Mariq Koleva"
-                    property string source: "qrc:/resources/redArrowDown.png"
-                    property string textColor: "red"
-                    property string time: "8:20 AM"
-                }
-
-                TransactionBlock{
-                    property string amount: "-68.90 BGN"
-                    property string interactor: "Mariq Koleva"
-                    property string source: "qrc:/resources/redArrowDown.png"
-                    property string textColor: "red"
-                    property string time: "8:20 AM"
-                }
             }
 
 
@@ -263,5 +201,20 @@ Rectangle {
         }
 
     }
+
+    Connections {
+            target: SessionHandler
+
+            function onTransactionsChanged() {
+                transactionsRepeater.model = SessionHandler.transactions.length;
+            }
+
+
+
+        }
+
+        Component.onCompleted: {
+            SessionHandler.fetchTransactions(fluxo)
+        }
 
 }

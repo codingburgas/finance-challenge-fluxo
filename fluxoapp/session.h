@@ -36,6 +36,7 @@ public:
     QString createSessionID(const QString& email, const QString& userId);
     Q_INVOKABLE void fetchBalance(Fluxo::App* app);
     Q_INVOKABLE void fetchTransactions(Fluxo::App* app);
+    Q_INVOKABLE void fetchRecentTransactions(Fluxo::App* app);
     Q_INVOKABLE void fetchBudgets(Fluxo::App* app);
 
 signals:
