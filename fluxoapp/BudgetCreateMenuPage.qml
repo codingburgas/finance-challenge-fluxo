@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 
 Rectangle {
-    id: window
+    id: mainWindow
     width: 420
     height: 844
     visible: true
@@ -132,6 +132,9 @@ Rectangle {
                         property string name: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetTitle
                         property string category: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetCategory
                         property string outOf: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetAmountInserted + "/" + SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetGoal
+                        Component.onCompleted: {
+                            window = mainWindow
+                        }
                     }
                 }
             }

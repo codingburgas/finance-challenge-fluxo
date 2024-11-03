@@ -14,6 +14,8 @@ Rectangle{
     radius: 20
     color: "#F1F1F1"
 
+    property QtObject window
+
     Text{
         id: name
         text: parent.name

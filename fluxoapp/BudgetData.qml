@@ -221,7 +221,7 @@ Rectangle {
 
             verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenterOffset: 1
-            cursorDelegate: CursorRectangle{property QtObject textField: username}
+            cursorDelegate: CursorRectangle{property QtObject textField: dateInput}
         }
 
 
