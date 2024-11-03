@@ -131,7 +131,7 @@ Rectangle {
                         required property int index
                         property string name: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetTitle
                         property string category: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetCategory
-                        property string outOf: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetAmountInserted + "/" + SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetGGoal
+                        property string outOf: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetAmountInserted + "/" + SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetGoal
                     }
                 }
             }

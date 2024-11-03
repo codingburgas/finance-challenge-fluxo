@@ -505,8 +505,7 @@ void Fluxo::MainOperations::createBudget(const QString& goal, Fluxo::App* app, F
                              {"deadline", budgetInfo["deadline"]},
                              {"category", budgetInfo["category"]},
                              {"title", budgetInfo["title"]},
-
-                             };
+            };
 
         qDebug() << "Preparing new-budget request with data:" << QJsonDocument(testData).toJson();
 
@@ -606,7 +605,7 @@ void Fluxo::MainOperations::sendMoney(const QString &amount, const QString &user
         }
 
         QJsonObject testData{
-            {"amount", amount},
+            {"amount", amount.toDouble()},
             {"email", email},
             {"category", "P2P"},
             {"token", responseObj["token"].toString()},

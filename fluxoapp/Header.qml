@@ -28,7 +28,7 @@ Rectangle {
             id: pfp
             x: 0
             y: 0
-            width: 40
+            width: 42
             height: 42
             text: userName.length > 0 ? userName.charAt(0).toUpperCase() : ""
             font.pixelSize: 16

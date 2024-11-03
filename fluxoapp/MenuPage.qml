@@ -109,7 +109,7 @@ Rectangle {
                     id:homeImageRect
                     width: 38
                     height: 36
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.left: parent.left
                     radius: 3
 
@@ -160,7 +160,7 @@ Rectangle {
                     id:budgetImageRect
                     width: 38
                     height: 36
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.left: parent.left
                     radius: 3
 
@@ -211,7 +211,7 @@ Rectangle {
                     id:withdrawImageRect
                     width: 38
                     height: 36
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.left: parent.left
                     radius: 3
 
@@ -261,7 +261,7 @@ Rectangle {
                     id:depositImageRect
                     width: 38
                     height: 36
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.left: parent.left
                     radius: 3
 
@@ -313,7 +313,7 @@ Rectangle {
                     id:sendImageRect
                     width: 38
                     height: 36
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.left: parent.left
                     radius: 3
 
@@ -364,7 +364,7 @@ Rectangle {
                     id:statsImageRect
                     width: 38
                     height: 36
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.left: parent.left
                     radius: 3
 
@@ -415,7 +415,7 @@ Rectangle {
                     id:transactionsImageRect
                     width: 38
                     height: 36
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.left: parent.left
                     radius: 3
 
@@ -471,7 +471,7 @@ Rectangle {
                     id:privacyPolicyImageRect
                     width: 38
                     height: 36
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.left: parent.left
                     radius: 3
 

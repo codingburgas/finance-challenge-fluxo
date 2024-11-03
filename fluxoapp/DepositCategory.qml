@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 //import QtQuick.Layouts 1.3
+import Qt.labs.platform 1.0
 
 Rectangle {
     id: window
@@ -139,8 +140,6 @@ Rectangle {
                 }
             }
         }
-
-
         Image {
             id: money_image
             x: 228
@@ -160,12 +159,13 @@ Rectangle {
         }
     }
 
-    Connections{
-        target: SessionHandler
+    Connections {
+           target: SessionHandler
 
-        function onTransactionDone(){
-            window.screenChanged("MainPage.qml")
-        }
-    }
+           function onTransactionDone() {
+               window.screenChanged("MainPage.qml");
+
+           }
+       }
 
 }

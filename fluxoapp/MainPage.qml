@@ -96,7 +96,7 @@ Rectangle {
                     id:withdrawRect
                     width: 44
                     height: 39
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     radius: 6
@@ -154,7 +154,7 @@ Rectangle {
                     id:depositRect
                     width: 44
                     height: 39
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     radius: 6
@@ -192,6 +192,9 @@ Rectangle {
                 MouseArea{
                     id: depositMouseArea
                     anchors.fill: parent
+                    anchors.leftMargin: 1
+                    anchors.rightMargin: -1
+                    anchors.topMargin: 0
                     anchors.bottomMargin: 13
                     onClicked:{
                         window.screenChanged("DepositAmount.qml")
@@ -212,7 +215,7 @@ Rectangle {
                     id:statsRect
                     width: 44
                     height: 39
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     radius: 6
@@ -269,7 +272,7 @@ Rectangle {
                     id:sendRect
                     width: 44
                     height: 39
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     radius: 6
@@ -307,6 +310,9 @@ Rectangle {
                 MouseArea{
                     id: sendMouseArea
                     anchors.fill: parent
+                    anchors.leftMargin: 0
+                    anchors.rightMargin: 0
+                    anchors.topMargin: 0
                     anchors.bottomMargin: 13
                     onClicked: {
                         window.screenChanged("SendMoney.qml")

@@ -159,9 +159,7 @@ Rectangle {
     Connections{
         target: SessionHandler
         function onTransactionDone(){
-            if (SessionHandler.getIsTransactionDone()){
-                window.screenChanged("MainPage.qml")
-            }
+            window.screenChanged("MainPage.qml")
         }
     }
 }

@@ -58,6 +58,7 @@ qt_add_qml_module(appfluxoapp
     SOURCES budget.h
     QML_FILES NewPageHideAnimation.qml
     QML_FILES NewPageShowAnimation.qml
+    SOURCES notification.h
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
