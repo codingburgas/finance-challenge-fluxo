@@ -32,7 +32,7 @@ Rectangle {
             id: homeMouseArea
             anchors.fill: parent
             onClicked: {
-                window.screenChanged("MainPage.qml")
+                navBar.window.screenChanged("MainPage.qml")
             }
         }
     }
@@ -52,7 +52,7 @@ Rectangle {
             id: receiptMouseArea
             anchors.fill: parent
             onClicked: {
-                window.screenChanged("TransactionsPage.qml")
+                navBar.window.screenChanged("TransactionsPage.qml")
             }
         }
     }
@@ -73,7 +73,7 @@ Rectangle {
             id: savingsMouseArea
             anchors.fill: parent
             onClicked: {
-                window.screenChanged("BudgetCreateMenuPage.qml")
+                navBar.window.screenChanged("BudgetCreateMenuPage.qml")
             }
         }
     }

@@ -37,6 +37,7 @@ Rectangle {
             id: header
             x:0
             y: 55
+            property QtObject window: window
             property bool welcomeBackText: false
             property bool menuButton: true
         }

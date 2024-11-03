@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
@@ -39,6 +41,7 @@ Rectangle {
             id: header
             x:0
             y: 55
+            property QtObject window: mainWindow
             property bool welcomeBackText: true
             property bool menuButton: true
         }
@@ -127,7 +130,7 @@ Rectangle {
                     id: budgetsRepeater
                     model: SessionHandler.budgets.length
 
-                    BudgetBlock{
+                    delegate: BudgetBlock{
                         required property int index
                         property string name: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetTitle
                         property string category: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetCategory
@@ -142,6 +145,7 @@ Rectangle {
 
         Navbar{
             id: navbar
+            property QtObject window: mainWindow
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23

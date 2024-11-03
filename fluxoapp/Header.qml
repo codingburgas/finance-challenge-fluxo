@@ -109,7 +109,7 @@ Rectangle {
             id: menuMouseArea
             anchors.fill: parent
             onClicked: {
-                window.screenChanged("MenuPage.qml")
+                header.window.screenChanged("MenuPage.qml")
             }
         }
     }
