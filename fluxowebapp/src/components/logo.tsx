@@ -1,11 +1,9 @@
-import { appConfig } from "@/config/app";
-import { Icons } from "./icons";
+import favicon from '/favicon.svg'; 
 
 export function Logo() {
     return (
-        <>
-            <Icons.logo className="h-6 w-6" />
-            <span className="font-bold">{appConfig.name}</span>
-        </>
-    )
+        <div className="flex justify-start">
+            <img src={favicon} alt="Logo"/>
+        </div>
+    );
 }

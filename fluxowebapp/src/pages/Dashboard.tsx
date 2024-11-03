@@ -18,7 +18,7 @@ export const Heading = () => {
             setTimeout(() => {
                 setIndex((prevIndex) => (prevIndex + 1) % sentences.length);
                 setVisible(true); // Fade in
-            }, 500); // Match this duration with the CSS transition duration
+            }, 500);
         }, 3000);
 
         return () => clearInterval(interval);
@@ -39,7 +39,6 @@ export const Heading = () => {
                 <span className="text-gray-400">FOR YOUR FAMILY.</span>
             </h1>
             
-            {/* Three pictures with lines */}
             <div className="flex flex-col items-center mt-8">
                 <div className="w-full h-0.5 bg-gray-100 mb-4"></div>
                 <div className="flex justify-between w-full max-w-[800px] gap-4">
@@ -68,14 +67,12 @@ export const Heading = () => {
 const TextSections = () => {
     return (
         <div className="w-full max-w-[1200px] mt-20 flex flex-col md:flex-row justify-between items-start md:items-center text-gray-300 p-4">
-            {/* Left Text */}
             <p className="text-left text-[42px] md:text-[42px] mb-6 md:mb-0">
                 Your <span className="text-[#57ff5a]">Trusted</span> Software
                 <br />
                 For Money Management
             </p>
 
-            {/* Right Text */}
             <p className="text-left md:text-right text-[16px] md:text-[18px] md:ml-auto max-w-[300px]">
                 Fluxo prioritizes in security and reliability. With advanced encryption, 
                 your data stays protected, and every transaction is verified for accuracy.
