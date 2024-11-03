@@ -6,6 +6,10 @@
   color: #000000;
   background-color: #57FF5A;
 }
+
+body{
+  overflow-x: hidden;
+}
  
 @layer base {
   :root {

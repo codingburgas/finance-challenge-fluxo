@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import backgroundEllipse from '../../public/radialEllipseBackground.png'
 
 const sentences = [
     "SPEND MONEY SMARTER WITH FLUXO!",
@@ -29,52 +30,70 @@ export const Heading = () => {
     }, [index]);
 
     return (
-        <div className="text-left"> 
-            <h2 className={`text-[25px] text-gray-400 transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}>
-                {currentSentence}
-            </h2>
-            <h1 className="text-[55px] font-bold -mt-2 leading-tight">
-                <span className="text-white">BEST</span> <span className="text-[#57ff5a]">FINANCIAL</span><br />
-                <span className="text-[#57ff5a]">MANAGEMENT SYSTEM</span><br />
-                <span className="text-gray-400">FOR YOUR FAMILY.</span>
-            </h1>
-            
-            <div className="flex flex-col items-center mt-8">
-                <div className="w-full h-0.5 bg-gray-100 mb-4"></div>
-                <div className="flex justify-between w-full max-w-[800px] gap-4">
-                    <img 
-                        src="chartpic.png" 
-                        alt="Image 1" 
-                        className="w-[106px] h-[106px] rounded-full object-cover" 
-                    />
-                    <img 
-                        src="clockpic.png" 
-                        alt="Image 2" 
-                        className="w-[106px] h-[106px] rounded-full object-cover"  
-                    />
-                    <img 
-                        src="moneypic.png" 
-                        alt="Image 3" 
-                        className="w-[106px] h-[106px] rounded-full object-cover"
-                    />
+        <>
+            <img
+                src={backgroundEllipse}
+                alt="Background gradient"
+                className="-top-52 select-none w-[40rem] -z-50 -left-24 absolute select-none"
+            />
+
+            <img
+                src={backgroundEllipse}
+                alt="Background gradient"
+                className=" select-none w-[40rem] -z-50 right-0 absolute select-none"
+            />
+            <div className="text-left"> 
+                <h2 className={`text-[25px] text-gray-400 transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}>
+                    {currentSentence}
+                </h2>
+                <h1 className="text-[55px] font-bold -mt-2 leading-tight">
+                    <span className="text-white z-10">BEST</span> <span className="text-[#57ff5a]">FINANCIAL</span><br />
+                    <span className="text-[#57ff5a]">MANAGEMENT SYSTEM</span><br />
+                    <span className="text-gray-400">FOR YOUR FAMILY.</span>
+                </h1>
+                
+                <div className="flex flex-col items-center mt-8">
+                    <div className="w-full h-0.5 bg-gray-100 mb-4"></div>
+                    <div className="flex justify-between w-full max-w-[800px] gap-4">
+                        <img 
+                            src="chartpic.png" 
+                            alt="Image 1" 
+                            className="w-[106px] h-[106px] rounded-full object-cover" 
+                        />
+                        <img 
+                            src="clockpic.png" 
+                            alt="Image 2" 
+                            className="w-[106px] h-[106px] rounded-full object-cover"  
+                        />
+                        <img 
+                            src="moneypic.png" 
+                            alt="Image 3" 
+                            className="w-[106px] h-[106px] rounded-full object-cover"
+                        />
+                    </div>
+                    <div className="w-full h-0.5 bg-gray-100 mt-4"></div>
                 </div>
-                <div className="w-full h-0.5 bg-gray-100 mt-4"></div>
             </div>
-        </div>
+        </>
     );
 }
 
 const TextSections = () => {
     return (
         <div className="w-full max-w-[1200px] mt-20 flex flex-col md:flex-row justify-between items-start md:items-center text-gray-300 p-4">
-            <p className="text-left font-medium	text-[42px] md:text-[42px] mb-6 md:mb-0">
+            <p className="text-left font-medium text-[42px] md:text-[42px] mb-6 md:mb-0">
                 Your <span className="text-[#57ff5a]">Trusted</span> Software
                 <br />
                 For Money Management
             </p>
+            <img
+                src={backgroundEllipse}
+                alt="Background gradient"
+                className=" select-none mt-28 w-[50rem] -z-50 -left-10 absolute select-none"
+            />
 
             <p className="text-left md:text-right text-[16px] md:text-[18px] md:ml-auto max-w-[300px]">
-                Fluxo prioritizes in security and reliability. With advanced encryption, 
+                Fluxo prioritizes security and reliability. With advanced encryption, 
                 your data stays protected, and every transaction is verified for accuracy.
             </p>
         </div>
@@ -104,6 +123,11 @@ const RectanglesSection = () => {
             <div className="bg-gradient-to-r from-[#152032] to-[#1e1e1e] shadow-inner h-[300px] w-full md:w-[450px] flex-shrink-0 p-6 border rounded-r-[22px] md:rounded-br-[22px] md:rounded-tr-[22px]">
                 <p className="text-[#57ff5a] text-[48px] font-bold font-['Oldschool Grotesk'] leading-[60px]">03.</p>
                 <p className="text-white text-[32px] font-normal font-['Oldschool Grotesk'] leading-[50px] mt-2">User-friendly interface.</p>
+                <img
+                src={backgroundEllipse}
+                alt="Background gradient"
+                className=" select-none mt-2 w-[50rem] -z-50 -right-10 absolute select-none"
+            />
             </div>
         </div>
     );
@@ -121,7 +145,6 @@ const ImagesAndTextSection = () => {
             </div>
 
             <div className="mt-4 md:mt-0 md:ml-8 text-left"> 
-                {/* Heading */}
                 <h3 className="text-[52px] font-semibold font-['Inter'] capitalize leading-snug">
                     <span className="text-white block">The Best</span>
                     <span className="text-[#57ff5a] block">Financial Management Software</span>
@@ -144,6 +167,11 @@ const ImagesAndTextSection = () => {
                     <p className="text-[19px] font-light font-['Inter'] text-white mt-4">
                         Designed for trust and reliability, it keeps your data safe while boosting productivity.
                     </p>
+                    <img
+                src={backgroundEllipse}
+                alt="Background gradient"
+                className=" select-none w-[50rem] bottom-0 -z-50 -left-10 absolute select-none"
+            />
                 </div>
 
                 <button className="mt-8 px-4 text-2xl py-2 bg-[#57ff5a] text-black rounded-2xl">
@@ -194,22 +222,21 @@ const Dashboard = () => {
                 </div>
             </div>
 
-
-                <div className="h-20"></div>
+            <div className="h-20"></div>
 
             <div className="w-full max-w-[1200px] p-4">
                 <TextSections />
             </div>
 
-                <div className="h-20"></div>
+            <div className="h-20"></div>
 
             <RectanglesSection />
 
-                <div className="h-20"></div>
+            <div className="h-20"></div>
 
             <ImagesAndTextSection />
 
-                <div className="h-20"></div>
+            <div className="h-20"></div>
         </div>
     );
 }
