@@ -67,7 +67,7 @@ export const Heading = () => {
 const TextSections = () => {
     return (
         <div className="w-full max-w-[1200px] mt-20 flex flex-col md:flex-row justify-between items-start md:items-center text-gray-300 p-4">
-            <p className="text-left text-[42px] md:text-[42px] mb-6 md:mb-0">
+            <p className="text-left font-medium	text-[42px] md:text-[42px] mb-6 md:mb-0">
                 Your <span className="text-[#57ff5a]">Trusted</span> Software
                 <br />
                 For Money Management
@@ -84,12 +84,12 @@ const TextSections = () => {
 const RectanglesSection = () => {
     return (
         <div className="flex flex-col md:flex-row justify-center items-end w-full max-w-[1200px]">
-            <div className="bg-gradient-to-r from-[#1e1e1e] to-[#152032] h-[300px] w-full md:w-[450px] flex-shrink-0 p-6 border border-gray-300 rounded-l-[22px] md:rounded-l-[22px] md:rounded-tl-[22px]">
+            <div className="bg-gradient-to-r from-[#1e1e1e] to-[#152032] h-[300px] w-full md:w-[450px] flex-shrink-0 p-6 border rounded-l-[22px] md:rounded-l-[22px] md:rounded-tl-[22px]">
                 <p className="text-[#57ff5a] text-[48px] font-bold font-['Oldschool Grotesk'] leading-[60px]">01.</p>
                 <p className="text-white text-[32px] font-normal font-['Oldschool Grotesk'] leading-[50px] mt-2">Privacy is our priority.</p>
             </div>
 
-            <div className="bg-[#57ff5a] h-[390px] w-full md:w-[400px] mx-0 p-6 border border-gray-300 rounded-t-[22px]">
+            <div className="bg-[#57ff5a] h-[390px] w-full md:w-[400px] mx-0 p-6 border border-[#57FF5A] rounded-t-[22px]">
                 <p className="text-black text-[48px] font-bold font-['Oldschool Grotesk'] leading-[60px]">02.</p>
                 <p className="text-black text-[32px] font-normal font-['Oldschool Grotesk'] leading-[50px] mt-2">Take control.</p>
                 <p className="text-black text-[16px] font-normal leading-[28px] mt-2">
@@ -101,7 +101,7 @@ const RectanglesSection = () => {
                 </p>
             </div>
 
-            <div className="bg-gradient-to-r from-[#152032] to-[#1e1e1e] shadow-inner h-[300px] w-full md:w-[450px] flex-shrink-0 p-6 border border-gray-300 rounded-r-[22px] md:rounded-br-[22px] md:rounded-tr-[22px]">
+            <div className="bg-gradient-to-r from-[#152032] to-[#1e1e1e] shadow-inner h-[300px] w-full md:w-[450px] flex-shrink-0 p-6 border rounded-r-[22px] md:rounded-br-[22px] md:rounded-tr-[22px]">
                 <p className="text-[#57ff5a] text-[48px] font-bold font-['Oldschool Grotesk'] leading-[60px]">03.</p>
                 <p className="text-white text-[32px] font-normal font-['Oldschool Grotesk'] leading-[50px] mt-2">User-friendly interface.</p>
             </div>
@@ -111,13 +111,12 @@ const RectanglesSection = () => {
 
 const ImagesAndTextSection = () => {
     return (
-        <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-[1200px] p-4 mt-20 rounded-lg shadow-lg">
-            {/* Left side: Image */}
+        <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-[1200px] p-4 mt-20 rounded-lg">
             <div className="flex-shrink-0">
                 <img 
                     src="MainPage.png" 
                     alt="Financial Management App" 
-                    className="w-full md:w-[387px] h-auto md:h-[810px] object-cover" 
+                    className="w-auto h-auto md:h-[810px] object-cover" 
                 />
             </div>
 
@@ -147,8 +146,7 @@ const ImagesAndTextSection = () => {
                     </p>
                 </div>
 
-                {/* Download Button */}
-                <button className="mt-6 px-4 py-2 bg-[#57ff5a] text-black rounded-md">
+                <button className="mt-8 px-4 text-2xl py-2 bg-[#57ff5a] text-black rounded-2xl">
                     Download
                 </button>
             </div>
@@ -177,7 +175,6 @@ const Dashboard = () => {
 
             <div className="h-20"></div> 
 
-            {/* Middle text and two icons on both sides */}
             <div className="w-full flex flex-col items-center mt-6">
                 <div className="flex justify-center items-center w-full max-w-[800px] space-x-4"> 
                     <img 

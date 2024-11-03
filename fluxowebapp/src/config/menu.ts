@@ -25,7 +25,7 @@ export const mainMenu: NavItemWithChildren[] = [
     },
     {
         title: 'About',
-        to: 'empty',
+        to: '/',
     },
 ]
 
