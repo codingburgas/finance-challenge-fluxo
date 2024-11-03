@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import backgroundEllipse from '../../public/radialEllipseBackground.png'
-import stars from '../../public/starsReview.png'
+import backgroundEllipse from '/radialEllipseBackground.png'
+import stars from '/starsReview.png'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const sentences = [
     "SPEND MONEY SMARTER WITH FLUXO!",
@@ -30,6 +32,15 @@ export const Heading = () => {
         setCurrentSentence(sentences[index]);
     }, [index]);
 
+    useEffect(() => {
+        AOS.init({
+            duration: 1000, 
+            easing: 'ease-in-out',
+            once: false, 
+        });
+    }, []);
+    
+
     return (
         <>
             <img
@@ -43,7 +54,7 @@ export const Heading = () => {
                 alt="Background gradient"
                 className="w-[40rem] -z-50 right-0 absolute select-none"
             />
-            <div className="text-left"> 
+            <div className="text-left" data-aos="fade-down-right"> 
                 <h2 className={`text-[25px] text-gray-400 transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}>
                     {currentSentence}
                 </h2>
@@ -80,8 +91,9 @@ export const Heading = () => {
 }
 
 const TextSections = () => {
+
     return (
-        <div className="w-full max-w-[1200px] mt-20 flex flex-col md:flex-row justify-between items-start md:items-center p-4 mb-16">
+        <div data-aos="fade-right" className="w-full max-w-[1200px] mt-20 flex flex-col md:flex-row justify-between items-start md:items-center p-4 mb-16">
             <p className="text-left font-medium text-[42px] md:text-[42px] mb-6 md:mb-0">
                 Your <span className="text-[#57ff5a]">Trusted</span> Software
                 <br />
@@ -103,7 +115,7 @@ const TextSections = () => {
 
 const RectanglesSection = () => {
     return (
-        <div className="flex flex-col md:flex-row justify-center items-end w-full max-w-[1200px]">
+        <div className="flex flex-col md:flex-row justify-center items-end w-full max-w-[1200px]" data-aos="fade-up">
             <div className="bg-gradient-to-r from-[#1e1e1e] to-[#152032] h-[300px] w-full md:w-[450px] flex-shrink-0 p-6 border rounded-l-[22px] md:rounded-l-[22px] md:rounded-tl-[22px]">
                 <p className="text-[#57ff5a] text-[48px] font-bold font-['Oldschool Grotesk'] leading-[60px]">01.</p>
                 <p className="text-white text-[32px] font-normal font-['Oldschool Grotesk'] leading-[50px] mt-2">Privacy is our priority.</p>
@@ -142,10 +154,11 @@ const ImagesAndTextSection = () => {
                     src="MainPage.png" 
                     alt="Financial Management App" 
                     className="w-auto h-auto md:h-[45rem] object-cover select-none -ml-10 mr-20" 
+                    data-aos="fade-up-right"
                 />
             </div>
 
-            <div className="mt-4 md:mt-0 md:ml-14 text-left"> 
+            <div className="mt-4 md:mt-0 md:ml-14 text-left" data-aos="fade-up-left"> 
                 <h3 className="text-[3.4rem] font-medium font-['Inter'] leading-snug bg-gradient-to-r from-[#FFFFFF] to-[#999999] bg-clip-text text-transparent">
                     <span className="block">The Best</span>
                     <span className="block text-[#57ff5a]">Financial Management Software</span>
@@ -198,7 +211,7 @@ const Dashboard = () => {
                     <Heading />
                 </div>
 
-                <div className="md:w-1/2 flex justify-end"> 
+                <div className="md:w-1/2 flex justify-end" data-aos="fade-down-left"> 
                     <img 
                         src="handsmoney.png" 
                         alt="Fluxo Illustration" 
@@ -209,7 +222,7 @@ const Dashboard = () => {
 
             <div className="h-20"></div> 
 
-            <div className="w-full flex flex-col items-center mt-6">
+            <div className="w-full flex flex-col items-center mt-6" data-aos="fade-up">
                 <div className="flex justify-center items-center w-full max-w-[800px] space-x-4"> 
                     <img 
                         src="Group_10.png" 
