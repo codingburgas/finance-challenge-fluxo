@@ -10,6 +10,25 @@
 body{
   overflow-x: hidden;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ECF0F3; 
+  border-radius: 5px; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #57FF5A; 
+  border-radius: 3px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4BDB4C;
+}
  
 @layer base {
   :root {
