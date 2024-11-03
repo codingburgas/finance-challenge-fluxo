@@ -3,7 +3,7 @@ import QtQuick 2.7
 SequentialAnimation{
     id: animation
     /*when new page appear and expands to fullscreen*/
-    property int duration: 450
+    property int duration: 350
 
     ParallelAnimation {
 

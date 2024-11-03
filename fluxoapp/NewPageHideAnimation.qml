@@ -3,7 +3,7 @@ import QtQuick 2.7
 SequentialAnimation{
     /*when old page shrink and underneath is left new one*/
     id: animation
-    property int duration: 450
+    property int duration: 350
 
     PropertyAction {
         target: animation.stackView.nextPage;
