@@ -80,7 +80,7 @@ Rectangle {
                 anchors.fill: parent
 
                 onClicked: {
-                    window.screenChanged("MainPage.qml")
+                    CoreOperations.sendMoney(amount.text, username.text, fluxo, SessionHandler)
                 }
             }
 
@@ -154,5 +154,14 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -23
+    }
+
+    Connections{
+        target: SessionHandler
+        function onTransactionDone(){
+            if (SessionHandler.getIsTransactionDone()){
+                window.screenChanged("MainPage.qml")
+            }
+        }
     }
 }

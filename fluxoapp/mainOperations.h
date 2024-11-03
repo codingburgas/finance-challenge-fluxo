@@ -29,6 +29,7 @@ public:
     Q_INVOKABLE void cacheBudgetInfo(const QString &title, const QString &category, const QString &deadline, Fluxo::App* app);
     Q_INVOKABLE QJsonObject retrieveBudgetInfoCache();
     Q_INVOKABLE void createBudget(const QString& amount, Fluxo::App* app, Fluxo::SessionHandler* handler);
+    Q_INVOKABLE void sendMoney(const QString& amount, const QString& username, Fluxo::App* app, Fluxo::SessionHandler* handler);
 
 };
 
