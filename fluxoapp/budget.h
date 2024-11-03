@@ -11,6 +11,7 @@ namespace Fluxo {
 class Budget : public QObject {
     Q_OBJECT
 
+    Q_PROPERTY(QString budgetId READ getBudgetId WRITE setBudgetId NOTIFY budgetIdChanged)
     Q_PROPERTY(QString budgetTitle READ getBudgetTitle WRITE setBudgetTitle NOTIFY budgetTitleChanged)
     Q_PROPERTY(QString budgetAmountInserted READ getBudgetAmountInserted WRITE setBudgetAmountInserted NOTIFY budgetAmountInsertedChanged)
     Q_PROPERTY(QString budgetGoal READ getBudgetGoal WRITE setBudgetGoal NOTIFY budgetGoalChanged)
@@ -19,11 +20,20 @@ class Budget : public QObject {
 
 
 public:
+    QString getBudgetId() const { return budgetId; }
     QString getBudgetTitle() const { return budgetTitle; }
     QString getBudgetAmountInserted() const { return budgetAmountInserted; }
     QString getBudgetGoal() const { return budgetGoal; }
     QString getBudgetDeadline() const { return budgetDeadline; }
     QString getBudgetCategory() const { return budgetCategory; }
+
+
+    void setBudgetId(const QString &id){
+        if (budgetId != id){
+            budgetId = id;
+            emit budgetIdChanged();
+        }
+    }
 
 
     void setBudgetTitle(const QString &title){
@@ -62,6 +72,7 @@ public:
     }
 
 signals:
+    void budgetIdChanged();
     void budgetTitleChanged();
     void budgetAmountInsertedChanged();
     void budgetGoalChanged();
@@ -69,6 +80,7 @@ signals:
     void budgetCategoryChanged();
 
 public:
+    QString budgetId;
     QString budgetTitle;
     QString budgetAmountInserted;
     QString budgetGoal;

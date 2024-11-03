@@ -8,6 +8,9 @@ Window {
     height: 844
     visible: true
 
+    /*//property to save budget id, when it's clicked
+    property string budgetId*/
+
     property string currentFile: "GetStartedPage.qml"
     property string nextFile: ""
     property Rectangle currentPage: GetStartedPage{}
@@ -46,21 +49,33 @@ Window {
                 let newComponent = Qt.createComponent( Qt.resolvedUrl(path) )
 
                 if (window.currentFile == "MainPage.qml"){
+
                     window.nextPage = newComponent.createObject(window, {x:window.width/2, z:2})
+
                     window.showAnimation.restart()
+
                 } else{
+
                     if (window.nextFile == "MainPage.qml"){
                         window.nextPage = newComponent.createObject(window, {z:0})
                         window.hideAnimation.restart()
+
                     } else {
+
                         window.nextPage = newComponent.createObject(window, {x:window.width/2, z:2})
                         window.showAnimation.restart()
+
                     }
                 }
 
             }
 
         }
+
+
+        /*function onBudgetClicked(id){
+            window.budgetId = id
+        }*/
     }
 
     Connections{

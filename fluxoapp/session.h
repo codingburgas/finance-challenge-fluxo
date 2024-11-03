@@ -38,6 +38,7 @@ public:
     Q_INVOKABLE void fetchTransactions(Fluxo::App* app);
     Q_INVOKABLE void fetchRecentTransactions(Fluxo::App* app);
     Q_INVOKABLE void fetchBudgets(Fluxo::App* app);
+    Q_INVOKABLE void fetchBudget(const QString &budgetId, Fluxo::App* app);
 
 signals:
 

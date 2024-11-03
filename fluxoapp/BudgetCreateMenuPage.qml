@@ -11,6 +11,7 @@ Rectangle {
     visible: true
 
     signal screenChanged(file: string)
+    signal budgetClicked(id: string)
 
     Rectangle {
         id: background
@@ -132,11 +133,16 @@ Rectangle {
 
                     delegate: BudgetBlock{
                         required property int index
+                        property string budgetId: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetId
                         property string name: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetTitle
                         property string category: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetCategory
-                        property string outOf: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetAmountInserted + "/" + SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetGoal
+                        property string amountInserted: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetAmountInserted
+                        property string goal: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetGoal
                         Component.onCompleted: {
                             window = mainWindow
+                            for (let budget of SessionHandler.budgets){
+                                console.log("budgetId is set to: ", budgetId)
+                            }
                         }
                     }
                 }

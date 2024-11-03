@@ -54,7 +54,7 @@ Rectangle {
         Text{
             id: yourBalance
 
-            text: "200 BGN"
+            text: SessionHandler.budgets[0].budgetAmountInserted
             color:"#000000"
 
             width: 191
@@ -163,7 +163,7 @@ Rectangle {
         }
         Text{
             id: recentTransactionsText
-            text: "My Dream Laptop"
+            text: SessionHandler.budgets[0].budgetTitle
             width: 179
             height: 28
             x:121
@@ -270,7 +270,7 @@ Rectangle {
             width: 191
             height: 21
             color: "#000000"
-            text: "2000 BGN"
+            text: SessionHandler.budgets[0].budgetGoal
             font.pixelSize: 18
             verticalAlignment: Text.AlignBottom
             z: 3
@@ -388,7 +388,7 @@ Rectangle {
             width: 191
             height: 21
             color: "#000000"
-            text: "21 January 2025"
+            text: SessionHandler.budgets[0].budgetDeadline
             font.pixelSize: 12
             verticalAlignment: Text.AlignBottom
             z: 3
@@ -419,7 +419,7 @@ Rectangle {
             width: 191
             height: 21
             color: "#000000"
-            text: "Education"
+            text: SessionHandler.budgets[0].budgetCategory
             font.pixelSize: 12
             verticalAlignment: Text.AlignBottom
             z: 3
@@ -510,5 +510,10 @@ Rectangle {
     anchors.bottom: parent.bottom
     anchors.bottomMargin: -23
     }
+
+    /*Component.onCompleted: {
+        SessionHandler.fetchBudget(window.budgetId)
+    }*/
+
 
 }

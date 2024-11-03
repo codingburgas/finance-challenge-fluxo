@@ -476,9 +476,12 @@ void Fluxo::SessionHandler::fetchBudgets(Fluxo::App* app) {
 
                 for (auto it = budgetsArray.begin(); it != budgetsArray.end(); ++it) {
                     QJsonObject budgetObject = it->toObject();
+                    qDebug() << "Budget object in json: " << budgetObject;
                     auto* budget = new Fluxo::Budget();
+                    budget->setBudgetId(QString::number(budgetObject["id"].toDouble()));
+                    qDebug() << "Create budget with id: " << budget->budgetId;
                     budget->setBudgetTitle(budgetObject["title"].toString());
-                    budget->setBudgetAmountInserted(QString::number(budgetObject["amountINserted"].toDouble()));
+                    budget->setBudgetAmountInserted(QString::number(budgetObject["amountInserted"].toDouble()));
                     budget->setBudgetGoal(QString::number(budgetObject["goal"].toDouble()));
                     budget->setBudgetCategory(budgetObject["category"].toString());
                     budget->setBudgetDeadline(budgetObject["deadline"].toString());
@@ -495,6 +498,66 @@ void Fluxo::SessionHandler::fetchBudgets(Fluxo::App* app) {
 }
 
 
+
+void Fluxo::SessionHandler::fetchBudget(const QString &budgetId, Fluxo::App* app){
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
+    QFile file(dir);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't open file:" << file.fileName();
+        return;
+    }
+
+    QByteArray fileData = file.readAll();
+    file.close();
+    QJsonDocument doc = QJsonDocument::fromJson(fileData);
+    QJsonObject jsonObj = doc.object();
+
+    QString token = jsonObj["token"].toString();
+    QString id = jsonObj["id"].toString();
+
+    QNetworkAccessManager* manager = app->getNetworkManager();
+    QNetworkRequest getInfoRequest(QUrl("https://fluxo-api.me/getInfo"));
+    getInfoRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QJsonObject getInfoRequestBody{{"token", token}, {"id", id}};
+    QNetworkReply* getInfoReply = manager->post(getInfoRequest, QJsonDocument(getInfoRequestBody).toJson());
+
+    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [=]() mutable {
+        if (getInfoReply->error() == QNetworkReply::NoError) {
+            QByteArray responseData = getInfoReply->readAll();
+            QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
+            QJsonObject responseObj = responseDoc.object();
+            qDebug() << "Data fetched from db: " << responseObj;
+
+            // Get budgets array
+            if (responseObj.contains("budgets") && responseObj["budgets"].isArray()) {
+                budgets.clear(); // Clear existing budgets
+                QJsonArray budgetsArray = responseObj["budgets"].toArray();
+
+
+                for (auto it = budgetsArray.begin(); it != budgetsArray.end(); ++it) {
+                    QJsonObject budgetObject = it->toObject();
+                    if (QString::number(budgetObject["id"].toDouble()) == budgetId){
+                        auto* budget = new Fluxo::Budget();
+                        budget->setBudgetId(QString::number(budgetObject["id"].toDouble()));
+                        budget->setBudgetTitle(budgetObject["title"].toString());
+                        budget->setBudgetAmountInserted(QString::number(budgetObject["amountINserted"].toDouble()));
+                        budget->setBudgetGoal(QString::number(budgetObject["goal"].toDouble()));
+                        budget->setBudgetCategory(budgetObject["category"].toString());
+                        budget->setBudgetDeadline(budgetObject["deadline"].toString());
+
+                        addBudget(budget);
+                    } else {qDebug() << "No budget found with id: " << budgetId;}
+
+                }
+                emit budgetsChanged();
+            } else {
+                qDebug() << "budgets key is not found in fetched data";
+            }
+        }
+        getInfoReply->deleteLater();
+    });
+}
 
 
 

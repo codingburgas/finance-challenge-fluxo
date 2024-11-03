@@ -3,10 +3,12 @@ import QtQuick 2.7
 Rectangle{
     /*
     params to be set:
+    budgetId: string
     window: QObject - object of a main rectangle in a file
     name: string - budget name
     category: string - category
-    outOf: string - a string, containing progress (100/200 BGN)
+    amountInserted: string - a string, containing amount
+    goal: string - a string, containing goal
     */
     id: budgetBlock
     width: 294
@@ -34,7 +36,6 @@ Rectangle{
 
 
     Rectangle{
-
         x: 251
         y: 11
         width: 24
@@ -47,6 +48,7 @@ Rectangle{
         }
         MouseArea{
             anchors.fill: parent
+            z:2
             onClicked: {
                 budgetBlock.window.screenChanged("BudgetEdit.qml")
             }
@@ -75,7 +77,7 @@ Rectangle{
 
     Text{
         id: outOf
-        text: parent.outOf
+        text: parent.amountInserted + "/" + parent.goal + "BGN"
 
         x:157
         y:65
@@ -88,5 +90,21 @@ Rectangle{
         font.weight: 400
         font.pixelSize: 14
         color: "#898989"
+    }
+
+    MouseArea{
+        anchors.fill: parent
+        z:1
+        onClicked: {
+            SessionHandler.fetchBudget(budgetBlock.budgetId, fluxo)
+        }
+    }
+
+    Connections{
+        target: SessionHandler
+
+        function onBudgetsChanged(){
+            budgetBlock.window.screenChanged("BudgetMainMenu.qml")
+        }
     }
 }
