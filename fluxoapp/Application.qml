@@ -42,31 +42,49 @@ Window {
         target: window.currentPage
         //checks if user clicked sth, which is supposed to enter new page
         function onScreenChanged(path){
+            console.log(path)
 
             if (window.currentFile != path){
                 window.nextFile = path
                 //create new component from path given and convert it into object
                 let newComponent = Qt.createComponent( Qt.resolvedUrl(path) )
 
-                if (window.currentFile == "MainPage.qml"){
+                let changeWindow = () => {
+                    if (newComponent.status == Component.Ready){
+                        if (window.currentFile == "MainPage.qml"){
 
-                    window.nextPage = newComponent.createObject(window, {x:window.width/2, z:2})
+                            window.nextPage = newComponent.createObject(window, {x:window.width/2, z:2})
 
-                    window.showAnimation.restart()
+                            window.showAnimation.restart()
 
-                } else{
+                        } else{
 
-                    if (window.nextFile == "MainPage.qml"){
-                        window.nextPage = newComponent.createObject(window, {z:0})
-                        window.hideAnimation.restart()
+                            if (window.nextFile == "MainPage.qml"){
+                                window.nextPage = newComponent.createObject(window, {z:0})
+                                window.hideAnimation.restart()
 
-                    } else {
+                            } else {
 
-                        window.nextPage = newComponent.createObject(window, {x:window.width/2, z:2})
-                        window.showAnimation.restart()
+                                window.nextPage = newComponent.createObject(window, {x:window.width/2, z:2})
+                                window.showAnimation.restart()
 
+                            }
+                        }
+                    } else if (newComponent.status == Component.Error){
+                        console.log("Error while switching screens: ", newComponent.errorString());
                     }
+
+
+                };
+                if (newComponent.status == Component.Ready){
+                        changeWindow();
+                }else if (newComponent.status === Component.Loading) {
+                    newComponent.statusChanged.connect(changeWindow); // Connect to statusChanged if still loading
+                } else if (newComponent.status === Component.Error) {
+                    console.error("Error loading component:", newComponent.errorString()); // Handle error case
                 }
+
+
 
             }
 

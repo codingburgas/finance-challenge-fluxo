@@ -155,8 +155,8 @@ Rectangle {
         }
 
     }
-    /*Component.onCompleted: {
+    Component.onCompleted: {
         SessionHandler.fetchBudgets(fluxo)
-    }*/
+    }
 
 }

@@ -73,7 +73,8 @@ Rectangle {
             id: savingsMouseArea
             anchors.fill: parent
             onClicked: {
-                SessionHandler.fetchBudgets(fluxo)
+                //SessionHandler.fetchBudgets(fluxo)
+                navBar.window.screenChanged("BudgetCreateMenuPage.qml")
             }
         }
     }
@@ -81,9 +82,9 @@ Rectangle {
     Connections{
         target: SessionHandler
 
-        function onBudgetsChanged(){
+        /*function onBudgetsChanged(){
             navBar.window.screenChanged("BudgetCreateMenuPage.qml")
-        }
+        }*/
     }
 
 }

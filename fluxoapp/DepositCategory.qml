@@ -137,7 +137,11 @@ Rectangle {
                 id: mouseAreaCategory
                 anchors.fill: parent
                 onClicked:{
-                    CoreOperations.deposit(categoryComboBox.currentText, fluxo, SessionHandler);
+                    if (SessionHandler.activeBudgetIndex == -1){
+                        CoreOperations.deposit(categoryComboBox.currentText, fluxo, SessionHandler);
+                    } else{
+                        CoreOperations.depositBudget(SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetId, categoryComboBox.currentText, fluxo, SessionHandler);
+                    }
                 }
             }
         }

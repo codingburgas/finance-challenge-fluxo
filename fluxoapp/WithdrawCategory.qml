@@ -138,9 +138,12 @@ Rectangle {
                 id: createMouseArea
                 anchors.fill: parent
                 onClicked: {
-                    lonClicked:{
-                        CoreOperations.withdraw(categoryComboBox.text, fluxo, SessionHandler);
+                    if (SessionHandler.activeBudgetIndex == -1){
+                        CoreOperations.withdraw(categoryComboBox.currentText, fluxo, SessionHandler);
+                    } else{
+                        CoreOperations.withdrawBudget(SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetId, categoryComboBox.currentText, fluxo, SessionHandler);
                     }
+
                 }
             }
 

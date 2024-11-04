@@ -573,6 +573,14 @@ void Fluxo::SessionHandler::updateActiveBudgetIndex(const QString &budgetId){
 
 
 
+void Fluxo::SessionHandler::setActiveBudgetIndex(int index) {
+    if (activeBudgetIndex != index) {
+        activeBudgetIndex = index;
+        emit activeBudgetIndexChanged();
+    }
+}
+
+
 
 // bool Fluxo::SessionHandler::isLogged() {
 

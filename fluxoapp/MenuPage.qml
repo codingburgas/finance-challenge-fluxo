@@ -7,6 +7,7 @@ Rectangle {
     height: 844
     visible: true
 
+    property var temp
     signal screenChanged(file: string)
 
     Rectangle {
@@ -246,7 +247,9 @@ Rectangle {
                     id: withdrawMouseArea
                     anchors.fill: parent
                     onClicked: {
-                        window.screenChanged("WithdrawAmount.qml")
+                        SessionHandler.setActiveBudgetIndex(-1)
+                        //window.screenChanged("WithdrawAmount.qml")
+                        window.temp = "WithdrawAmount.qml"
                     }
                 }
             }
@@ -297,7 +300,9 @@ Rectangle {
                     anchors.fill: parent
 
                     onClicked: {
-                        window.screenChanged("DepositAmount.qml")
+                        SessionHandler.setActiveBudgetIndex(-1)
+                        //window.screenChanged("DepositAmount.qml")
+                        window.temp = "DepositAmount.qml"
                     }
 
                 }
@@ -528,8 +533,15 @@ Rectangle {
     Connections{
         target: SessionHandler
 
+
+        //when budgets are fetched, go to that page
         function onBudgetsChanged(){
             window.screenChanged("BudgetCreateMenuPage.qml")
+        }
+
+        //go to either withdraw or deposit page to make transactions with balance, not budget
+        function onActiveBudgetIndexChanged(){
+            window.screenChanged(window.temp)
         }
     }
 }

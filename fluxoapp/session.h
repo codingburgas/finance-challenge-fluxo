@@ -26,7 +26,7 @@ class SessionHandler : public QObject {
     Q_PROPERTY(bool sessionWritingCompleted READ isSessionWritingCompleted WRITE setSessionWritingCompleted NOTIFY sessionWritingCompletedChanged)
     Q_PROPERTY(bool isTransactionDone READ getIsTransactionDone WRITE setIsTransactionDone NOTIFY transactionDone)
     Q_PROPERTY(bool isBudgetDone READ getIsBudgetDone WRITE setIsBudgetDone NOTIFY budgetDone)
-    Q_PROPERTY(int activeBudgetIndex READ getActiveBudgetIndex WRITE setActiveBudgetIndex NOTIFY activeBudgetIndexChanged)
+    Q_PROPERTY(int activeBudgetIndex READ getActiveBudgetIndex WRITE setActiveBudgetIndexnotused NOTIFY activeBudgetIndexChanged)
     Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
     Q_PROPERTY(QList<QObject*> transactions READ getTransactions NOTIFY transactionsChanged)
     Q_PROPERTY(QList<QObject*> budgets READ getBudgets NOTIFY budgetsChanged)
@@ -40,6 +40,7 @@ public:
     Q_INVOKABLE void fetchRecentTransactions(Fluxo::App* app);
     Q_INVOKABLE void fetchBudgets(Fluxo::App* app);
     Q_INVOKABLE void updateActiveBudgetIndex(const QString &budgetId);
+    Q_INVOKABLE void setActiveBudgetIndex(int index);
 
 signals:
 
@@ -126,7 +127,7 @@ public:
         }
     }
 
-    void setActiveBudgetIndex(int index) {
+    void setActiveBudgetIndexnotused(int index) {
         if (activeBudgetIndex != index) {
             activeBudgetIndex = index;
             emit activeBudgetIndexChanged();

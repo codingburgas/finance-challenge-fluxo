@@ -8,6 +8,7 @@ Rectangle {
     height: 844
     visible: true
 
+    property string temp
     signal screenChanged(file: string)
 
     Rectangle {
@@ -137,7 +138,10 @@ Rectangle {
                     id: withdrawMouseArea
                     anchors.fill: parent
                     onClicked:{
+                        SessionHandler.activeBudgetIndex = -1
                         window.screenChanged("WithdrawAmount.qml")
+                        //window.temp = "WithdrawAmount.qml"
+                        //console.log()
                     }
                 }
 
@@ -198,7 +202,9 @@ Rectangle {
                     anchors.topMargin: 0
                     anchors.bottomMargin: 13
                     onClicked:{
+                        SessionHandler.activeBudgetIndex = -1
                         window.screenChanged("DepositAmount.qml")
+                        //window.temp = "DepositAmount.qml"
                     }
                 }
 
@@ -431,6 +437,10 @@ Rectangle {
                 for (let transaction of SessionHandler.transactions){
                     console.log("Transaction: ", transaction.transactionAmount, transaction.target)
                 }
+            }
+
+            function onActiveBudgetIndexChanged(){
+                window.screenChanged(window.temp)
             }
 
 
