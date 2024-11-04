@@ -21,17 +21,16 @@ Rectangle {
         Rectangle {
             id: whiteRectange
             x: 1
-            width: 390
-            height: 667
+            width: parent.width
+            height: 690
             color: "#f1f1f1"
             radius: 43
-            anchors.top: parent.top
-            anchors.topMargin: 139
+            y: 190
             z: 1
 
             Text {
                 id: _text2
-                x: 47
+                anchors.left: rectangle1.left
                 y: 49
                 text: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetTitle
 
@@ -94,8 +93,8 @@ Rectangle {
 
         Text {
             id: _text1
-            x: 149
-            y: 154
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 204
             color: "#000000"
             text: qsTr("Edit A <font color=\"#689A78\">Budget</font>")
             z: 1
@@ -108,7 +107,7 @@ Rectangle {
 
         TextField {
             id: amount
-            anchors.horizontalCenter: parent.horizontalCenter
+            x: rectangle1.x
             y: 275
             width: 293
             height: 38
@@ -136,7 +135,7 @@ Rectangle {
 
         Text {
             id: _text3
-            x: 52
+            x: rectangle1.x
             y: 252
             width: 99
             height: 23
@@ -153,7 +152,7 @@ Rectangle {
             id: categoryComboBox
             y: 391
             anchors.topMargin: 152
-            anchors.horizontalCenter: parent.horizontalCenter
+            x: rectangle1.x
             width: 294
             height: 38
 
@@ -185,7 +184,7 @@ Rectangle {
 
         TextField {
             id: dateInput
-            anchors.horizontalCenter: parent.horizontalCenter
+            x: rectangle1.x
             y: 507
             width: 293
             height: 38
@@ -213,7 +212,7 @@ Rectangle {
 
         Text {
             id: _textDateLabel
-            x: 52
+            x: rectangle1.x
             y: 483
             width: 122
             height: 23
@@ -226,17 +225,9 @@ Rectangle {
             font.styleName: "Regular"
         }
 
-        Navbar {
-            id: navbar
-            property QtObject window: window
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: -23
-        }
-
         Text {
             id: categoryChoose
-            x: 54
+            x: rectangle1.x
             y: 367
             width: 140
             height: 23
@@ -258,6 +249,13 @@ Rectangle {
         property bool welcomeBackText: false
         property bool menuButton: true
     }
+    /*Navbar{
+        id: navbar
+        property QtObject window: window
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -23
+    }*/
 
     Connections {
         target: SessionHandler
