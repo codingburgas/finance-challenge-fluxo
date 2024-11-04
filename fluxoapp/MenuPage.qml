@@ -195,7 +195,7 @@ Rectangle {
                     id: budgetMouseArea
                     anchors.fill: parent
                     onClicked: {
-                        window.screenChanged("BudgetMainMenu.qml")
+                        SessionHandler.fetchBudgets(fluxo)
                     }
 
                 }
@@ -524,4 +524,12 @@ Rectangle {
         }
     }
 
+
+    Connections{
+        target: SessionHandler
+
+        function onBudgetsChanged(){
+            window.screenChanged("BudgetCreateMenuPage.qml")
+        }
+    }
 }
