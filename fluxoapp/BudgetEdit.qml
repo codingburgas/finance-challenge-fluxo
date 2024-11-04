@@ -32,7 +32,7 @@ Rectangle {
                 id: _text2
                 x: 47
                 y: 49
-                text: qsTr("My Dream Laptop")
+                text: SessionHandler.budgets[0].budgetTitle
 
                 font.family: "Inter"
                 font.styleName: "normal"
@@ -86,7 +86,7 @@ Rectangle {
                 id: saveMouseArea
                 anchors.fill: parent
                 onClicked: {
-                    window.screenChanged("BudgetCreateMenuPage.qml")
+                    SessionHandler.fetchBudget(SessionHandler.budgets[0].budgetId, fluxo)
                 }
             }
         }
@@ -256,6 +256,14 @@ Rectangle {
         property QtObject window: window
         property bool welcomeBackText: false
         property bool menuButton: true
+    }
+
+    Connections {
+        target: SessionHandler
+
+        function onBudgetsChanged(){
+            window.screenChanged("BudgetMainMenu.qml")
+        }
     }
 
 }

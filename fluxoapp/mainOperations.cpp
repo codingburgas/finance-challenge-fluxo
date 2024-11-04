@@ -633,3 +633,199 @@ void Fluxo::MainOperations::sendMoney(const QString &amount, const QString &user
     });
     handler->setIsTransactionDone(false);
 }
+
+
+
+
+
+
+
+Fluxo::MainOperations::deleteBudget(const QString& budgetId, Fluxo::App* app, Fluxo::SessionHandler* handler){
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
+    QFile file(dir);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't open file:" << file.fileName();
+        return;
+    }
+
+    QByteArray fileData = file.readAll();
+    file.close();
+    QJsonDocument doc = QJsonDocument::fromJson(fileData);
+    QJsonObject jsonObj = doc.object();
+
+    QString token = jsonObj["token"].toString();
+    QString id = jsonObj["id"].toString();
+    if (token.isEmpty() || id.isEmpty()) {
+        qWarning() << "Token or ID is missing in data.json.";
+        return;
+    }
+
+    qDebug() << "Token and ID retrieved successfully:" << token << id;
+
+
+    QNetworkAccessManager* manager = app->getNetworkManager();
+    QNetworkRequest getInfoRequest(QUrl("https://fluxo-api.me/getInfo"));
+    getInfoRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QJsonObject getInfoRequestBody{{"token", token}, {"id", id}};
+    qDebug() << "Sending request to /deleteBudget with body:" << QJsonDocument(getInfoRequestBody).toJson();
+    QNetworkReply* getInfoReply = manager->post(getInfoRequest, QJsonDocument(getInfoRequestBody).toJson());
+
+
+    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [=]() mutable {
+        if (getInfoReply->error() != QNetworkReply::NoError) {
+            qWarning() << "Request to /deleteBudget failed, error:" << getInfoReply->errorString();
+            getInfoReply->deleteLater();
+            return;
+        }
+
+        QByteArray responseData = getInfoReply->readAll();
+        getInfoReply->deleteLater();
+        QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
+        QJsonObject responseObj = responseDoc.object();
+
+        QString email = responseObj["email"].toString();
+        if (email.isEmpty()) {
+            qWarning() << "Failed to retrieve email from /getInfo response.";
+            return;
+        }
+
+        qDebug() << "Email retrieved from /getInfo response:" << email;
+
+        QJsonObject testData{
+            {"email", email},
+            {"token", responseObj["token"].toString()},
+            {"id", responseObj["id"].toString()},
+        };
+
+        qDebug() << "Preparing deleteBudget request with data:" << QJsonDocument(testData).toJson();
+
+        QNetworkRequest depositRequest(QUrl("https://fluxo-api.me/deleteBudget"));
+        depositRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+        QNetworkReply* depositReply = manager->post(depositRequest, QJsonDocument(testData).toJson());
+
+        QObject::connect(depositReply, &QNetworkReply::finished, this, [=]() mutable {
+            if (depositReply->error() == QNetworkReply::NoError) {
+                qDebug() << "P2P request successful, reply:" << depositReply->readAll();
+                //handler->setIsBudgetDone(true);
+                emit handler->transactionsChanged();
+            } else {
+                qWarning() << "P2P request failed, error:" << depositReply->errorString();
+            }
+            depositReply->deleteLater();
+        });
+
+    });
+}
+
+
+
+
+void Fluxo::MainOperations::editBudget(const QString& budgetId, const QString& budgetGoal, const QString& budgetCategory, const QString& budgetDeadline, Fluxo::App* app, Fluxo::SessionHandler* handler){
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
+    QFile file(dir);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't open file:" << file.fileName();
+        return;
+    }
+
+    QByteArray fileData = file.readAll();
+    file.close();
+    QJsonDocument doc = QJsonDocument::fromJson(fileData);
+    QJsonObject jsonObj = doc.object();
+
+    QString token = jsonObj["token"].toString();
+    QString id = jsonObj["id"].toString();
+    if (token.isEmpty() || id.isEmpty()) {
+        qWarning() << "Token or ID is missing in data.json.";
+        return;
+    }
+
+    qDebug() << "Token and ID retrieved successfully:" << token << id;
+
+
+    QNetworkAccessManager* manager = app->getNetworkManager();
+    QNetworkRequest getInfoRequest(QUrl("https://fluxo-api.me/getInfo"));
+    getInfoRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QJsonObject getInfoRequestBody{{"token", token}, {"id", id}};
+    qDebug() << "Sending request to /getInfo with body:" << QJsonDocument(getInfoRequestBody).toJson();
+    QNetworkReply* getInfoReply = manager->post(getInfoRequest, QJsonDocument(getInfoRequestBody).toJson());
+
+
+    QObject::connect(getInfoReply, &QNetworkReply::finished, this, [=]() mutable {
+        if (getInfoReply->error() != QNetworkReply::NoError) {
+            qWarning() << "Request to /getInfo failed, error:" << getInfoReply->errorString();
+            getInfoReply->deleteLater();
+            return;
+        }
+
+        QByteArray responseData = getInfoReply->readAll();
+        getInfoReply->deleteLater();
+        QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
+        QJsonObject responseObj = responseDoc.object();
+
+        QString email = responseObj["email"].toString();
+        if (email.isEmpty()) {
+            qWarning() << "Failed to retrieve email from /getInfo response.";
+            return;
+        }
+
+        qDebug() << "Email retrieved from /getInfo response:" << email;
+
+
+        if (responseObj.contains("budgets") && responseObj["budgets"].isArray()) {
+            QJsonArray budgetsArray = responseObj["budgets"].toArray();
+
+            for (const QJsonValue& budgetValue : budgetsArray) {
+                QJsonObject budgetObject = budgetValue.toObject();
+
+
+                auto* budget = new Fluxo::Budget();
+                budget->setBudgetTitle(budgetObject["title"].toString());
+                budget->setBudgetAmountInserted(QString::number(budgetObject["amountInserted"].toDouble()));
+                budget->setBudgetGoal(QString::number(budgetObject["goal"].toDouble()));
+                budget->setBudgetCategory(budgetObject["category"].toString());
+                budget->setBudgetDeadline(budgetObject["deadline"].toString());
+
+                handler->addBudget(budget);
+            }
+            qDebug() << "Processed" << budgetsArray.size() << "budgets.";
+        }
+        else {
+            qWarning() << "No budget found in response.";
+        }
+
+        QJsonObject testData{
+            {"email", email},
+            {"token", responseObj["token"].toString()},
+            {"id", responseObj["id"].toString()},
+            {"budgetId", budgetId},
+            {"goal", budgetGoal},
+            {"deadline", budgetDeadline},
+            {"category", budgetCategory},
+        };
+
+        qDebug() << "Preparing new-budget request with data:" << QJsonDocument(testData).toJson();
+
+        QNetworkRequest newBudgetRequest(QUrl("https://fluxo-api.me/editBudget"));
+        newBudgetRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+        QNetworkReply* newBudgetReply = manager->post(newBudgetRequest, QJsonDocument(testData).toJson());
+
+        QObject::connect(newBudgetReply, &QNetworkReply::finished, this, [=]() mutable {
+            if (newBudgetReply->error() == QNetworkReply::NoError) {
+                qDebug() << "New-budget request successful, reply:" << newBudgetReply->readAll();
+                handler->setIsBudgetDone(true);
+                emit handler->budgetsChanged();
+            } else {
+                qWarning() << "New-budget request failed, error:" << newBudgetReply->errorString();
+            }
+            newBudgetReply->deleteLater();
+        });
+    });
+
+    Fluxo::MainOperations::deleteCache(true);
+    handler->setIsBudgetDone(false);
+}

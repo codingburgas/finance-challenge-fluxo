@@ -50,7 +50,8 @@ Rectangle{
             anchors.fill: parent
             z:2
             onClicked: {
-                budgetBlock.window.screenChanged("BudgetEdit.qml")
+                budgetBlock.path = "BudgetEdit.qml"
+                SessionHandler.fetchBudget(budgetBlock.budgetId, fluxo)
             }
 
 
@@ -96,6 +97,7 @@ Rectangle{
         anchors.fill: parent
         z:1
         onClicked: {
+            budgetBlock.path = "BudgetMainMenu.qml"
             SessionHandler.fetchBudget(budgetBlock.budgetId, fluxo)
         }
     }
@@ -104,7 +106,8 @@ Rectangle{
         target: SessionHandler
 
         function onBudgetsChanged(){
-            budgetBlock.window.screenChanged("BudgetMainMenu.qml")
+            budgetBlock.window.screenChanged(budgetBlock.path)
         }
+
     }
 }

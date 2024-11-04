@@ -30,6 +30,8 @@ public:
     Q_INVOKABLE QJsonObject retrieveBudgetInfoCache();
     Q_INVOKABLE void createBudget(const QString& amount, Fluxo::App* app, Fluxo::SessionHandler* handler);
     Q_INVOKABLE void sendMoney(const QString& amount, const QString& username, Fluxo::App* app, Fluxo::SessionHandler* handler);
+    Q_INVOKABLE void editBudget(const QString& budgetId, const QString& budgetGoal, const QString& budgetCategory, const QString& budgetDeadline, Fluxo::App* app, Fluxo::SessionHandler* handler);
+    Q_INVOKABLE void deleteBudget(const QString& budgetId, Fluxo::App* app, Fluxo::SessionHandler* handler);
 
 };
 
