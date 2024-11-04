@@ -141,10 +141,10 @@ Rectangle {
 
                 Text {
                     id: _text2
-                    x: 23
+                    anchors.horizontalCenter: parent.horizontalCenter 
                     y: 32
                     color: "#304437"
-                    text: qsTr("12%")
+                    text: (SessionHadler.budgets[0].budgetAmountInserted / SessionHadler.budgets[0].budgetGoal * 100).toFixed(0)
                     font.pixelSize: 29
                     z: 3
                     font.styleName: "Bold"
@@ -155,7 +155,7 @@ Rectangle {
                 id: _text3
                 x: 180
                 y: 208
-                text: qsTr("202.20 BGN")
+                text: SessionHadler.budgets[0].budgetAmountInserted
                 font.pixelSize: 12
                 z: 3
             }
