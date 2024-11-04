@@ -26,6 +26,7 @@ class SessionHandler : public QObject {
     Q_PROPERTY(bool sessionWritingCompleted READ isSessionWritingCompleted WRITE setSessionWritingCompleted NOTIFY sessionWritingCompletedChanged)
     Q_PROPERTY(bool isTransactionDone READ getIsTransactionDone WRITE setIsTransactionDone NOTIFY transactionDone)
     Q_PROPERTY(bool isBudgetDone READ getIsBudgetDone WRITE setIsBudgetDone NOTIFY budgetDone)
+    Q_PROPERTY(int activeBudgetIndex READ getActiveBudgetIndex WRITE setActiveBudgetIndex NOTIFY activeBudgetIndexChanged)
     Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
     Q_PROPERTY(QList<QObject*> transactions READ getTransactions NOTIFY transactionsChanged)
     Q_PROPERTY(QList<QObject*> budgets READ getBudgets NOTIFY budgetsChanged)
@@ -38,7 +39,7 @@ public:
     Q_INVOKABLE void fetchTransactions(Fluxo::App* app);
     Q_INVOKABLE void fetchRecentTransactions(Fluxo::App* app);
     Q_INVOKABLE void fetchBudgets(Fluxo::App* app);
-    Q_INVOKABLE void fetchBudget(const QString &budgetId, Fluxo::App* app);
+    Q_INVOKABLE void updateActiveBudgetIndex(const QString &budgetId);
 
 signals:
 
@@ -50,6 +51,9 @@ signals:
     void usernameChanged();
     void transactionsChanged();
     void budgetsChanged();
+    void activeBudgetIndexChanged();
+    void budgetEdited();
+    void budgetDeleted();
 
 private:
 
@@ -57,6 +61,7 @@ private:
     bool sessionWritingCompleted = false;
     bool isTransactionDone = false;
     bool isBudgetDone = false;
+    int activeBudgetIndex = 0;
     QString username;
     QList<QObject*> transactions;
     QList<QObject*> budgets;
@@ -67,6 +72,7 @@ public:
     QString getUsername() const { return username; }
     bool getIsTransactionDone() const { return isTransactionDone; }
     bool getIsBudgetDone() const { return isBudgetDone; }
+    int getActiveBudgetIndex() const { return activeBudgetIndex; }
 
     Q_REQUIRED_RESULT QList<QObject*> getTransactions() const {
         return transactions;
@@ -117,6 +123,13 @@ public:
         if (isBudgetDone != done) {
             isBudgetDone = done;
             emit budgetDone();
+        }
+    }
+
+    void setActiveBudgetIndex(int index) {
+        if (activeBudgetIndex != index) {
+            activeBudgetIndex = index;
+            emit activeBudgetIndexChanged();
         }
     }
 

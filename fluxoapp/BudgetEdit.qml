@@ -10,6 +10,7 @@ Rectangle {
     visible: true
 
     signal screenChanged(file: string)
+    property var budgetId: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetId
 
     Rectangle {
         id: background
@@ -32,7 +33,7 @@ Rectangle {
                 id: _text2
                 x: 47
                 y: 49
-                text: SessionHandler.budgets[0].budgetTitle
+                text: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetTitle
 
                 font.family: "Inter"
                 font.styleName: "normal"
@@ -86,7 +87,7 @@ Rectangle {
                 id: saveMouseArea
                 anchors.fill: parent
                 onClicked: {
-                    SessionHandler.fetchBudget(SessionHandler.budgets[0].budgetId, fluxo)
+                    CoreOperations.editBudget(window.budgetId, amount.text, categoryComboBox.currentText, dateInput.text, fluxo, SessionHandler)
                 }
             }
         }
@@ -106,7 +107,7 @@ Rectangle {
         }
 
         TextField {
-            id: title
+            id: amount
             anchors.horizontalCenter: parent.horizontalCenter
             y: 275
             width: 293
@@ -130,7 +131,7 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenterOffset: -11
 
-            cursorDelegate: CursorRectangle{property QtObject textField: title}
+            cursorDelegate: CursorRectangle{property QtObject textField: amount}
         }
 
         Text {
@@ -261,7 +262,15 @@ Rectangle {
     Connections {
         target: SessionHandler
 
+        function onBudgetEdited(){
+            SessionHandler.fetchBudgets(fluxo)
+        }
+
         function onBudgetsChanged(){
+            SessionHandler.updateActiveBudgetIndex(window.budgetId)
+        }
+
+        function onActiveBudgetIndexChanged(){
             window.screenChanged("BudgetMainMenu.qml")
         }
     }

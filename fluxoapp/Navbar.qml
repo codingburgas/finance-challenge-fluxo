@@ -73,8 +73,16 @@ Rectangle {
             id: savingsMouseArea
             anchors.fill: parent
             onClicked: {
-                navBar.window.screenChanged("BudgetCreateMenuPage.qml")
+                SessionHandler.fetchBudgets(fluxo)
             }
+        }
+    }
+
+    Connections{
+        target: SessionHandler
+
+        function onBudgetsChanged(){
+            navBar.window.screenChanged("BudgetCreateMenuPage.qml")
         }
     }
 

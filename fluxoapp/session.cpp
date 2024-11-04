@@ -499,7 +499,7 @@ void Fluxo::SessionHandler::fetchBudgets(Fluxo::App* app) {
 
 
 
-void Fluxo::SessionHandler::fetchBudget(const QString &budgetId, Fluxo::App* app){
+/*void Fluxo::SessionHandler::fetchBudget(const QString &budgetId, Fluxo::App* app){
     QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
     QFile file(dir);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -557,6 +557,18 @@ void Fluxo::SessionHandler::fetchBudget(const QString &budgetId, Fluxo::App* app
         }
         getInfoReply->deleteLater();
     });
+}*/
+
+
+void Fluxo::SessionHandler::updateActiveBudgetIndex(const QString &budgetId){
+    for (int i=0; i<budgets.count(); i++){
+        auto budget = dynamic_cast<Fluxo::Budget*>(budgets.at(i));
+        if (budget->budgetId == budgetId){
+            setActiveBudgetIndex(i);
+            break;
+        }
+    }
+    emit activeBudgetIndexChanged();
 }
 
 

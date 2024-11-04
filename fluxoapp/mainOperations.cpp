@@ -640,7 +640,7 @@ void Fluxo::MainOperations::sendMoney(const QString &amount, const QString &user
 
 
 
-Fluxo::MainOperations::deleteBudget(const QString& budgetId, Fluxo::App* app, Fluxo::SessionHandler* handler){
+void Fluxo::MainOperations::deleteBudget(const QString& budgetId, Fluxo::App* app, Fluxo::SessionHandler* handler){
     QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/data.json";
     QFile file(dir);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -696,6 +696,7 @@ Fluxo::MainOperations::deleteBudget(const QString& budgetId, Fluxo::App* app, Fl
             {"email", email},
             {"token", responseObj["token"].toString()},
             {"id", responseObj["id"].toString()},
+            {"budgetId", budgetId},
         };
 
         qDebug() << "Preparing deleteBudget request with data:" << QJsonDocument(testData).toJson();
@@ -709,7 +710,7 @@ Fluxo::MainOperations::deleteBudget(const QString& budgetId, Fluxo::App* app, Fl
             if (depositReply->error() == QNetworkReply::NoError) {
                 qDebug() << "P2P request successful, reply:" << depositReply->readAll();
                 //handler->setIsBudgetDone(true);
-                emit handler->transactionsChanged();
+                emit handler->budgetDeleted();
             } else {
                 qWarning() << "P2P request failed, error:" << depositReply->errorString();
             }
@@ -817,8 +818,8 @@ void Fluxo::MainOperations::editBudget(const QString& budgetId, const QString& b
         QObject::connect(newBudgetReply, &QNetworkReply::finished, this, [=]() mutable {
             if (newBudgetReply->error() == QNetworkReply::NoError) {
                 qDebug() << "New-budget request successful, reply:" << newBudgetReply->readAll();
-                handler->setIsBudgetDone(true);
-                emit handler->budgetsChanged();
+                //handler->setIsBudgetDone(true);
+                emit handler->budgetEdited();
             } else {
                 qWarning() << "New-budget request failed, error:" << newBudgetReply->errorString();
             }

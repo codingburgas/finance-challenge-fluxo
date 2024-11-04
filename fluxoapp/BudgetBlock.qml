@@ -17,6 +17,7 @@ Rectangle{
     color: "#F1F1F1"
 
     property QtObject window
+    property string path
 
     Text{
         id: name
@@ -38,6 +39,7 @@ Rectangle{
     Rectangle{
         x: 251
         y: 11
+        z:2
         width: 24
         height: 24
 
@@ -50,8 +52,8 @@ Rectangle{
             anchors.fill: parent
             z:2
             onClicked: {
-                budgetBlock.path = "BudgetEdit.qml"
-                SessionHandler.fetchBudget(budgetBlock.budgetId, fluxo)
+                SessionHandler.updateActiveBudgetIndex(budgetBlock.budgetId)
+                budgetBlock.window.screenChanged("BudgetEdit.qml")
             }
 
 
@@ -97,17 +99,16 @@ Rectangle{
         anchors.fill: parent
         z:1
         onClicked: {
-            budgetBlock.path = "BudgetMainMenu.qml"
-            SessionHandler.fetchBudget(budgetBlock.budgetId, fluxo)
+            SessionHandler.updateActiveBudgetIndex(budgetBlock.budgetId)
+
         }
     }
 
     Connections{
         target: SessionHandler
 
-        function onBudgetsChanged(){
-            budgetBlock.window.screenChanged(budgetBlock.path)
+        function onActiveBudgetIndexChanged(){
+            budgetBlock.window.screenChanged("BudgetMainMenu.qml")
         }
-
     }
 }

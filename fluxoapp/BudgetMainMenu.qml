@@ -54,7 +54,7 @@ Rectangle {
         Text{
             id: yourBalance
 
-            text: SessionHandler.budgets[0].budgetAmountInserted
+            text: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetAmountInserted
             color:"#000000"
 
             width: 191
@@ -144,7 +144,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter 
                     y: 32
                     color: "#304437"
-                    text: (SessionHadler.budgets[0].budgetAmountInserted / SessionHadler.budgets[0].budgetGoal * 100).toFixed(0)
+                    text: (SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetAmountInserted / SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetGoal * 100).toFixed(0)
                     font.pixelSize: 29
                     z: 3
                     font.styleName: "Bold"
@@ -155,7 +155,7 @@ Rectangle {
                 id: _text3
                 x: 180
                 y: 208
-                text: SessionHadler.budgets[0].budgetAmountInserted
+                text: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetAmountInserted
                 font.pixelSize: 12
                 z: 3
             }
@@ -163,7 +163,7 @@ Rectangle {
         }
         Text{
             id: recentTransactionsText
-            text: SessionHandler.budgets[0].budgetTitle
+            text: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetTitle
             width: 179
             height: 28
             x:121
@@ -270,7 +270,7 @@ Rectangle {
             width: 191
             height: 21
             color: "#000000"
-            text: SessionHandler.budgets[0].budgetGoal
+            text: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetGoal
             font.pixelSize: 18
             verticalAlignment: Text.AlignBottom
             z: 3
@@ -388,7 +388,7 @@ Rectangle {
             width: 191
             height: 21
             color: "#000000"
-            text: SessionHandler.budgets[0].budgetDeadline
+            text: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetDeadline
             font.pixelSize: 12
             verticalAlignment: Text.AlignBottom
             z: 3
@@ -419,7 +419,7 @@ Rectangle {
             width: 191
             height: 21
             color: "#000000"
-            text: SessionHandler.budgets[0].budgetCategory
+            text: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetCategory
             font.pixelSize: 12
             verticalAlignment: Text.AlignBottom
             z: 3
@@ -442,6 +442,14 @@ Rectangle {
             font.underline: true
             font.styleName: "normal"
             font.family: "Inter"
+
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                onClicked: {
+                    CoreOperations.deleteBudget(SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetIndex)
+                }
+            }
         }
 
         Image {
@@ -511,9 +519,18 @@ Rectangle {
     anchors.bottomMargin: -23
     }
 
-    /*Component.onCompleted: {
-        SessionHandler.fetchBudget(window.budgetId)
-    }*/
+    Connections{
+        target: SessionHandler
+
+        function onBudgetDeleted(){
+            SessionHandler.fetchBudgets(fluxo)
+        }
+
+
+        function onBudgetsChanged(){
+            window.screenChanged("BudgetCreateMenuPage.qml")
+        }
+    }
 
 
 }

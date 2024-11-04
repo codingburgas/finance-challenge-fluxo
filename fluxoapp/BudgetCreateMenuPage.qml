@@ -122,7 +122,7 @@ Rectangle {
                         id: createBudgetMouseArea
                         anchors.fill: parent
                         onClicked: {
-                            window.screenChanged("BudgetData.qml")
+                            mainWindow.screenChanged("BudgetData.qml")
                         }
                     }
                 }
@@ -140,9 +140,6 @@ Rectangle {
                         property string goal: SessionHandler.budgets[SessionHandler.budgets.length-index-1].budgetGoal
                         Component.onCompleted: {
                             window = mainWindow
-                            for (let budget of SessionHandler.budgets){
-                                console.log("budgetId is set to: ", budgetId)
-                            }
                         }
                     }
                 }
@@ -158,17 +155,8 @@ Rectangle {
         }
 
     }
-
-    Connections {
-        target: SessionHandler
-
-        function onBudgetsChanged(){
-            budgetsRepeater.model = SessionHandler.budgets.length
-        }
-    }
-
-    Component.onCompleted: {
+    /*Component.onCompleted: {
         SessionHandler.fetchBudgets(fluxo)
-    }
+    }*/
 
 }
