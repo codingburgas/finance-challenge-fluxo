@@ -17,6 +17,16 @@ Rectangle {
         visible: true
         color: "#304437"
 
+
+        Header{
+            id: header
+            x:0
+            y: 55
+            property QtObject window: window
+            property bool welcomeBackText: true
+            property bool menuButton: true
+        }
+
         Rectangle {
             id: whiteRectange
             width: 420
@@ -44,25 +54,7 @@ Rectangle {
             }
         }
 
-        Rectangle {
-            id: rectangle
-            x: 30
-            y: 33
-            width: 42
-            height: 42
-            color: "#d4de67"
-            radius: 50
-        }
 
-        Text {
-            id: _text
-            x: 91
-            y: 46
-            color: "#ffffff"
-            text: qsTr("Hi There, ")
-            font.pixelSize: 16
-            font.weight: Font.Bold
-        }
 
         Rectangle {
             id: buttonRectangle
