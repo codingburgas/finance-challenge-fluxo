@@ -3,8 +3,9 @@ import { createBrowserRouter } from "react-router-dom";
 import { Applayout } from "./components/layouts/AppLayout";
 
 import NoMatch from "./pages/NoMatch";
-import Dashboard from "./pages/Dashboard";
-import Empty from "./pages/Empty";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Sample from "./pages/Sample";
 
 export const router = createBrowserRouter([
@@ -14,15 +15,19 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <Dashboard />,
+                element: <Home />,
             },
             {
                 path: "sample",
                 element: <Sample />,
             },
             {
-                path: "empty",
-                element: <Empty />,
+                path: "Login",
+                element: <Login />,
+            },
+            {
+                path: "Register",
+                element: <Register />,
             },
         ],
     },

@@ -20,8 +20,8 @@ export const mainMenu: NavItemWithChildren[] = [
         to: '/',
     },
     {
-        title: "What's new",
-        to: '/',
+        title: "Dashboard",
+        to: '/Login',
     },
     {
         title: 'About',

@@ -11,6 +11,10 @@ body{
   overflow-x: hidden;
 }
 
+.overflow-hidden {
+  overflow-y: hidden;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 12px;

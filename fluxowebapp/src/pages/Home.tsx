@@ -201,7 +201,7 @@ const ImagesAndTextSection = () => {
 
 
 
-const Dashboard = () => {
+const Home = () => {
     return (
         <div className="flex flex-col items-center p-4 w-full"> 
             <div className="h-9"></div> 
@@ -260,4 +260,4 @@ const Dashboard = () => {
     );
 }
 
-export default Dashboard;
+export default Home;

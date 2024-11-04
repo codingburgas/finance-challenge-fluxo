@@ -96,7 +96,6 @@ export function Header() {
                                                                     null
                                                                 ) : (
                                                                     <div className="px-3">
-                                                                        {/* <Separator /> */}
                                                                     </div>
                                                                 )
                                                             )
@@ -122,8 +121,7 @@ export function Header() {
                         </ScrollArea>
                     </SheetContent>
                 </Sheet>
-                {/* Mobile logo */}
-                <a href="/" className="mr-6 flex items-center space-x-2 md:hidden">
+                <a href="/Home" className="mr-6 flex items-center space-x-2 md:hidden">
                     <Icons.logo className="h-6 w-6" />
                 </a>
             </div>
