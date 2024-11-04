@@ -5,6 +5,7 @@ import { Applayout } from "./components/layouts/AppLayout";
 import NoMatch from "./pages/NoMatch";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import Sample from "./pages/Sample";
 
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
             {
                 path: "Login",
                 element: <Login />,
+            },
+            {
+                path: "Dashboard",
+                element: <Dashboard />,
             },
             {
                 path: "Register",

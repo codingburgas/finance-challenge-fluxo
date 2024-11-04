@@ -1,4 +1,3 @@
-import { appConfig } from "@/config/app";
 import { ModeToggle } from "../mode-toggle";
 
 export function Footer() {
