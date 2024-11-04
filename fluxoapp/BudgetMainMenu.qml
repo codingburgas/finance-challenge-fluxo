@@ -129,7 +129,7 @@ Rectangle {
 
             Rectangle {
                 id: rectangle2
-                x: 159
+                anchors.horizontalCenter: parent.horizontalCenter
                 y: 102
                 width: 102
                 height: 102
@@ -141,7 +141,7 @@ Rectangle {
 
                 Text {
                     id: _text2
-                    anchors.horizontalCenter: parent.horizontalCenter 
+                    anchors.horizontalCenter: parent.horizontalCenter
                     y: 32
                     color: "#304437"
                     text: (SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetAmountInserted / SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetGoal * 100).toFixed(0)
@@ -153,7 +153,7 @@ Rectangle {
 
             Text {
                 id: _text3
-                x: 180
+                anchors.horizontalCenter: parent.horizontalCenter
                 y: 208
                 text: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetAmountInserted
                 font.pixelSize: 12
@@ -164,16 +164,19 @@ Rectangle {
         Text{
             id: recentTransactionsText
             text: SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetTitle
+            elide: Text.ElideRight
             width: 179
             height: 28
-            x:121
+            anchors.horizontalCenter: parent.horizontalCenter
             y:497
 
             font.family: "Inter"
             font.styleName: "Bold"
             font.weight: 700
             font.pixelSize: 18
+            horizontalAlignment: Text.AlignHCenter
             color: "#000000"
+
         }
 
         Rectangle {
@@ -447,7 +450,7 @@ Rectangle {
                 id: mouseArea
                 anchors.fill: parent
                 onClicked: {
-                    CoreOperations.deleteBudget(SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetIndex)
+                    CoreOperations.deleteBudget(SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetId, fluxo, SessionHandler)
                 }
             }
         }

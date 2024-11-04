@@ -52,7 +52,7 @@ Rectangle{
             anchors.fill: parent
             z:2
             onClicked: {
-                SessionHandler.updateActiveBudgetIndex(budgetBlock.budgetId)
+                //SessionHandler.updateActiveBudgetIndex(budgetBlock.budgetId)
                 budgetBlock.window.screenChanged("BudgetEdit.qml")
             }
 
@@ -80,12 +80,12 @@ Rectangle{
 
     Text{
         id: outOf
-        text: parent.amountInserted + "/" + parent.goal + "BGN"
+        text: parent.amountInserted + "/" + parent.goal + " BGN"
 
-        x:157
+        anchors.right: parent.right
         y:65
 
-        width: 130
+        width: 140
         height: 18
 
         font.family: "Inter"
@@ -99,16 +99,16 @@ Rectangle{
         anchors.fill: parent
         z:1
         onClicked: {
-            SessionHandler.updateActiveBudgetIndex(budgetBlock.budgetId)
+            budgetBlock.window.screenChanged("BudgetMainMenu.qml")
 
         }
     }
 
-    Connections{
+    /*Connections{
         target: SessionHandler
 
         function onActiveBudgetIndexChanged(){
             budgetBlock.window.screenChanged("BudgetMainMenu.qml")
         }
-    }
+    }*/
 }
