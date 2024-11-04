@@ -69,8 +69,9 @@
 
 ## - Technologies for development
 <div align="left">
-    <img src="https://skillicons.dev/icons?i=git,github,qt,cpp,js"/>
-
+    <img src="https://skillicons.dev/icons?i=git,github,qt,cpp,vite,react,tailwind,ts"/>
+<img width="40" height="40" src="https://ui.shadcn.com/apple-touch-icon.png">
+<img height="40" src="https://media.licdn.com/dms/image/v2/C5112AQHnn_dCEI3_5A/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1575110118823?e=2147483647&v=beta&t=VgrtWQvpd9c0vNkhysdR9Cf56B85hLqSUOO85qlVF3s">
 </div>
 
 ## - Programs for documents
@@ -81,14 +82,14 @@
 
 # 📁 Documents
 ### Code & Team Documentation
-  - [Documentation]()
+  - [Documentation](https://codingburgas-my.sharepoint.com/:w:/g/personal/idraykova22_codingburgas_bg/EfgTfqos05lHlidL0iBIWswBc8iY4We7Do5Tk7LbWHCYNw?e=zEhAnQ)
 
 ### Presenting
-  - [Presentation]()
+  - [Presentation](https://codingburgas-my.sharepoint.com/:p:/g/personal/idraykova22_codingburgas_bg/EUqpLr8SI4FFjPOTqNODNqMBHNW5TCafqnGEiMJ_E2Fb8Q?e=IbXQBn)
 
 ### Design
-  - [Application Design]()
-  - [Website Design]()
+  - [Application Design](https://www.figma.com/design/Q7F2TojxgrcfHpAdjXnXOB/Fluxo-Design?node-id=0-1)
+  - [Website Design](https://www.figma.com/design/Q7F2TojxgrcfHpAdjXnXOB/Fluxo-Design?node-id=2-2)
 
 
 # 👥 Team
@@ -105,5 +106,5 @@
 </p>
 
 <h1 align="center">
- You can support us by giving a 🌟 to our repository!
+ You can support us by giving a 💚 to our repository!
 </h1>
