@@ -19,13 +19,13 @@ public:
     void initialize();
 
     Q_REQUIRED_RESULT
-    int run();
+        int run();
 
     Q_REQUIRED_RESULT
-    Q_INVOKABLE QNetworkAccessManager* getNetworkManager();
+        Q_INVOKABLE QNetworkAccessManager* getNetworkManager();
 
     Q_REQUIRED_RESULT
-    Q_INVOKABLE SessionHandler* getSessionHandler();
+        Q_INVOKABLE SessionHandler* getSessionHandler();
 
 private:
 

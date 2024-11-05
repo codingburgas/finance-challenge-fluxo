@@ -1,16 +1,19 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 //import QtQuick.Layouts 1.3
+import Qt.labs.platform 1.0
 
-Window {
+Rectangle {
+    id: window
     width: 420
-    height: 900
+    height: 844
     visible: true
+
+    signal screenChanged(file: string)
 
     Rectangle {
         id: background
-        width: 420
-        height: 844
+        anchors.fill: parent
         visible: true
         color: "#304437"
 
@@ -30,30 +33,19 @@ Window {
             }
         }
 
-        Rectangle {
-            id: rectangle
-            x: 30
-            y: 33
-            width: 42
-            height: 42
-            color: "#d4de67"
-            radius: 50
-        }
-
-        Text {
-            id: _text
-            x: 91
-            y: 46
-            color: "#ffffff"
-            text: qsTr("Hi There, ")
-            font.pixelSize: 16
-            font.weight: Font.Bold
+        Header{
+            id: header
+            x:0
+            y: 55
+            property QtObject window: window
+            property bool welcomeBackText: false
+            property bool menuButton: true
         }
 
         Rectangle {
             id: whiteRectange
             width: 420
-            height: 633
+            height: 633+20
             color: "#f1f1f1"
             radius: 43
             anchors.top: parent.top
@@ -88,15 +80,23 @@ Window {
                 anchors.top: _text2.bottom
                 anchors.topMargin: 74
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 200
-                height: 40
+                width: 293
+                height: 50
+
 
                 currentIndex: -1
-                onCurrentIndexChanged: {
-                    if (currentIndex === -1) {
-                        categoryComboBox.text = "";
+                    displayText: (currentIndex === -1) ? "<font color=\"#898989\">Choose a category</font>" : currentText
+                    contentItem: Text{
+                        text: categoryComboBox.displayText
+                        verticalAlignment: Text.AlignVCenter
+                        leftPadding: 11
+                        elide: Text.ElideRight
+                        textFormat: Text.RichText
+                        font.family: "Inter"
+                        font.styleName: "normal"
+                        font.weight: 400
+                        font.pixelSize: 20
                     }
-                }
 
                 model: ["Food", "Education", "Transportation", "Bills", "Shopping", "Friends and Family", "Health"]
 
@@ -104,7 +104,7 @@ Window {
                 anchors.horizontalCenterOffset: 1
                 background: Rectangle {
                     color: "#f0f0f0"
-                    border.color: "#d3d3d3"
+                    border.color: "#898989"
                     radius: 8
                 }
             }
@@ -134,28 +134,17 @@ Window {
             }
 
             MouseArea {
-                id: mouseArea
+                id: mouseAreaCategory
                 anchors.fill: parent
                 onClicked:{
-                    CoreOperations.deposit(categoryComboBox.text, fluxo);
+                    if (SessionHandler.activeBudgetIndex == -1){
+                        CoreOperations.deposit(categoryComboBox.currentText, fluxo, SessionHandler);
+                    } else{
+                        CoreOperations.depositBudget(SessionHandler.budgets[SessionHandler.activeBudgetIndex].budgetId, categoryComboBox.currentText, fluxo, SessionHandler);
+                    }
                 }
             }
         }
-
-        Rectangle {
-            id: navBar
-            y: 772
-            width: 484
-            height: 95
-            color: "#fdfdfd"
-            radius: 43
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: -23
-            z: 2
-            anchors.horizontalCenterOffset: 0
-        }
-
         Image {
             id: money_image
             x: 228
@@ -166,5 +155,22 @@ Window {
             source: "qrc:/resources/transactionsImage.png"
             fillMode: Image.PreserveAspectFit
         }
+        Navbar{
+            id: navbar
+            property QtObject window: window
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: -23
+        }
     }
+
+    Connections {
+           target: SessionHandler
+
+           function onTransactionDone() {
+               window.screenChanged("MainPage.qml");
+
+           }
+       }
+
 }

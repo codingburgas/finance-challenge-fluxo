@@ -2,18 +2,21 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
-Window {
+Rectangle {
     id: window
-    width: 390
+    width: 420
     height: 844
     visible: true
 
+    property string temp
+    signal screenChanged(file: string)
+
     Rectangle {
         id: background
-        width: 420
-        height: 844
+        anchors.fill: parent
         visible: true
         color: "#304437"
+
 
 
         Rectangle{
@@ -32,82 +35,13 @@ Window {
             }
         }
 
-        Rectangle {
-            id: profilePic
-            x: 20
-            y: 56
-            width: 42
-            height: 42
-            color: "#d4de67"
-            radius: 50
-        }
-
-        Text {
-            id: greetingText
-            x: 71
-            y: 62
-            width: 193
-            height: 23
-
-            color: "#ffffff"
-            text: qsTr("Hi There, ")
-            font.letterSpacing: 0.02
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 600
-            font.pixelSize: 14
-        }
-
-        Text {
-            id: welcomeBackText
-            x: 71
-            y: 82
-            width: 127
-            height: 13
-
-            color: "#ffffff"
-            text: qsTr("Welcome back to Fluxo")
-            font.letterSpacing: 0.02
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 300
-            font.pixelSize: 11
-        }
-
-        Rectangle{
-            id: menu
-            x: window.width*0.875
-            y: 56
-            width: 30
-            height: 30
-            color: "#00ffffff"
-
-            ColumnLayout{
-                anchors.centerIn: parent
-                Rectangle{
-                    id: line1
-                    Layout.preferredWidth: 22.5
-                    Layout.preferredHeight: 3
-                    border.width: 7
-                }
-                Rectangle{
-                    id: line2
-                    Layout.preferredWidth: 22.5
-                    Layout.preferredHeight: 3
-                    border.width: 7
-                }
-                Rectangle{
-                    id: line3
-                    Layout.preferredWidth: 22.5
-                    Layout.preferredHeight: 3
-                    border.width: 7
-                }
-            }
-            MouseArea{
-                id: menuMouseArea
-                anchors.fill: parent
-            }
-
+        Header{
+            id: header
+            x:0
+            y: 55
+            property QtObject window: window
+            property bool welcomeBackText: true
+            property bool menuButton: true
         }
 
 
@@ -130,7 +64,6 @@ Window {
         Text{
             id: yourBalance
 
-            text: "122.23 BGN"
             color:"#EFEFEF"
 
             width: 191
@@ -143,6 +76,7 @@ Window {
             font.pixelSize: 32
             verticalAlignment: Text.AlignBottom
         }
+
 
         Rectangle{
             id:actions
@@ -164,15 +98,16 @@ Window {
                     id:withdrawRect
                     width: 44
                     height: 39
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     radius: 6
 
                     Image{
-                        source: ":/resources/withdrawIcon.png"
+                        source: "qrc:/resources/withdrawIcon.png"
                         anchors.centerIn: parent
                     }
+
                 }
 
                 Rectangle{
@@ -202,6 +137,12 @@ Window {
                 MouseArea{
                     id: withdrawMouseArea
                     anchors.fill: parent
+                    onClicked:{
+                        SessionHandler.activeBudgetIndex = -1
+                        window.screenChanged("WithdrawAmount.qml")
+                        //window.temp = "WithdrawAmount.qml"
+                        //console.log()
+                    }
                 }
 
             }
@@ -218,13 +159,13 @@ Window {
                     id:depositRect
                     width: 44
                     height: 39
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     radius: 6
 
                     Image{
-                        source: ":/resources/depositIcon.png"
+                        source: "qrc:/resources/depositIcon.png"
                         anchors.centerIn: parent
                     }
                 }
@@ -256,6 +197,15 @@ Window {
                 MouseArea{
                     id: depositMouseArea
                     anchors.fill: parent
+                    anchors.leftMargin: 1
+                    anchors.rightMargin: -1
+                    anchors.topMargin: 0
+                    anchors.bottomMargin: 13
+                    onClicked:{
+                        SessionHandler.activeBudgetIndex = -1
+                        window.screenChanged("DepositAmount.qml")
+                        //window.temp = "DepositAmount.qml"
+                    }
                 }
 
             }
@@ -272,15 +222,16 @@ Window {
                     id:statsRect
                     width: 44
                     height: 39
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     radius: 6
 
                     Image{
-                        source: ":/resources/statsIcon.png"
+                        source: "qrc:/resources/statsIcon.png"
                         anchors.centerIn: parent
                     }
+
                 }
 
                 Rectangle{
@@ -310,6 +261,9 @@ Window {
                 MouseArea{
                     id: statsMouseArea
                     anchors.fill: parent
+                    onClicked: {
+                        window.screenChanged("Statistics.qml")
+                    }
                 }
 
             }
@@ -325,13 +279,13 @@ Window {
                     id:sendRect
                     width: 44
                     height: 39
-                    color: "#6badd8b9"
+                    color: "#fdfdfd"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     radius: 6
 
                     Image{
-                        source: ":/resources/sendIcon.png"
+                        source: "qrc:/resources/sendIcon.png"
                         anchors.centerIn: parent
                     }
                 }
@@ -363,164 +317,149 @@ Window {
                 MouseArea{
                     id: sendMouseArea
                     anchors.fill: parent
+                    anchors.leftMargin: 0
+                    anchors.rightMargin: 0
+                    anchors.topMargin: 0
+                    anchors.bottomMargin: 13
+                    onClicked: {
+                        window.screenChanged("SendMoney.qml")
+                    }
                 }
 
             }
         }
 
-        Rectangle{
+        Rectangle {
             id: whiteRectangle
             width: parent.width
             height: 446
-            x:0
-            y:388
+            x: 0
+            y: 388
             radius: 43
             color: "#FDFDFD"
 
-
-        }
-        Text{
-            id: recentTransactionsText
-            text: "Recent Transactions"
-            width: 209
-            height: 28
-            x:27
-            y:439
-
-            font.family: "Inter"
-            font.styleName: "normal"
-            font.weight: 600
-            font.pixelSize: 20
-            color: "#000000"
-        }
-
-        Rectangle{
-            id: seeAllButton
-            width: 45
-            height: 13
-            x: 314
-            y: 445
-
             Text{
-                id: seeAllText
+                        id: recentTransactionsText
+                        text: "Recent Transactions"
+                        width: 209
+                        height: 28
+                        x:27
+                        y:17
 
-                anchors.fill: parent
+                        font.family: "Inter"
+                        font.styleName: "normal"
+                        font.weight: 600
+                        font.pixelSize: 20
+                        color: "#000000"
+                    }
 
-                text: "See all"
-                font.family: "Inter"
-                font.styleName: "normal"
-                font.weight: 600
-                font.pixelSize: 14
-                font.underline: true
-            }
+                    Rectangle{
+                        id: seeAllButton
+                        width: 45
+                        height: 13
+                        x: 314
+                        y: 17
 
-            MouseArea{
-                id: seeAllMouseArea
+                        Text{
+                            id: seeAllText
+
+                            anchors.fill: parent
+
+                            text: "See all"
+                            font.family: "Inter"
+                            font.styleName: "normal"
+                            font.weight: 600
+                            font.pixelSize: 14
+                            font.underline: true
+                        }
+
+                        MouseArea{
+                            id: seeAllMouseArea
+                            anchors.fill: parent
+                            onClicked: {
+                                window.screenChanged("TransactionsPage.qml")
+                            }
+                        }
+                    }
+
+            ColumnLayout {
+                id: recentTransactions
+                spacing: 27
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 110
+                width: 366
+                height: Math.min(SessionHandler.transactions.length, 4)*41 + (Math.min(SessionHandler.transactions.length, 4)-1)*27
+                visible: true
+                z: 10
+
+                Repeater {
+                    id: transactionsRepeater
+                    model: Math.min(SessionHandler.transactions.length, 4)
+                    visible: true
+
+                    TransactionBlock{
+
+                        function isExpence(type){
+                            console.log("Type in func: ", type)
+                            if (type=="WITHDRAW"){return true;}
+                            if (type=="DEPOSIT"){return false;}
+                            if (type.includes("BUDGET:WITHDRAW")){return false;}
+                            if (type.includes("BUDGET:DEPOSIT")){return true;}
+                        }
+
+                        required property int index
+                        property QtObject transaction: SessionHandler.transactions[SessionHandler.transactions.length - index - 1]
+                        property string amount: transaction.transactionAmount
+                        property string interactor: transaction.target
+                        property string time: transaction.timeProcessed
+                        //property string source: (transaction.type == "WITHDRAW")? "qrc:/resources/redArrowDown.png" : "qrc:/resources/greenArrowUp.png"
+                        property string source: (isExpence(transaction.type))? "qrc:/resources/redArrowDown.png" : "qrc:/resources/greenArrowUp.png"
+                        property string textColor: (isExpence(transaction.type))? "red" : "notRed"
+                    }
+
+                }
             }
         }
 
-        ColumnLayout{
-            id: recentTransactions
-            spacing: 27
-            x: 24
-            y: 497
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: ":/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: ":/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: ":/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-            TransactionBlock{
-                property string amount: "-68.90 BGN"
-                property string interactor: "Mariq Koleva"
-                property string source: ":/resources/redArrowDown.png"
-                property string textColor: "red"
-                property string time: "8:20 AM"
-            }
-        }
 
-
-
-        Rectangle {
-            id: navBar
-            y: 772
-            width: 484
-            height: 95
-            color: "#fdfdfd"
-            radius: 43
+        Navbar{
+            id: navbar
+            property QtObject window: window
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: -23
-            z: 2
-            anchors.horizontalCenterOffset: 0
         }
-
-        Rectangle{
-            id: receiptRect
-            width: 25
-            height: 25
-            x: 53
-            y: 793
-            Image{
-                id: receiptImage
-                anchors.fill: parent
-                source: ":/resources/receiptIcon.png"
-            }
-            MouseArea{
-                id: receiptMouseArea
-                anchors.fill: parent
-            }
-        }
-        Rectangle{
-            id: homeRect
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: 793
-
-            width: 25
-            height: 25
-            Image{
-                id: homeImage
-                anchors.fill: parent
-                source: ":/resources/homeIcon.png"
-            }
-            MouseArea{
-                id: homeMouseArea
-                anchors.fill: parent
-            }
-        }
-        Rectangle{
-            id: savingsRect
-            x: 311
-            y: 793
-
-            width: 25
-            height: 25
-            Image{
-                id: savingsIcon
-                anchors.fill: parent
-                source: ":/resources/savingsIcon.png"
-            }
-            MouseArea{
-                id: savingsMouseArea
-                anchors.fill: parent
-            }
-        }
-
-
     }
+
+    Connections {
+            target: SessionHandler
+
+            function onBalanceUpdated(newBalance) {
+                yourBalance.text = newBalance;
+            }
+
+            function onTransactionDone() {
+                if (SessionHandler.isTransactionDone) {
+                    window.screenChanged("MainPage.qml");
+                }
+            }
+
+            function onTransactionsChanged() {
+                transactionsRepeater.model = Math.min(SessionHandler.transactions.length, 4);
+                for (let transaction of SessionHandler.transactions){
+                    console.log("Transaction: ", transaction.transactionAmount, transaction.target)
+                }
+            }
+
+            function onActiveBudgetIndexChanged(){
+                window.screenChanged(window.temp)
+            }
+
+
+        }
+
+        Component.onCompleted: {
+            SessionHandler.fetchBalance(fluxo)
+            SessionHandler.fetchTransactions(fluxo)
+        }
 }

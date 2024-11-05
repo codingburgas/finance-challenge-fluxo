@@ -1,12 +1,18 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 
-Window{
+Rectangle {
     id: window
-    width: 390
+    visible: true
+    width: 420
     height: 844
+
+    signal screenChanged(file: string)
+
     Rectangle {
-        id: authPage
+        id: background
         anchors.fill: parent
         color: "#304437"
 
@@ -22,7 +28,7 @@ Window{
                 id: logoImage
                 width:113
                 height:33
-                source: ":/logo.png"
+                source: "qrc:/resources/logo.png"
                 anchors.centerIn: parent
             }
         }
@@ -47,7 +53,7 @@ Window{
             anchors.left: parent.left
             anchors.right: parent.right
             y: 308
-            height: 543
+            height: 543+20 //+20 in order to hide background under element
             color: "#FDFDFD"
             radius: 43
         }
@@ -58,7 +64,7 @@ Window{
             height: 3
             border.width: 7
             anchors.horizontalCenter: parent.horizontalCenter
-            property double y: 323.5
+            y: 323.5
 
         }
 
@@ -68,7 +74,7 @@ Window{
             border.width: 0
             z:2
             anchors.horizontalCenter: circle.horizontalCenter
-            property double y: 0.42*window.height
+            y: 0.42*window.height
 
             Text {
                 id: textMain
@@ -88,19 +94,22 @@ Window{
             }
         }
 
-
-
-        TextArea {
+        TextField {
             id: username
             anchors.horizontalCenter: parent.horizontalCenter
             y: 498
             width: 293
             height: 56
+
             text: ""
             z: 10
             placeholderText: qsTr("Username")
+
+            placeholderTextColor: "#898989"
+
             background: Rectangle{
                 width: 293
+                height: 56
                 radius: 8
                 border.width: 1
                 border.color: "#898989"
@@ -112,9 +121,12 @@ Window{
             font.pixelSize: 20
 
             verticalAlignment: Text.AlignVCenter
+
+            cursorDelegate: CursorRectangle{property QtObject textField: username}
+
         }
 
-        TextArea {
+        TextField {
             id: password
             anchors.horizontalCenter: parent.horizontalCenter
             y: 571
@@ -123,6 +135,9 @@ Window{
             text: ""
             z: 10
             placeholderText: qsTr("Password")
+            placeholderTextColor: "#898989"
+            echoMode: TextInput.Password
+
             background: Rectangle{
                 width: 293
                 radius: 8
@@ -136,14 +151,15 @@ Window{
             font.pixelSize: 20
 
             verticalAlignment: Text.AlignVCenter
-        }
 
+            cursorDelegate: CursorRectangle{property QtObject textField: password}
+        }
 
 
 
         Rectangle {
             id: buttonRectangle
-            x: 90
+            anchors.horizontalCenter: parent.horizontalCenter
             y: 726
             width: 200
             height: 50
@@ -163,16 +179,23 @@ Window{
             }
 
             MouseArea {
-                anchors.fill: parent
-                onClicked: {
-
-                    if (fluxo !== null)
-                        SessionHandler.writeSession(username.text, password.text, fluxo);
-                    else
-                        console.log("App instance is null");
-                }
-            }
+                            anchors.fill: parent
+                            onClicked: {
+                                if (fluxo !== null) {
+                                    SessionHandler.writeSession(username.text, password.text, fluxo);
+                                }
+                            }
+                        }
         }
     }
 
+    Connections {
+        target: SessionHandler
+
+        function onSessionWritingCompletedChanged() {
+            if (SessionHandler.sessionWritingCompleted) {
+                window.screenChanged("MainPage.qml")
+            }
+        }
+    }
 }

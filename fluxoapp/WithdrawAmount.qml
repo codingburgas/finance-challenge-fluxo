@@ -2,20 +2,17 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
-Window {
+Rectangle {
+    id: window
     width: 420
-    height: 900
+    height: 844
     visible: true
 
-    Loader {
-            id: loader
-            anchors.fill: parent
-        }
+    signal screenChanged(file: string)
 
     Rectangle {
         id: background
-        width: 420
-        height: 844
+        anchors.fill: parent
         visible: true
         color: "#304437"
 
@@ -48,25 +45,14 @@ Window {
                             }
                     }
 
-            Rectangle {
-                id: rectangle
-                x: 30
-                y: 33
-                width: 42
-                height: 42
-                color: "#d4de67"
-                radius: 50
-            }
-
-            Text {
-                id: _text
-                x: 91
-                y: 46
-                color: "#ffffff"
-                text: qsTr("Hi There, ")
-                font.pixelSize: 16
-                font.weight: Font.Bold
-            }
+        Header{
+            id: header
+            x:0
+            y: 55
+            property QtObject window: window
+            property bool welcomeBackText: false
+            property bool menuButton: true
+        }
 
         Rectangle {
             id: whiteRectange
@@ -78,7 +64,7 @@ Window {
             anchors.topMargin: 211
             z: 1
 
-            TextArea {
+            TextField {
                 id: inputField
                 width: 300
                 height: 50
@@ -86,8 +72,10 @@ Window {
                 y: 88
                 readOnly: true
                 font.pixelSize: 20
-                horizontalAlignment: Text.AlignJustify
+                horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
+                placeholderText: "Amount"
+                placeholderTextColor: "#898989"
                 background: Rectangle {
                     color: "#ffffff"
                     radius: 8
@@ -110,42 +98,60 @@ Window {
 
                 Repeater {
                     model: [
-                                            { text: "    1" }, { text: "    2" }, { text: "    3" },
-                                            { text: "    4" }, { text: "    5" }, { text: "    6" },
-                                            { text: "    7" }, { text: "    8" }, { text: "    9" },
-                                            { text: "    ." }, { text: "    0" }, { text: "    <", isBackspace: true }
-                                        ]
+                        { text: "    1" }, { text: "    2" }, { text: "    3" },
+                        { text: "    4" }, { text: "    5" }, { text: "    6" },
+                        { text: "    7" }, { text: "    8" }, { text: "    9" },
+                        { text: "    ." }, { text: "    0" }, { text: "    <", isBackspace: true }
+                    ]
 
-                                    delegate: Button {
-                                        text: modelData.text === "." ? modelData.text : modelData.text.trim()
-                                        width: 110
-                                        height: 54
-                                        font.pixelSize: 20
-                                        background: Rectangle {
-                                            color: modelData.color
-                                            width: parent.width + 20
-                                            height: parent.height
-                                            radius: 16
-                                            border.color: "#d3d3d3"
-                                            }
+                delegate: Button {
+                        text: modelData.text === "." ? modelData.text : modelData.text.trim()
+                        width: 110
+                        height: 54
+                        font.pixelSize: 20
+                        background: Rectangle {
+                            color: "#ffffff"
+                            width: parent.width + 20
+                            height: parent.height
+                            radius: 16
+                            border.color: "#d3d3d3"
 
-                                            contentItem: Text {
-                                                text: modelData.text
-                                                anchors.centerIn: parent
-                                                font.pixelSize: 19
-                                                color: "#101828"
-                                                }
+                            Behavior on color {
+                                ColorAnimation { duration: 150 }
+                            }
+                            }
 
-                                        onClicked: {
-                                            if (modelData.isBackspace) {
-                                                if (inputField.text.length > 0) {
-                                                    inputField.text = inputField.text.slice(0, -1);
-                                                }
-                                            } else {
-                                                inputField.text += text;
-                                            }
-                                        }
-                                    }
+                        contentItem: Text {
+                            text: modelData.text
+                            anchors.centerIn: parent
+                            font.pixelSize: 19
+                            color: "#101828"
+                            }
+
+                        onClicked: {
+                            if (modelData.isBackspace) {
+                                if (inputField.text.length > 0) {
+                                    inputField.text = inputField.text.slice(0, -1);
+                                }
+                            } else {
+                                inputField.text += text;
+                            }
+                        }
+
+                        onPressed: {
+                            background.color = "#e0e0e0"
+                            scale = 0.95
+                        }
+
+                        onReleased: {
+                            background.color = "#ffffff"
+                            scale = 1.0
+                        }
+
+                        Behavior on scale {
+                            NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
+                        }
+                    }
                 }
 
 
@@ -177,33 +183,10 @@ Window {
             MouseArea {
                    anchors.fill: parent
                    onClicked: {
-
-                       loader.source = "withdrawCategory.qml";
+                    CoreOperations.cacheAmount(inputField.text, fluxo);
+                    window.screenChanged("WithdrawCategory.qml")
                    }
                }
-
-            NumberAnimation {
-                id: animateFlow
-                target: background
-                properties: "x"
-                duration: 500
-                to: -390
-                from: 0
-            }
-        }
-
-        Rectangle {
-            id: navBar
-            y: 772
-            width: 484
-            height: 95
-            color: "#fdfdfd"
-            radius: 43
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: -23
-            z: 2
-            anchors.horizontalCenterOffset: 0
         }
 
         Text {
@@ -227,5 +210,13 @@ Window {
             source: "qrc:/resources/transactionsImage.png"
             fillMode: Image.PreserveAspectFit
         }
-}
+    Navbar{
+        id: navbar
+        property QtObject window: window
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -23
+    }
+    }
+
 }

@@ -5,6 +5,8 @@ Rectangle{
     width: 356
     height: 41
 
+
+
     Rectangle{
         id: transactionImageRect
         width: 41
@@ -64,7 +66,7 @@ Rectangle{
 
     Text{
         id: transactionAmount
-        text: transactionBlock.amount
+        text: (transactionBlock.textColor=="red" ? "-":"") + transactionBlock.amount + " BGN"
 
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right

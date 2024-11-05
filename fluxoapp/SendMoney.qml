@@ -1,11 +1,15 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 
-Window {
+Rectangle {
     id: window
-    width: 380
+    width: 420
     height: 844
     visible: true
+
+    signal screenChanged(file: string)
 
     Rectangle {
         id: getStartedPage
@@ -38,36 +42,13 @@ Window {
 
             Text {
                 id: textEdit
-                x: 47
+                x: username.x
                 y: 25
                 width: 139
                 height: 31
                 text: qsTr("Send Money")
                 font.pixelSize: 22
                 font.styleName: "SemiBold"
-            }
-
-            TextEdit {
-                id: amountText
-                x: 47
-                y: 192
-                width: 80
-                height: 20
-                color: "#515151"
-                text: qsTr("Amount")
-                font.pixelSize: 12
-                rotation: 0
-            }
-
-            TextEdit {
-                id: usernameText
-                x: 47
-                y: 83
-                width: 80
-                height: 20
-                color: "#515151"
-                text: qsTr("Username")
-                font.pixelSize: 12
             }
         }
 
@@ -93,54 +74,43 @@ Window {
                 font.pixelSize: 22
                 font.styleName: "SemiBold"
             }
+
+            MouseArea{
+                id: sendMouseArea
+                anchors.fill: parent
+
+                onClicked: {
+                    CoreOperations.sendMoney(amount.text, username.text, fluxo, SessionHandler)
+                }
+            }
+
+
         }
 
+
+
     }
 
-    Text {
-        id: _text
-        x: 91
-        y: 46
-        color: "#ffffff"
-        text: qsTr("Hi There, ")
-        font.pixelSize: 16
-        font.weight: Font.Bold
+    Header{
+        id: header
+        x:0
+        y: 55
+        property QtObject window: window
+        property bool welcomeBackText: false
+        property bool menuButton: true
     }
 
-    Rectangle {
-        id: rectangle
-        x: 30
-        y: 33
-        width: 42
-        height: 42
-        color: "#d4de67"
-        radius: 50
-    }
-
-    Rectangle {
-        id: navBar
-        y: 772
-        width: 484
-        height: 95
-        color: "#fdfdfd"
-        radius: 43
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: -23
-        z: 2
-        anchors.horizontalCenterOffset: 0
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-    TextArea {
+    TextField {
         id: amount
-        x: 44
+        anchors.horizontalCenter: window.horizontalCenter
         y: 547
         width: 293
         height: 56
         text: ""
         font.pixelSize: 16
         verticalAlignment: Text.AlignVCenter
-        placeholderText: ""
+        placeholderText: "Amount"
+        placeholderTextColor: "#898989"
         z: 10
         font.weight: 400
         font.styleName: "normal"
@@ -151,17 +121,20 @@ Window {
             border.color: "#898989"
             border.width: 1
         }
+
+        cursorDelegate: CursorRectangle{property QtObject textField: amount}
     }
 
-    TextArea {
+    TextField {
         id: username
-        x: 44
+        anchors.horizontalCenter: window.horizontalCenter
         y: 438
         width: 293
         height: 56
         font.pixelSize: 16
         verticalAlignment: Text.AlignVCenter
-        placeholderText: ""
+        placeholderText: "Username"
+        placeholderTextColor: "#898989"
         hoverEnabled: true
         z: 10
         font.weight: 400
@@ -173,6 +146,21 @@ Window {
             border.color: "#898989"
             border.width: 1
         }
+        cursorDelegate: CursorRectangle{property QtObject textField: username}
     }
 
+    Navbar{
+        id: navbar
+        property QtObject window: window
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -23
+    }
+
+    Connections{
+        target: SessionHandler
+        function onTransactionDone(){
+            window.screenChanged("MainPage.qml")
+        }
+    }
 }

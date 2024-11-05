@@ -2,21 +2,17 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
-Window {
+Rectangle {
     id: window
     width: 420
-    height: 900
+    height: 844
     visible: true
 
-    Loader {
-        id: loader
-        anchors.fill: parent
-    }
+    signal screenChanged(file: string)
 
     Rectangle {
         id: background
-        width: 420
-        height: 844
+        anchors.fill: parent
         visible: true
         color: "#304437"
 
@@ -80,7 +76,7 @@ Window {
             anchors.topMargin: 211
             z: 1
 
-            TextArea {
+            TextField {
                 id: inputField
                 width: 300
                 height: 50
@@ -88,8 +84,10 @@ Window {
                 y: 53
                 readOnly: true
                 font.pixelSize: 20
-                horizontalAlignment: Text.AlignJustify
+                horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
+                placeholderText: qsTr("Amount")
+                placeholderTextColor: "#898989"
                 background: Rectangle {
                     color: "#FFFFFF"
                     radius: 8
@@ -111,44 +109,62 @@ Window {
 
                 Repeater {
                     model: [
-                                            { text: "    1" }, { text: "    2" }, { text: "    3" },
-                                            { text: "    4" }, { text: "    5" }, { text: "    6" },
-                                            { text: "    7" }, { text: "    8" }, { text: "    9" },
-                                            { text: "    ." }, { text: "    0" }, { text: "    <", isBackspace: true }
-                                        ]
+                            { text: "    1" }, { text: "    2" }, { text: "    3" },
+                            { text: "    4" }, { text: "    5" }, { text: "    6" },
+                            { text: "    7" }, { text: "    8" }, { text: "    9" },
+                            { text: "    ." }, { text: "    0" }, { text: "    <", isBackspace: true }
+                        ]
 
-                                    delegate: Button {
-                                        text: modelData.text === "." ? modelData.text : modelData.text.trim()
-                                        width: 110
-                                        height: 54
-                                        font.pixelSize: 20
-                                        background: Rectangle {
-                                            color: modelData.color
-                                            width: parent.width + 20
-                                            height: parent.height
-                                            radius: 16
-                                            border.color: "#d3d3d3"
-                                            }
+                    delegate: Button {
+                        text: modelData.text === "." ? modelData.text : modelData.text.trim()
+                        width: 110
+                        height: 54
+                        font.pixelSize: 20
+                        background: Rectangle {
+                            color: "#ffffff"
+                            width: parent.width + 20
+                            height: parent.height
+                            radius: 16
+                            border.color: "#d3d3d3"
 
-                                            contentItem: Text {
-                                                text: modelData.text
-                                                anchors.centerIn: parent
-                                                font.pixelSize: 19
-                                                color: "#101828"
-                                                }
-
-                                        onClicked: {
-                                            if (modelData.isBackspace) {
-                                                if (inputField.text.length > 0) {
-                                                    inputField.text = inputField.text.slice(0, -1);
-                                                }
-                                            } else {
-                                                inputField.text += text;
-                                            }
-                                        }
-                                    }
-                                }
+                            Behavior on color {
+                                ColorAnimation { duration: 150 }
                             }
+                            }
+
+                            contentItem: Text {
+                                text: modelData.text
+                                anchors.centerIn: parent
+                                font.pixelSize: 19
+                                color: "#101828"
+                                }
+
+                        onClicked: {
+                            if (modelData.isBackspace) {
+                                if (inputField.text.length > 0) {
+                                    inputField.text = inputField.text.slice(0, -1);
+                                }
+                            } else {
+                                inputField.text += text;
+                            }
+                        }
+
+                        onPressed: {
+                            background.color = "#e0e0e0"
+                            scale = 0.95
+                        }
+
+                        onReleased: {
+                            background.color = "#ffffff"
+                            scale = 1.0
+                        }
+
+                        Behavior on scale {
+                            NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -175,48 +191,32 @@ Window {
                 anchors.centerIn: parent
             }
 
-            NumberAnimation {
-                id: animateFlow
-                target: background
-                properties: "x"
-                duration: 500
-                to: -390
-                from: 0
+            MouseArea{
+                id: createMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    CoreOperations.createBudget(inputField.text, fluxo, SessionHandler)
+                    window.screenChanged("BudgetMainMenu.qml")
+                }
             }
-        }
-
-        Rectangle {
-            id: navBar
-            y: 772
-            width: 484
-            height: 95
-            color: "#fdfdfd"
-            radius: 43
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: -23
-            z: 2
-            anchors.horizontalCenterOffset: 0
         }
 
         Text {
             id: _text1
-            x: 123
+            anchors.horizontalCenter: parent.horizontalCenter
             y: 121
             color: "#ffffff"
             text: qsTr("Creating a budget")
             font.pointSize: 22
             font.styleName: "SemiBold"
         }
+        Navbar{
+            id: navbar
+            property QtObject window: window
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: -23
+        }
     }
 
-    Image {
-        id: money_image
-        x: 203
-        y: 72
-        width: 245
-        height: 297
-        source: "resources/money_image.png"
-        fillMode: Image.PreserveAspectFit
-    }
 }
