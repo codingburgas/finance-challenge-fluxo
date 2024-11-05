@@ -3,7 +3,6 @@ import backgroundEllipse from "/radialEllipseBackground.png";
 import dashboardIcon from "/DashboardIcon.png";
 import transactionsIcon from "/TransactionsIcon.png";
 import statisticIcon from "/StatisticsIcon.png";
-import budgetIcon from "/BudgetIcon.png";
 
 export default function Dashboard() {
   useEffect(() => {
@@ -47,7 +46,7 @@ export default function Dashboard() {
               <h2>Dashboard</h2>
             </a>
             <a
-              href=""
+              href="/Transactions"
               className="pl-4 flex items-center space-x-3 rounded-[0.3rem] hover:bg-[#171717] hover:w-[11rem]"
             >
               <img src={transactionsIcon} alt="Transactions Icon" />
@@ -59,13 +58,6 @@ export default function Dashboard() {
             >
               <img src={statisticIcon} alt="Statistics Icon" />
               <h2>Statistics</h2>
-            </a>
-            <a
-              href=""
-              className="pl-4 flex items-center space-x-3 rounded-[0.3rem] hover:bg-[#171717] hover:w-[11rem]"
-            >
-              <img src={budgetIcon} alt="Budget Icon" />
-              <h2>Budget</h2>
             </a>
           </div>
         </div>
@@ -95,7 +87,7 @@ export default function Dashboard() {
 
             <div className="flex justify-between mt-10 w-[62rem]">
               <h1 className="font-bold text-2xl">Recent Transactions</h1>
-              <a href="">
+              <a href="/Transactions">
                 <h3 className="text-right underline">View All</h3>
               </a>
             </div>

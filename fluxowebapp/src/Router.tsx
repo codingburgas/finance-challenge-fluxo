@@ -5,9 +5,9 @@ import { Applayout } from "./components/layouts/AppLayout";
 import NoMatch from "./pages/NoMatch";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Transactions from "./pages/Transactions";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
-import Sample from "./pages/Sample";
 
 export const router = createBrowserRouter([
     {
@@ -19,12 +19,12 @@ export const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: "sample",
-                element: <Sample />,
-            },
-            {
                 path: "Login",
                 element: <Login />,
+            },
+            {
+                path: "Transactions",
+                element: <Transactions />,
             },
             {
                 path: "Dashboard",
