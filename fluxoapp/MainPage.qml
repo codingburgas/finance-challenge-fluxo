@@ -397,14 +397,26 @@ Rectangle {
                     model: Math.min(SessionHandler.transactions.length, 4)
                     visible: true
 
-                    TransactionBlock {
+                    TransactionBlock{
+
+                        function isExpence(type){
+                            console.log("Type in func: ", type)
+                            if (type=="WITHDRAW"){return true;}
+                            if (type=="DEPOSIT"){return false;}
+                            if (type.includes("BUDGET:WITHDRAW")){return false;}
+                            if (type.includes("BUDGET:DEPOSIT")){return true;}
+                        }
+
                         required property int index
-                        property string amount: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].transactionAmount
-                        property string interactor: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target
-                        property string time: SessionHandler.transactions[SessionHandler.transactions.length - index - 1].timeProcessed
-                        property string source: (SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target == "WITHDRAW")? "qrc:/resources/redArrowDown.png" : "qrc:/resources/greenArrowUp.png"
-                        property string textColor: (SessionHandler.transactions[SessionHandler.transactions.length - index - 1].target == "WITHDRAW")? "red" : "notRed"
+                        property QtObject transaction: SessionHandler.transactions[SessionHandler.transactions.length - index - 1]
+                        property string amount: transaction.transactionAmount
+                        property string interactor: transaction.target
+                        property string time: transaction.timeProcessed
+                        //property string source: (transaction.type == "WITHDRAW")? "qrc:/resources/redArrowDown.png" : "qrc:/resources/greenArrowUp.png"
+                        property string source: (isExpence(transaction.type))? "qrc:/resources/redArrowDown.png" : "qrc:/resources/greenArrowUp.png"
+                        property string textColor: (isExpence(transaction.type))? "red" : "notRed"
                     }
+
                 }
             }
         }
@@ -448,6 +460,6 @@ Rectangle {
 
         Component.onCompleted: {
             SessionHandler.fetchBalance(fluxo)
-            SessionHandler.fetchRecentTransactions(fluxo)
+            SessionHandler.fetchTransactions(fluxo)
         }
 }

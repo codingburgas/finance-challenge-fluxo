@@ -368,6 +368,7 @@ void Fluxo::SessionHandler::fetchTransactions(Fluxo::App* app) {
                     transaction->setTransactionAmount(QString::number(transactionObject["amount"].toDouble()));
                     transaction->setTarget(transactionObject["target"].toString());
                     transaction->setTimeProcessed(transactionObject["timeProcessed"].toString());
+                    transaction->type = transactionObject["typeOfTransaction"].toString();
                     addTransaction(transaction);
                 }
                 emit transactionsChanged();
@@ -424,6 +425,7 @@ void Fluxo::SessionHandler::fetchRecentTransactions(Fluxo::App* app) {
                     transaction->setTransactionAmount(QString::number(transactionObject["amount"].toDouble()));
                     transaction->setTarget(transactionObject["target"].toString());
                     transaction->setTimeProcessed(transactionObject["timeProcessed"].toString());
+                    transaction->type = transactionObject["typeOfTransaction"].toString();
                     addTransaction(transaction);
                 }
                 emit transactionsChanged();

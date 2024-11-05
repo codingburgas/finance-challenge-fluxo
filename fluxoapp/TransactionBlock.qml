@@ -5,6 +5,8 @@ Rectangle{
     width: 356
     height: 41
 
+
+
     Rectangle{
         id: transactionImageRect
         width: 41

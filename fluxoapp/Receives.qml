@@ -201,6 +201,7 @@ Rectangle {
 
                         required property int index
                         property QtObject transaction: SessionHandler.transactions[SessionHandler.transactions.length - index - 1]
+                        visible: !isExpense(transaction.type)
                         property string amount: transaction.transactionAmount
                         property string interactor: transaction.target
                         property string time: transaction.timeProcessed
