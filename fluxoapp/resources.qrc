@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/logo.png</file>
+        <file>resources/money_image.png</file>
+        <file>resources/transactionsImage.png</file>
+        <file>resources/depositIcon.png</file>
+        <file>resources/sendIcon.png</file>
+        <file>resources/statsIcon.png</file>
+        <file>resources/withdrawIcon.png</file>
+        <file>resources/greenArrowUp.png</file>
+        <file>resources/redArrowDown.png</file>
+        <file>resources/restaurantIcon.png</file>
+        <file>resources/studyIcon.png</file>
+        <file>resources/homeIcon.png</file>
+        <file>resources/receiptIcon.png</file>
+        <file>resources/savingsIcon.png</file>
+        <file>resources/budgetIcon.png</file>
+        <file>resources/incomeIcon.png</file>
+        <file>resources/spendingsIcon.png</file>
+        <file>resources/penCircle.png</file>
+        <file>resources/handWithCoins.png</file>
+        <file>resources/plusBudgetIcon.png</file>
+        <file>resources/statisticsIcon.png</file>
+    </qresource>
+</RCC>
